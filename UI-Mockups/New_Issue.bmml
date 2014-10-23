@@ -1,12 +1,15 @@
-<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="1771" measuredH="816" mockupW="1757" mockupH="816">
+<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="1771" measuredH="945" mockupW="1757" mockupH="945">
   <controls>
-    <control controlID="0" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="14" y="0" w="1757" h="816" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="14" y="0" w="1757" h="816" measuredW="450" measuredH="400" zOrder="0" locked="true" isInGroup="-1">
       <controlProperties>
         <text>Collabo%20Decision%0Ahttp%3A//www.collabo-decision.at</text>
       </controlProperties>
     </control>
-    <control controlID="2" controlTypeID="com.balsamiq.mockups::TabBar" x="14" y="69" w="1757" h="719" measuredW="462" measuredH="100" zOrder="1" locked="false" isInGroup="-1">
+    <control controlID="2" controlTypeID="com.balsamiq.mockups::TabBar" x="14" y="72" w="1757" h="873" measuredW="462" measuredH="100" zOrder="1" locked="true" isInGroup="-1">
       <controlProperties>
+        <hrefs>%2CDesignDecision%26bm%3BDesignDecision.bmml%26bm%3BDesignDecision.bmml%26bm%3BDesignDecision.bmml%2C</hrefs>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%22106%2C72%2C308%2C110%22%20href%3D%22DesignDecision.bmml%22%20alt%3D%22DesignDecision%22%20id%3D%222%22/%3E</map>
+        <selectedIndex>0</selectedIndex>
         <size>24</size>
         <text>Issues%2C%20Design%20Decisions%2C%20Statistics</text>
       </controlProperties>
@@ -34,7 +37,7 @@
       </controlProperties>
     </control>
     <control controlID="8" controlTypeID="com.balsamiq.mockups::VerticalScrollBar" x="929" y="202" w="-1" h="291" measuredW="16" measuredH="100" zOrder="6" locked="false" isInGroup="-1"/>
-    <control controlID="9" controlTypeID="com.balsamiq.mockups::TextInput" x="239" y="529" w="713" h="-1" measuredW="322" measuredH="27" zOrder="7" locked="false" isInGroup="-1">
+    <control controlID="9" controlTypeID="com.balsamiq.mockups::TextInput" x="239" y="529" w="706" h="-1" measuredW="322" measuredH="27" zOrder="7" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Keywords%3B%20associated%20with%20the%20issue%3B%20Architecture%3B%20...</text>
       </controlProperties>
@@ -64,10 +67,61 @@
     </control>
     <control controlID="17" controlTypeID="com.balsamiq.mockups::RedX" x="922" y="599" w="16" h="23" measuredW="240" measuredH="104" zOrder="12" locked="false" isInGroup="-1"/>
     <control controlID="18" controlTypeID="com.balsamiq.mockups::RedX" x="922" y="631" w="16" h="23" measuredW="240" measuredH="104" zOrder="13" locked="false" isInGroup="-1"/>
-    <control controlID="19" controlTypeID="com.balsamiq.mockups::Button" x="98" y="746" w="-1" h="-1" measuredW="129" measuredH="27" zOrder="14" locked="false" isInGroup="-1">
+    <control controlID="19" controlTypeID="com.balsamiq.mockups::Button" x="98" y="883" w="-1" h="-1" measuredW="129" measuredH="27" zOrder="14" locked="false" isInGroup="-1">
       <controlProperties>
+        <href>Issues%26bm%3BIssues.bmml%26bm%3BIssues.bmml%26bm%3BIssues.bmml</href>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%2284%2C883%2C213%2C910%22%20href%3D%22Issues.bmml%22%20alt%3D%22Issues%22%20id%3D%2219%22/%3E</map>
         <size>18</size>
         <text>Create%20Issue</text>
+      </controlProperties>
+    </control>
+    <control controlID="20" controlTypeID="com.balsamiq.mockups::Label" x="98" y="720" w="-1" h="-1" measuredW="103" measuredH="26" zOrder="15" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>18</size>
+        <text>Depends%20On</text>
+      </controlProperties>
+    </control>
+    <control controlID="22" controlTypeID="com.balsamiq.mockups::TextInput" x="239" y="726" w="706" h="-1" measuredW="114" measuredH="27" zOrder="16" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Enter%20Issue%20Title</text>
+      </controlProperties>
+    </control>
+    <control controlID="23" controlTypeID="com.balsamiq.mockups::Label" x="98" y="768" w="-1" h="-1" measuredW="102" measuredH="26" zOrder="17" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>18</size>
+        <text>Resolved%20By</text>
+      </controlProperties>
+    </control>
+    <control controlID="24" controlTypeID="com.balsamiq.mockups::TextInput" x="239" y="768" w="706" h="-1" measuredW="114" measuredH="27" zOrder="18" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Enter%20Issue%20Title</text>
+      </controlProperties>
+    </control>
+    <control controlID="25" controlTypeID="com.balsamiq.mockups::Label" x="98" y="809" w="-1" h="-1" measuredW="88" measuredH="26" zOrder="19" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>18</size>
+        <text>Related%20To</text>
+      </controlProperties>
+    </control>
+    <control controlID="26" controlTypeID="com.balsamiq.mockups::TextInput" x="239" y="809" w="706" h="-1" measuredW="124" measuredH="27" zOrder="20" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Enter%20Issue%20Titles%3B</text>
+      </controlProperties>
+    </control>
+    <control controlID="27" controlTypeID="com.balsamiq.mockups::List" x="1315" y="139" w="390" h="269" measuredW="100" measuredH="126" zOrder="21" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Issue%20X%0AIssue%20Y%0AIssue%20Z</text>
+      </controlProperties>
+    </control>
+    <control controlID="28" controlTypeID="com.balsamiq.mockups::Label" x="1067" y="142" w="-1" h="-1" measuredW="219" measuredH="26" zOrder="22" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>18</size>
+        <text>Issues%20with%20matching%20Tags</text>
+      </controlProperties>
+    </control>
+    <control controlID="29" controlTypeID="com.balsamiq.mockups::StickyNote" x="1332" y="220" w="311" h="178" measuredW="109" measuredH="123" zOrder="23" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Issue%20Creation%20will%20probably%20happen%20in%20a%20multiple-step%20wizard-style%20%0A%20%0AFirst%20page%20will%20include%20specifying%20tags%2C%20following%20pages%20will%20display%20issuse%20matching%20the%20given%20tags%0A%20%0ARelations%20to%20other%20issues%20should%20also%20be%20specified%20after%20matching%20issues%20are%20displayed</text>
       </controlProperties>
     </control>
   </controls>

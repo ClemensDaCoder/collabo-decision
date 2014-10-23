@@ -1,0 +1,26 @@
+<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="1771" measuredH="816" mockupW="1757" mockupH="816">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="14" y="0" w="1757" h="816" measuredW="450" measuredH="400" zOrder="0" locked="true" isInGroup="-1">
+      <controlProperties>
+        <text>Collabo%20Decision%0Ahttp%3A//www.collabo-decision.at</text>
+      </controlProperties>
+    </control>
+    <control controlID="2" controlTypeID="com.balsamiq.mockups::TabBar" x="14" y="72" w="1757" h="744" measuredW="462" measuredH="100" zOrder="1" locked="true" isInGroup="-1">
+      <controlProperties>
+        <selectedIndex>1</selectedIndex>
+        <size>24</size>
+        <text>Issues%2C%20Design%20Decisions%2C%20Statistics</text>
+      </controlProperties>
+    </control>
+    <control controlID="3" controlTypeID="com.balsamiq.mockups::ButtonBar" x="42" y="121" w="757" h="42" measuredW="704" measuredH="27" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>All%2C%20Collecting%20Alternatives%2C%20%20Selecting%20Alternative%2C%20Decided%2C%20Obsolete%2C%20Inappriate%20Solution%2C%20Blocked</text>
+      </controlProperties>
+    </control>
+    <control controlID="4" controlTypeID="com.balsamiq.mockups::DataGrid" x="42" y="173" w="1078" h="407" measuredW="538" measuredH="281" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Title%5Cr%20%5E%2C%20Status%20%5Ev%2C%20Owner%2C%20Creation%20Date%20v%2C%20%20Rating%0ADD%201%5CrComplicated%20Stuff%2C%20Collecting%20Alternatives%2C%20Michael%2C%2015.10.2014%2C%20N/A%0ADD%207%5CrMaybe%20title%20of%20issue%2C%20Collecting%20Alternatives%2C%20Manuel%2C%2016.10.2014%2C%20N/A%0ADD%203%2C%20Collecting%20Alternatives%2C%20Michael%2C%2017.10.2014%2C%20N/A%0ADD%204%2C%20Collecting%20Alternatives%2C%20Michael%2C%2019.10.2014%2C%20N/A%0ADD%205%2C%20Decided%2C%20Katharina%2C%2020.10.2014%2C%204.3%20out%20of%2010%0ADD%206%2C%20Obsolete%2C%20David%2C%2022.10.2014%2C%20N/A%0AD%207%2C%20Inapproiate%20Solution%2C%20Rainer%2C%2023.10.2014%2C%20N/A%0ADD%202%2C%20Blocked%2C%20Manuel%2C%2016.10.2014%2C%20N/A%0A%7B0L%2C%200C%2C%200C%2C%200C%2C%200C%7D</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>
