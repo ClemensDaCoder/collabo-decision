@@ -1,0 +1,15 @@
+<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="1771" measuredH="816" mockupW="1757" mockupH="816">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="14" y="0" w="1757" h="816" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Collabo%20Decision%0Ahttp%3A//www.collabo-decision.at</text>
+      </controlProperties>
+    </control>
+    <control controlID="2" controlTypeID="com.balsamiq.mockups::TabBar" x="14" y="72" w="1757" h="719" measuredW="462" measuredH="100" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>24</size>
+        <text>Issues%2C%20Design%20Decisions%2C%20Statistics</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>
