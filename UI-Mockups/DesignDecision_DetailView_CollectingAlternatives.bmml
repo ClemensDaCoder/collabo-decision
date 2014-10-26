@@ -97,6 +97,8 @@
     </control>
     <control controlID="21" controlTypeID="com.balsamiq.mockups::Link" x="187" y="189" w="-1" h="-1" measuredW="42" measuredH="19" zOrder="19" locked="false" isInGroup="-1">
       <controlProperties>
+        <href>Issue_DetailView_InProgress%26bm%3BIssue_DetailView_InProgress.bmml%26bm%3BIssue_DetailView_InProgress.bmml%26bm%3BIssue_DetailView_InProgress.bmml</href>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%22173%2C189%2C215%2C208%22%20href%3D%22Issue_DetailView_InProgress.bmml%22%20alt%3D%22Issue_DetailView_InProgress%22%20id%3D%2221%22/%3E</map>
         <text>Issue%201</text>
       </controlProperties>
     </control>

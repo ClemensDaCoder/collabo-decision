@@ -22,6 +22,8 @@
     </control>
     <control controlID="4" controlTypeID="com.balsamiq.mockups::Link" x="248" y="231" w="-1" h="-1" measuredW="28" measuredH="19" zOrder="3" locked="false" isInGroup="-1">
       <controlProperties>
+        <href>DesignDecision_DetailView_CollectingAlternatives%26bm%3BDesignDecision_DetailView_CollectingAlternatives.bmml%26bm%3BDesignDecision_DetailView_CollectingAlternatives.bmml%26bm%3BDesignDecision_DetailView_CollectingAlternatives.bmml</href>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%22234%2C231%2C262%2C250%22%20href%3D%22DesignDecision_DetailView_CollectingAlternatives.bmml%22%20alt%3D%22DesignDecision_DetailView_CollectingAlternatives%22%20id%3D%224%22/%3E</map>
         <text>DD%201</text>
       </controlProperties>
     </control>
@@ -39,7 +41,6 @@
     <control controlID="7" controlTypeID="com.balsamiq.mockups::VerticalScrollBar" x="938" y="309" w="-1" h="291" measuredW="16" measuredH="100" zOrder="6" locked="false" isInGroup="-1"/>
     <control controlID="8" controlTypeID="com.balsamiq.mockups::Button" x="1001" y="652" w="-1" h="-1" measuredW="77" measuredH="27" zOrder="7" locked="false" isInGroup="-1">
       <controlProperties>
-        <href>DesignDecision_DetailView_CollectingAlternatives%26bm%3BDesignDecision_DetailView_CollectingAlternatives.bmml%26bm%3BDesignDecision_DetailView_CollectingAlternatives.bmml%26bm%3BDesignDecision_DetailView_CollectingAlternatives.bmml</href>
         <map>%3Carea%20shape%3D%22rect%22%20coords%3D%22987%2C652%2C1064%2C679%22%20href%3D%22DesignDecision_DetailView_CollectingAlternatives.bmml%22%20alt%3D%22DesignDecision_DetailView_CollectingAlternatives%22%20id%3D%228%22/%3E</map>
         <size>18</size>
         <text>Modify</text>

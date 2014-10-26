@@ -80,6 +80,8 @@
     </control>
     <control controlID="20" controlTypeID="com.balsamiq.mockups::Link" x="211" y="189" w="-1" h="-1" measuredW="42" measuredH="19" zOrder="16" locked="false" isInGroup="-1">
       <controlProperties>
+        <href>Issue_DetailView_Open%26bm%3BIssue_DetailView_Open.bmml%26bm%3BIssue_DetailView_Open.bmml%26bm%3BIssue_DetailView_Open.bmml</href>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%22197%2C189%2C239%2C208%22%20href%3D%22Issue_DetailView_Open.bmml%22%20alt%3D%22Issue_DetailView_Open%22%20id%3D%2220%22/%3E</map>
         <text>Issue%201</text>
       </controlProperties>
     </control>

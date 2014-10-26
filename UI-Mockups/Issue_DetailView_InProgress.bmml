@@ -94,6 +94,7 @@
     </control>
     <control controlID="33" controlTypeID="com.balsamiq.mockups::VerticalTabBar" x="994" y="107" w="443" h="126" measuredW="200" measuredH="202" zOrder="18" locked="false" isInGroup="-1">
       <controlProperties>
+        <selectedIndex>2</selectedIndex>
         <size>18</size>
         <text>Depends%20On%0AResolved%20By%0ARelated%20To%0AMatching%20Tags</text>
         <verticalScrollbar>true</verticalScrollbar>
@@ -101,6 +102,8 @@
     </control>
     <control controlID="34" controlTypeID="com.balsamiq.mockups::Link" x="1141" y="114" w="-1" h="-1" measuredW="103" measuredH="24" zOrder="19" locked="false" isInGroup="-1">
       <controlProperties>
+        <href>New_Issue%26bm%3BNew_Issue.bmml%26bm%3BNew_Issue.bmml%26bm%3BNew_Issue.bmml</href>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%221127%2C114%2C1230%2C138%22%20href%3D%22New_Issue.bmml%22%20alt%3D%22New_Issue%22%20id%3D%2234%22/%3E</map>
         <size>18</size>
         <text>Issue%20Title%205</text>
       </controlProperties>

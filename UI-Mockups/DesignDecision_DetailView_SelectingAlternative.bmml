@@ -80,6 +80,8 @@
     </control>
     <control controlID="21" controlTypeID="com.balsamiq.mockups::Link" x="187" y="189" w="-1" h="-1" measuredW="42" measuredH="19" zOrder="16" locked="false" isInGroup="-1">
       <controlProperties>
+        <href>Issue_DetailView_InProgress%26bm%3BIssue_DetailView_InProgress.bmml%26bm%3BIssue_DetailView_InProgress.bmml%26bm%3BIssue_DetailView_InProgress.bmml</href>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%22173%2C189%2C215%2C208%22%20href%3D%22Issue_DetailView_InProgress.bmml%22%20alt%3D%22Issue_DetailView_InProgress%22%20id%3D%2221%22/%3E</map>
         <text>Issue%201</text>
       </controlProperties>
     </control>
@@ -131,11 +133,11 @@
         <text>It%20is%20assumed%20that%20...</text>
       </controlProperties>
     </control>
-    <control controlID="40" controlTypeID="com.balsamiq.mockups::Button" x="187" y="626" w="-1" h="-1" measuredW="49" measuredH="27" zOrder="25" locked="false" isInGroup="-1">
+    <control controlID="40" controlTypeID="com.balsamiq.mockups::Button" x="187" y="626" w="-1" h="-1" measuredW="283" measuredH="27" zOrder="25" locked="false" isInGroup="-1">
       <controlProperties>
         <href>DesignDecision%26bm%3BDesignDecision.bmml%26bm%3BDesignDecision.bmml%26bm%3BDesignDecision.bmml</href>
-        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%22173%2C626%2C222%2C653%22%20href%3D%22DesignDecision.bmml%22%20alt%3D%22DesignDecision%22%20id%3D%2240%22/%3E</map>
-        <text>Vote</text>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%22173%2C626%2C456%2C653%22%20href%3D%22DesignDecision.bmml%22%20alt%3D%22DesignDecision%22%20id%3D%2240%22/%3E</map>
+        <text>Rank%20Solutions%20According%20to%20selected%20Order</text>
       </controlProperties>
     </control>
     <control controlID="41" controlTypeID="com.balsamiq.mockups::Label" x="187" y="510" w="-1" h="-1" measuredW="73" measuredH="21" zOrder="26" locked="false" isInGroup="-1">

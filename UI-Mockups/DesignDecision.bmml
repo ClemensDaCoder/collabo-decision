@@ -5,8 +5,10 @@
         <text>Collabo%20Decision%0Ahttp%3A//www.collabo-decision.at</text>
       </controlProperties>
     </control>
-    <control controlID="2" controlTypeID="com.balsamiq.mockups::TabBar" x="14" y="72" w="1757" h="744" measuredW="462" measuredH="100" zOrder="1" locked="true" isInGroup="-1">
+    <control controlID="2" controlTypeID="com.balsamiq.mockups::TabBar" x="14" y="72" w="1757" h="744" measuredW="462" measuredH="100" zOrder="1" locked="false" isInGroup="-1">
       <controlProperties>
+        <hrefs>Issues%26bm%3BIssues.bmml%26bm%3BIssues.bmml%26bm%3BIssues.bmml%2CDesignDecision%26bm%3BDesignDecision.bmml%26bm%3BDesignDecision.bmml%26bm%3BDesignDecision.bmml%2C</hrefs>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%2220%2C72%2C106%2C110%22%20href%3D%22Issues.bmml%22%20alt%3D%22Issues%22%20id%3D%222%22/%3E%3Carea%20shape%3D%22rect%22%20coords%3D%22106%2C72%2C308%2C110%22%20href%3D%22DesignDecision.bmml%22%20alt%3D%22DesignDecision%22%20id%3D%222%22/%3E</map>
         <selectedIndex>1</selectedIndex>
         <size>24</size>
         <text>Issues%2C%20Design%20Decisions%2C%20Statistics</text>

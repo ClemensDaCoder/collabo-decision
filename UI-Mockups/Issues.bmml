@@ -27,6 +27,8 @@
     </control>
     <control controlID="13" controlTypeID="com.balsamiq.mockups::Button" x="1607" y="121" w="131" h="42" measuredW="85" measuredH="27" zOrder="4" locked="false" isInGroup="-1">
       <controlProperties>
+        <href>New_Issue%26bm%3BNew_Issue.bmml%26bm%3BNew_Issue.bmml%26bm%3BNew_Issue.bmml</href>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%221593%2C121%2C1724%2C163%22%20href%3D%22New_Issue.bmml%22%20alt%3D%22New_Issue%22%20id%3D%2213%22/%3E</map>
         <text>New%20Issue</text>
       </controlProperties>
     </control>
