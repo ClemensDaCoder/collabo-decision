@@ -177,8 +177,8 @@
     </control>
     <control controlID="48" controlTypeID="com.balsamiq.mockups::Button" x="1395" y="122" w="-1" h="-1" measuredW="361" measuredH="36" zOrder="33" locked="false" isInGroup="-1">
       <controlProperties>
-        <href>New_DesignDecision%26bm%3BNew_DesignDecision.bmml%26bm%3BNew_DesignDecision.bmml%26bm%3BNew_DesignDecision.bmml</href>
-        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%221381%2C122%2C1742%2C158%22%20href%3D%22New_DesignDecision.bmml%22%20alt%3D%22New_DesignDecision%22%20id%3D%2248%22/%3E</map>
+        <href>DesignDecision_DetailView_Decided%26bm%3BDesignDecision_DetailView_Decided.bmml%26bm%3BDesignDecision_DetailView_Decided.bmml%26bm%3BDesignDecision_DetailView_Decided.bmml</href>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%221381%2C122%2C1742%2C158%22%20href%3D%22DesignDecision_DetailView_Decided.bmml%22%20alt%3D%22DesignDecision_DetailView_Decided%22%20id%3D%2248%22/%3E</map>
         <size>28</size>
         <text>Decide%20using%20Alternative%20X</text>
       </controlProperties>
