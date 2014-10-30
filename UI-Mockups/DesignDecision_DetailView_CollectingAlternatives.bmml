@@ -142,7 +142,7 @@
     </control>
     <control controlID="30" controlTypeID="com.balsamiq.mockups::TextArea" x="187" y="309" w="706" h="135" measuredW="200" measuredH="140" zOrder="27" locked="false" isInGroup="-1">
       <controlProperties>
-        <text>It%20will%20be%20decided%20how%20to%20...</text>
+        <text>The%20alternative%20was%20chosen%20because%20...</text>
       </controlProperties>
     </control>
     <control controlID="31" controlTypeID="com.balsamiq.mockups::VerticalScrollBar" x="877" y="309" w="-1" h="136" measuredW="16" measuredH="100" zOrder="28" locked="false" isInGroup="-1"/>
