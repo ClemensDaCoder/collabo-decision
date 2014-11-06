@@ -173,12 +173,12 @@
         <text>It%20is%20assumed%20that%20...</text>
       </controlProperties>
     </control>
-    <control controlID="39" controlTypeID="com.balsamiq.mockups::Button" x="1465" y="128" w="-1" h="-1" measuredW="285" measuredH="36" zOrder="33" locked="false" isInGroup="-1">
+    <control controlID="39" controlTypeID="com.balsamiq.mockups::Button" x="1432" y="128" w="-1" h="-1" measuredW="301" measuredH="36" zOrder="33" locked="false" isInGroup="-1">
       <controlProperties>
         <href>New_DesignDecision%26bm%3BNew_DesignDecision.bmml%26bm%3BNew_DesignDecision.bmml%26bm%3BNew_DesignDecision.bmml</href>
-        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%221451%2C128%2C1736%2C164%22%20href%3D%22New_DesignDecision.bmml%22%20alt%3D%22New_DesignDecision%22%20id%3D%2239%22/%3E</map>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%221418%2C128%2C1719%2C164%22%20href%3D%22New_DesignDecision.bmml%22%20alt%3D%22New_DesignDecision%22%20id%3D%2239%22/%3E</map>
         <size>28</size>
-        <text>Inapproriate%20Solution</text>
+        <text>Inappropriate%20Solution</text>
       </controlProperties>
     </control>
   </controls>
