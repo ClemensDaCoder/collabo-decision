@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import collabodecision.webservice.persistence.IssueDao;
@@ -28,7 +29,12 @@ public class IssueController {
 	}
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.GET)
-	public Issue getIssue(@PathVariable long id) {
+	public Issue getIssue(@PathVariable long id, @RequestParam(value="withRelations", defaultValue="false") boolean withRelations) {
+		
+		if(withRelations) {
+			return issueDao.getIssueWithRelations(id);
+		}
+		
 		return issueDao.getIssue(id);
 	}
 	
