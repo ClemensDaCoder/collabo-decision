@@ -3,6 +3,7 @@ package collabodecision.webservice.persistence.hibernate;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,17 @@ public class IssueDaoImpl extends BaseDao implements IssueDao {
 		Criteria crit = getCurrentSession().createCriteria(Issue.class);
 		crit.add(Restrictions.eq("idIssue", id));
 		return (Issue)crit.uniqueResult();
+	}
+
+	@Override
+	public Issue getIssueWithRelations(long id) {
+		Issue issue = getIssue(id);
+		Hibernate.initialize(issue.getComments());
+		Hibernate.initialize(issue.getDesignDecisions());
+		Hibernate.initialize(issue.getIssueRelationsFrom());
+		Hibernate.initialize(issue.getIssueRelationsTo());
+		Hibernate.initialize(issue.getIssueTags());
+		return issue;
 	}
 
 }

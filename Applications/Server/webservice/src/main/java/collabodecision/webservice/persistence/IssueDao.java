@@ -13,4 +13,6 @@ public interface IssueDao {
 	List<Issue> getIssues();
 	
 	Issue getIssue(long id);
+	
+	Issue getIssueWithRelations(long id);
 }
