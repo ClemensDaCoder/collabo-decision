@@ -13,7 +13,7 @@
 	<bean id="dataSourceMySQL"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost:3306/collabo-decision" />
+		<property name="url" value="jdbc:mysql://localhost:3306/collabo_decision" />
 		<property name="username" value="root" />
 		<property name="password" value="" />
 	</bean>
@@ -26,8 +26,8 @@
 			<props>
 				<!-- <prop key="hibernate.show_sql">true</prop>
 				<prop key="hibernate.format_sql">true</prop> -->
-				<prop key="dialect">org.hibernate.dialect.MySQLDialect</prop>
-				<prop key="hibernate.hbm2ddl.auto">create</prop>
+				<prop key="dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
 			</props>
 		</property>
 	</bean>
