@@ -1,6 +1,7 @@
 package collabodecision.webservice.persistence.hibernate;
 
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import collabodecision.webservice.persistence.IssueDao;
+import collabodecision.webservice.persistence.domain.Comment;
 import collabodecision.webservice.persistence.domain.Issue;
 
 @Repository
@@ -48,12 +50,18 @@ public class IssueDaoImpl extends BaseDao implements IssueDao {
 	@Override
 	public Issue getIssueWithRelations(long id) {
 		Issue issue = getIssue(id);
-		Hibernate.initialize(issue.getComments());
-		Hibernate.initialize(issue.getDesignDecisions());
-		Hibernate.initialize(issue.getIssueRelationsFrom());
-		Hibernate.initialize(issue.getIssueRelationsTo());
-		Hibernate.initialize(issue.getIssueTags());
+		//Hibernate.initialize(issue.getComments());
+		//Hibernate.initialize(issue.getDesignDecisions());
+		//Hibernate.initialize(issue.getIssueRelationsFrom());
+		//Hibernate.initialize(issue.getIssueRelationsTo());
+		//Hibernate.initialize(issue.getIssueTags());
 		return issue;
+	}
+
+	@Override
+	public void addComments(long id, Set<Comment> comments) {
+		Issue issue = getIssue(id);
+		issue.setComments(comments);		
 	}
 
 }

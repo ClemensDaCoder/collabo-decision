@@ -18,15 +18,31 @@
 ### 3. Applikation Starten (In Eclipse)
 	RUN - collabodecision.webservice.Application
   	
-### 4. Test mit Browser: 
-
-http://localhost:8080/issues			(Alle Issues werden angezeigt)  
-http://localhost:8080/issues/134		(Nur Issue mit Id 1 wird angezeigt)  
-   
+### 4. Test mit Postman:   
+  
+Postman Erweiterung für Chrome herunterladen (https://chrome.google.com/webstore/detail/postman-rest-client/fdmmgilgnpjigdojojpjoooidkmcomcm?hl=de)  
+Postman Collection importieren ("Postman_Collection_Collabo_Decision.json" in "/src/main/resources/")
    
 ## Weitere Informationen:
   
 - Konfiguration der DB Connection in der Datei: /src/main/resources/spring/data-context.xml  
   
 - Wenn das Property <prop key="hibernate.hbm2ddl.auto">create</prop> eingestellt ist, dann wird das DB Schema jedes mal wieder neu generiert, wenn die Applikation neu gestartet wird!   
-	(Wenn nicht erwünscht einfach auf "update" stellen, oder auskommentieren)
+	(Wenn nicht erwünscht einfach auf "update" stellen, oder auskommentieren)  
+
+# Fehler  
+  
+## Unendliche Rekursion  
+Wenn "withRelations=true" requested wird, entsteht eine infinite recursion (Problem derzeit nur auskommentiert)  
+
+## Post Issue
+>Column 'idCreator' cannot be null
+
+## Post DesignDecision
+>Column 'assumption' cannot be null
+
+## Delete Issue
+>Cannot delete or update a parent row: a foreign key constraint fails (`collabo_decision`.`DesignDecision`, CONSTRAINT `FK_5le2xhi6pisuyqf0oe3g6divc` FOREIGN KEY (`idIssue`) REFERENCES `Issue` (`idIssue`))
+
+## Delete DesignDecision
+>Cannot delete or update a parent row: a foreign key constraint fails (`collabo_decision`.`Comment`, CONSTRAINT `FK_98lligxdu23y51or7oct9y3rw` FOREIGN KEY (`idDesignDecision`) REFERENCES `DesignDecision` (`idDesignDecision`))

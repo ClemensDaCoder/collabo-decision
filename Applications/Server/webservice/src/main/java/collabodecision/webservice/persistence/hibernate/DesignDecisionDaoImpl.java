@@ -48,9 +48,9 @@ public class DesignDecisionDaoImpl extends BaseDao implements DesignDecisionDao 
 	@Override
 	public DesignDecision getDesignDecisionWithRelations(long id) {
 		DesignDecision designDecision = getDesignDecision(id);
-		Hibernate.initialize(designDecision.getIssue());
-		Hibernate.initialize(designDecision.getAlternatives());
-		Hibernate.initialize(designDecision.getComments());
+		//Hibernate.initialize(designDecision.getIssue());
+		//Hibernate.initialize(designDecision.getAlternatives());
+		//Hibernate.initialize(designDecision.getComments());
 		return designDecision;
 	}
 

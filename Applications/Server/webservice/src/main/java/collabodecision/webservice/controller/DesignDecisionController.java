@@ -38,7 +38,9 @@ public class DesignDecisionController {
 		return designDecisionDao.getDesignDecision(id);
 	}	
 	
-	
+	/*
+	 * Column 'assumption' cannot be null
+	 */
 	@RequestMapping(method=RequestMethod.POST)
 	public void addDesignDecision(@Valid DesignDecision designDecision) {
 		designDecisionDao.saveOrUpdateDesignDecision(designDecision);

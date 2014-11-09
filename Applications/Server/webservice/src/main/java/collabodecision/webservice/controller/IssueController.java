@@ -1,6 +1,7 @@
 package collabodecision.webservice.controller;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import collabodecision.webservice.persistence.IssueDao;
+import collabodecision.webservice.persistence.domain.Comment;
 import collabodecision.webservice.persistence.domain.Issue;
 
 @RestController
@@ -56,5 +58,10 @@ public class IssueController {
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
 	public void deleteIssue(@PathVariable long id, @Valid Issue issue) {
 		issueDao.deleteIssue(id);
+	}
+	
+	@RequestMapping(value="/{id}", method=RequestMethod.POST)
+	public void addComments(@PathVariable long id, @Valid  Set<Comment> comments) {
+		issueDao.addComments(id, comments);
 	}
 }
