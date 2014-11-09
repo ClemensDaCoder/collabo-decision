@@ -8,7 +8,7 @@ public interface IssueDao {
 	
 	void saveOrUpdateIssue(Issue issue);
 	
-	void deleteIssue(Issue issue);
+	void deleteIssue(long id);
 	
 	List<Issue> getIssues();
 	

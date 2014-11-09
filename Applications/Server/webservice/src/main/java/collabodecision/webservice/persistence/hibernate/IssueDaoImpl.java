@@ -26,8 +26,10 @@ public class IssueDaoImpl extends BaseDao implements IssueDao {
 	}
 
 	@Override
-	public void deleteIssue(Issue issue) {
-		getCurrentSession().delete(issue);
+	public void deleteIssue(long id) {
+		Criteria crit = getCurrentSession().createCriteria(Issue.class);
+		crit.add(Restrictions.eq("idIssue", id));
+		getCurrentSession().delete((Issue)crit.uniqueResult());
 	}
 
 	@SuppressWarnings("unchecked")

@@ -38,7 +38,9 @@ public class IssueController {
 		return issueDao.getIssue(id);
 	}
 	
-	@RequestMapping(method=RequestMethod.PUT)
+	
+	
+	@RequestMapping(method=RequestMethod.POST)
 	public void addIssue(@Valid Issue issue) {
 		issueDao.saveOrUpdateIssue(issue);
 	}
@@ -46,5 +48,13 @@ public class IssueController {
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
 	public void updateIssue(@PathVariable long id, @Valid  Issue issue) {
 		issueDao.saveOrUpdateIssue(issue);
+	}
+	
+	/*
+	 * Cannot delete or update a parent row: a foreign key constraint fails
+	 */
+	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
+	public void deleteIssue(@PathVariable long id, @Valid Issue issue) {
+		issueDao.deleteIssue(id);
 	}
 }

@@ -18,11 +18,10 @@
 ### 3. Applikation Starten (In Eclipse)
 	RUN - collabodecision.webservice.Application
   	
-### 4. Test mit Browser: 
-
-http://localhost:8080/issues			(Alle Issues werden angezeigt)  
-http://localhost:8080/issues/134		(Nur Issue mit Id 1 wird angezeigt)  
-   
+### 4. Test mit Postman:   
+  
+Postman Erweiterung für Chrome herunterladen (https://chrome.google.com/webstore/detail/postman-rest-client/fdmmgilgnpjigdojojpjoooidkmcomcm?hl=de)  
+Postman Collection importieren ("Postman_Collection_Collabo_Decision.json" in "/src/main/resources/")
    
 ## Weitere Informationen:
   
