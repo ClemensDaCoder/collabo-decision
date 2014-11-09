@@ -41,8 +41,12 @@ Wenn "withRelations=true" requested wird, entsteht eine infinite recursion (Prob
 ### Post DesignDecision
 >Column 'assumption' cannot be null
 
+### Post Comment
+>Column 'idCreator' cannot be null
+
 ### Delete Issue
 >Cannot delete or update a parent row: a foreign key constraint fails (`collabo_decision`.`DesignDecision`, CONSTRAINT `FK_5le2xhi6pisuyqf0oe3g6divc` FOREIGN KEY (`idIssue`) REFERENCES `Issue` (`idIssue`))
 
 ### Delete DesignDecision
 >Cannot delete or update a parent row: a foreign key constraint fails (`collabo_decision`.`Comment`, CONSTRAINT `FK_98lligxdu23y51or7oct9y3rw` FOREIGN KEY (`idDesignDecision`) REFERENCES `DesignDecision` (`idDesignDecision`))
+
