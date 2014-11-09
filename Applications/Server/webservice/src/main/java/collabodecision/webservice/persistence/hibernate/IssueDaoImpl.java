@@ -50,7 +50,7 @@ public class IssueDaoImpl extends BaseDao implements IssueDao {
 	@Override
 	public Issue getIssueWithRelations(long id) {
 		Issue issue = getIssue(id);
-		//Hibernate.initialize(issue.getComments());
+		Hibernate.initialize(issue.getComments());
 		//Hibernate.initialize(issue.getDesignDecisions());
 		//Hibernate.initialize(issue.getIssueRelationsFrom());
 		//Hibernate.initialize(issue.getIssueRelationsTo());
@@ -61,7 +61,8 @@ public class IssueDaoImpl extends BaseDao implements IssueDao {
 	@Override
 	public void addComments(long id, Set<Comment> comments) {
 		Issue issue = getIssue(id);
-		issue.setComments(comments);		
+		issue.setComments(comments);
+		getCurrentSession().saveOrUpdate(issue);
 	}
 
 }

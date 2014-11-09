@@ -60,7 +60,10 @@ public class IssueController {
 		issueDao.deleteIssue(id);
 	}
 	
-	@RequestMapping(value="/{id}", method=RequestMethod.POST)
+	/*
+	 * To Do!!!
+	 */
+	@RequestMapping(value="/{id}/comments", method=RequestMethod.POST)
 	public void addComments(@PathVariable long id, @Valid  Set<Comment> comments) {
 		issueDao.addComments(id, comments);
 	}
