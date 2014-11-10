@@ -30,6 +30,25 @@ public class File {
 	@ManyToOne
 	@JoinColumn(name="idAlternative")
 	private Alternative alternative;
+	
+	public File() {
+		
+	}
+
+	public File(String pathToFile, Alternative alternative) {
+		this.pathToFile = pathToFile;
+		this.alternative = alternative;
+	}
+
+	public File(String pathToFile, DesignDecision designDecision) {
+		this.pathToFile = pathToFile;
+		this.designDecision = designDecision;
+	}
+
+	public File(String pathToFile, Issue issue) {
+		this.pathToFile = pathToFile;
+		this.issue = issue;
+	}
 
 	public String getPathToFile() {
 		return pathToFile;

@@ -1,5 +1,6 @@
 package collabodecision.webservice.persistence.hibernate;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -10,6 +11,7 @@ import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import collabodecision.webservice.persistence.IssueDao;
 import collabodecision.webservice.persistence.domain.Comment;
@@ -39,6 +41,7 @@ public class IssueDaoImpl extends BaseDao implements IssueDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
+	@Transactional(readOnly = true)
 	public List<Issue> getIssues(IssueStatus status, List<Tag> tags) {
 		
 		Criteria crit = getCurrentSession().createCriteria(Issue.class, "issue");
@@ -81,6 +84,15 @@ public class IssueDaoImpl extends BaseDao implements IssueDao {
 		Issue issue = getIssue(id);
 		issue.setComments(comments);
 		getCurrentSession().saveOrUpdate(issue);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional(readOnly=true)
+	public List<Issue> getIssuesByIds(Collection<Long> issueIds) {
+		Criteria crit = getCurrentSession().createCriteria(Issue.class);
+		crit.add(Restrictions.in("idIssue", issueIds));
+		return crit.list();
 	}
 
 }

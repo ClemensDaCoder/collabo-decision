@@ -27,6 +27,17 @@ public class IssueRelation {
 	@ManyToOne
 	@JoinColumn(name="idRelationType", nullable=false)
 	private RelationType relationType;
+	
+	public IssueRelation() {
+		
+	}
+	
+	public IssueRelation(Issue issueFrom, Issue issueTo,
+			RelationType relationType) {
+		this.issueFrom = issueFrom;
+		this.issueTo = issueTo;
+		this.relationType = relationType;
+	}
 
 	public Issue getIssueFrom() {
 		return issueFrom;

@@ -11,6 +11,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 @Entity
 @Table
 public class Issue {
@@ -41,22 +44,52 @@ public class Issue {
 	private User creator;
 	
 	@OneToMany(mappedBy="issueFrom")
+	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
 	private Set<IssueRelation> issueRelationsFrom;
 	
 	@OneToMany(mappedBy="issueTo")
+	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
 	private Set<IssueRelation> issueRelationsTo;
 	
 	@OneToMany(mappedBy="issue")
+	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
 	private Set<DesignDecision> designDecisions;
 	
 	@OneToMany(mappedBy="issue")
+	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
 	private Set<File> files;
 	
 	@OneToMany(mappedBy="issue")
+	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
 	private Set<Comment> comments;
 	
 	@OneToMany(mappedBy="issue")
+	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
 	private Set<IssueTag> issueTags;
+	
+	public Issue() {
+	}
+	
+	public Issue(String title, String description, boolean blocked,
+			IssueStatus issueStatus, User owner, User creator,
+			Set<IssueRelation> issueRelationsFrom,
+			Set<IssueRelation> issueRelationsTo,
+			Set<DesignDecision> designDecisions, Set<File> files,
+			Set<Comment> comments, Set<IssueTag> issueTags) {
+		super();
+		this.title = title;
+		this.description = description;
+		this.blocked = blocked;
+		this.issueStatus = issueStatus;
+		this.owner = owner;
+		this.creator = creator;
+		this.issueRelationsFrom = issueRelationsFrom;
+		this.issueRelationsTo = issueRelationsTo;
+		this.designDecisions = designDecisions;
+		this.files = files;
+		this.comments = comments;
+		this.issueTags = issueTags;
+	}
 
 	public String getTitle() {
 		return title;

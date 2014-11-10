@@ -33,7 +33,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		// Maybe different ROLES - according to issues maybe?
 		List<GrantedAuthority> authorities = new ArrayList<>();
 		authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-		
+			
 		return new User(user.getMail(), user.getPassword(), true, true, true, true, authorities);
 	}
 

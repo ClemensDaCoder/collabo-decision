@@ -24,6 +24,15 @@ public class IssueTag {
 	@JoinColumn(name="idIssue", nullable=false)
 	private Issue issue;
 
+	public IssueTag() {
+		
+	}
+	
+	public IssueTag(Tag tag, Issue issue) {
+		this.tag = tag;
+		this.issue = issue;
+	}
+
 	public Tag getTag() {
 		return tag;
 	}
