@@ -9,6 +9,8 @@ public interface TagDao {
 	
 	List<Tag> getTagsByName(Collection<String> names);
 	
-	List<Tag> saveOrUpdateTags(Collection<String> tagNames);
+	void saveOrUpdateTag(Tag tag);
+	
+	List<Tag> getAllTags();
 	
 }

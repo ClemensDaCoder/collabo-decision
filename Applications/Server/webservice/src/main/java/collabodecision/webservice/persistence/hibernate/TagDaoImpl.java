@@ -1,6 +1,5 @@
 package collabodecision.webservice.persistence.hibernate;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -33,15 +32,15 @@ public class TagDaoImpl extends BaseDao implements TagDao {
 
 	@Override
 	@Transactional(readOnly = false)
-	public List<Tag> saveOrUpdateTags(Collection<String> tagNames) {
-		
-		List<Tag> tags = new ArrayList<>();
-		
-		for (String tagName : tagNames) {
-			tags.add(new Tag(tagName));
-		}
-		getCurrentSession().saveOrUpdate(tags);
-		return tags;
+	public void saveOrUpdateTag(Tag tag) {
+		getCurrentSession().saveOrUpdate(tag);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional(readOnly = true)
+	public List<Tag> getAllTags() {
+		return getCurrentSession().createCriteria(Tag.class).list();
 	}
 
 }

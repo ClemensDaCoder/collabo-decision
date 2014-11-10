@@ -2,6 +2,7 @@ package collabodecision.webservice.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -58,8 +59,9 @@ public class IssueController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	@Transactional(readOnly = true)
-	public List<Issue> getIssues(@RequestParam(value = "status") String status,
-			@RequestParam(value = "tags") List<String> tags) {
+	public List<Issue> getIssues(
+			@RequestParam(value = "status", required = false) String status,
+			@RequestParam(value = "tag", required = false) List<String> tags) {
 		IssueStatus issueStatus = issueStatusDao.getIssueStatusByName(status);
 		List<Tag> tagsOfIssue = tagDao.getTagsByName(tags);
 		return issueDao.getIssues(issueStatus, tagsOfIssue);
@@ -79,15 +81,16 @@ public class IssueController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
+	@Transactional(readOnly = false)
 	public void addIssue(
-			@RequestParam(value = "title", required = true) String title,
-			@RequestParam(value = "description", required = true) String description,
-			@RequestParam(value = "owner", required = true) long idOwner,
-			@RequestParam(value = "tags") List<String> tagNames,
-			@RequestParam(value = "files") List<String> files,
-			@RequestParam(value = "depends") List<Long> dependIds,
-			@RequestParam(value = "resolves") List<Long> resolvesIds,
-			@RequestParam(value = "related") List<Long> relatedIds) {
+			@RequestParam(value = "title") String title,
+			@RequestParam(value = "description") String description,
+			@RequestParam(value = "owner") long idOwner,
+			@RequestParam(value = "tag") List<String> tagNames,
+			@RequestParam(value = "file", required = false) List<String> files,
+			@RequestParam(value = "depends", required = false) List<Long> dependIds,
+			@RequestParam(value = "resolves", required = false) List<Long> resolvesIds,
+			@RequestParam(value = "relates", required = false) List<Long> relatedIds) {
 
 		Issue issue = new Issue();
 
@@ -102,8 +105,28 @@ public class IssueController {
 				.getContext().getAuthentication().getName());
 		issue.setCreator(creator);
 
-		// Adding the tags - Might be new ones there
-		List<Tag> tags = tagDao.saveOrUpdateTags(tagNames);
+		// Adding the tags - Must check if there are no existing ones before!
+		List<Tag> existingTags = tagDao.getAllTags();
+		List<Tag> tags = new ArrayList<>();
+
+		for (String tagName : tagNames) {
+			Tag newTag = new Tag(tagName);
+
+			// Check if tag exists - if so: add the existing to the Collection
+			if (existingTags.contains(newTag)) {
+				// Find the existing tag in the collection
+				for (Tag existingTag : existingTags) {
+					if (existingTag.getName().equals(tagName)) {
+						tags.add(existingTag);
+						break;
+					}
+				}
+			} else {
+				// If it does not exist - add the new one to the DB
+				tags.add(newTag);
+				tagDao.saveOrUpdateTag(newTag);
+			}
+		}
 
 		// Adding the IssueTags to the Issue
 		Set<IssueTag> issueTags = new HashSet<>();
@@ -113,50 +136,59 @@ public class IssueController {
 		issue.setIssueTags(issueTags);
 
 		// Adding new Issue Files to the Issue
-		Set<File> issueFiles = new HashSet<>();
-		for (String file : files) {
-			issueFiles.add(new File(file, issue));
+		if (files != null) {
+			Set<File> issueFiles = new HashSet<>();
+			for (String file : files) {
+				issueFiles.add(new File(file, issue));
+			}
+			issue.setFiles(issueFiles);
 		}
-		issue.setFiles(issueFiles);
 
 		// Adding Related Issues to Issue
 		Set<IssueRelation> issueRelationsFrom = new HashSet<>();
 		Set<IssueRelation> issueRelationsTo = new HashSet<>();
 
 		// This issue depends on other issues
-		List<Issue> dependingIssues = issueDao.getIssuesByIds(dependIds);
-		for (Issue dependingIssue : dependingIssues) {
-			issueRelationsFrom.add(new IssueRelation(issue, dependingIssue,
-					relationTypeDao.getRelationTypeByType("DEPENDS")));
-		}
+		if (dependIds != null) {
+			List<Issue> dependingIssues = issueDao.getIssuesByIds(dependIds);
+			for (Issue dependingIssue : dependingIssues) {
+				issueRelationsFrom.add(new IssueRelation(issue, dependingIssue,
+						relationTypeDao.getRelationTypeByType("DEPENDS")));
+			}
 
+			// If the issue depends on another issue -> it is considered
+			// blocked!
+			issue.setBlocked(dependingIssues.size() > 0);
+		}
 		// This issue resolves other issues
-		List<Issue> resolvesIssues = issueDao.getIssuesByIds(resolvesIds);
-		for (Issue resolvesIssue : resolvesIssues) {
-			issueRelationsFrom.add(new IssueRelation(issue, resolvesIssue,
-					relationTypeDao.getRelationTypeByType("RESOLVES")));
+		if (resolvesIds != null) {
+			List<Issue> resolvesIssues = issueDao.getIssuesByIds(resolvesIds);
+			for (Issue resolvesIssue : resolvesIssues) {
+				issueRelationsFrom.add(new IssueRelation(issue, resolvesIssue,
+						relationTypeDao.getRelationTypeByType("RESOLVES")));
+			}
 		}
 
 		// This issue is related to other issues
 		// other issues are related to this issue
-		List<Issue> relatedIssues = issueDao.getIssuesByIds(relatedIds);
-		for (Issue relatedIssue : relatedIssues) {
-			issueRelationsFrom.add(new IssueRelation(issue, relatedIssue,
-					relationTypeDao.getRelationTypeByType("RELATES")));
-			issueRelationsTo.add(new IssueRelation(relatedIssue, issue,
-					relationTypeDao.getRelationTypeByType("RELATES")));
+		if (relatedIds != null) {
+			List<Issue> relatedIssues = issueDao.getIssuesByIds(relatedIds);
+			for (Issue relatedIssue : relatedIssues) {
+				issueRelationsFrom.add(new IssueRelation(issue, relatedIssue,
+						relationTypeDao.getRelationTypeByType("RELATES")));
+				issueRelationsTo.add(new IssueRelation(relatedIssue, issue,
+						relationTypeDao.getRelationTypeByType("RELATES")));
+			}
 		}
 
 		issue.setIssueRelationsFrom(issueRelationsFrom);
 		issue.setIssueRelationsTo(issueRelationsTo);
-		
-		// If the issue depends on another issue -> it is considered blocked!
-		issue.setBlocked(dependingIssues.size() > 0);
 
 		issueDao.saveOrUpdateIssue(issue);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	@Transactional(readOnly = false)
 	public void updateIssue(@PathVariable long id, @Valid Issue issue) {
 		issueDao.saveOrUpdateIssue(issue);
 	}
@@ -165,6 +197,7 @@ public class IssueController {
 	 * Cannot delete or update a parent row: a foreign key constraint fails
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	@Transactional(readOnly = false)
 	public void deleteIssue(@PathVariable long id, @Valid Issue issue) {
 		issueDao.deleteIssue(id);
 	}

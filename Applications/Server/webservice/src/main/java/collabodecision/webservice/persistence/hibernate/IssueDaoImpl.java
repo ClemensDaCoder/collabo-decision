@@ -72,10 +72,10 @@ public class IssueDaoImpl extends BaseDao implements IssueDao {
 	public Issue getIssueWithRelations(long id) {
 		Issue issue = getIssue(id);
 		Hibernate.initialize(issue.getComments());
-		//Hibernate.initialize(issue.getDesignDecisions());
-		//Hibernate.initialize(issue.getIssueRelationsFrom());
-		//Hibernate.initialize(issue.getIssueRelationsTo());
-		//Hibernate.initialize(issue.getIssueTags());
+		Hibernate.initialize(issue.getDesignDecisions());
+		Hibernate.initialize(issue.getIssueRelationsFrom());
+		Hibernate.initialize(issue.getIssueRelationsTo());
+		Hibernate.initialize(issue.getIssueTags());
 		return issue;
 	}
 
