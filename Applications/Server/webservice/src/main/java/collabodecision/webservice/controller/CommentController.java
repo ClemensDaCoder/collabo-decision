@@ -1,6 +1,9 @@
 package collabodecision.webservice.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,12 +32,18 @@ public class CommentController {
 	@RequestMapping(value = "/{idParentComment}", method = RequestMethod.POST)
 	public void addComment(@PathVariable long idParentComment,
 			@RequestParam(value = "message") String message,
-			@RequestParam(value = "date") Date date) {
+			@RequestParam(value = "date") String stringDate) {
 
 		Comment comment = new Comment();
 		comment.setParentComment(commentDao.getComment(idParentComment));
 		comment.setText(message);
-		comment.setDate(date);
+		Date date;
+		try {
+			date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH).parse(stringDate);
+			comment.setDate(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		
 		// Fetch the username from the SecurityContext
 		String username = SecurityContextHolder.getContext()
