@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 
 import collabodecision.webservice.persistence.CommentDao;
 import collabodecision.webservice.persistence.domain.Comment;
-import collabodecision.webservice.persistence.domain.Issue;
 
 @Repository
 public class CommentDaoImpl extends BaseDao implements CommentDao {

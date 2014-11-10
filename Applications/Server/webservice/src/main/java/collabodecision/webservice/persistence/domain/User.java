@@ -29,9 +29,6 @@ public class User {
 	@Column(nullable=false)
 	private String surname;
 	
-	@OneToMany(mappedBy="user")
-	private Set<UserSession> userSessions;
-	
 	@OneToMany(mappedBy="owner")
 	private Set<Issue> owningIssues;
 	
@@ -68,14 +65,6 @@ public class User {
 
 	public void setSurname(String surname) {
 		this.surname = surname;
-	}
-
-	public Set<UserSession> getUserSessions() {
-		return userSessions;
-	}
-
-	public void setUserSessions(Set<UserSession> userSessions) {
-		this.userSessions = userSessions;
 	}
 
 	public Set<Issue> getOwningIssues() {

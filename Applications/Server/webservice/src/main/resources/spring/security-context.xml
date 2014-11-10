@@ -1,0 +1,45 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+						http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+
+
+	<!-- Security configuration for REST services. -->
+	<security:http entry-point-ref="restServicesEntryPoint" create-session="stateless">
+
+		<security:intercept-url pattern="/**"
+			access="ROLE_USER" />
+		<security:http-basic />
+
+		<security:custom-filter ref="basicAuthenticationFilter"
+			before="BASIC_AUTH_FILTER" />
+
+	</security:http>
+
+	 <bean id="basicAuthenticationFilter"
+        class="org.springframework.security.web.authentication.www.BasicAuthenticationFilter">
+        <property name="authenticationManager" ref="authenticationManager" />
+        <property name="authenticationEntryPoint" ref="restServicesEntryPoint" />
+    </bean>
+
+	<!-- Entry point for REST service. -->
+	<bean id="restServicesEntryPoint" class="collabodecision.webservice.security.RestAuthenticationEntryPoint" />
+
+	<!-- Authentication manager - Where are the users: Fetch from Database -->
+	<security:authentication-manager alias="authenticationManager">
+		<security:authentication-provider user-service-ref="userDetailsServiceImpl">
+			<!-- passwords are currently not encoded - Dummy Data! -->
+			<!-- <security:password-encoder ref="encoder"></security:password-encoder> -->
+		</security:authentication-provider>
+	</security:authentication-manager>
+	
+	<!-- Encode Passwords with BCrypt -->
+	<bean id="encoder"
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+
+	<security:global-method-security
+		secured-annotations="enabled" jsr250-annotations="enabled"
+		pre-post-annotations="enabled">
+	</security:global-method-security>
+
+</beans>
