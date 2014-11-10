@@ -105,28 +105,21 @@ public class IssueController {
 				.getContext().getAuthentication().getName());
 		issue.setCreator(creator);
 
-		// Adding the tags - Must check if there are no existing ones before!
-		List<Tag> existingTags = tagDao.getAllTags();
+		// Get all the tags that are already in the DB
+		List<Tag> tagsInDb = tagDao.getTagsByName(tagNames);
 		List<Tag> tags = new ArrayList<>();
-
-		for (String tagName : tagNames) {
+		
+		for(String tagName : tagNames) {
 			Tag newTag = new Tag(tagName);
-
-			// Check if tag exists - if so: add the existing to the Collection
-			if (existingTags.contains(newTag)) {
-				// Find the existing tag in the collection
-				for (Tag existingTag : existingTags) {
-					if (existingTag.getName().equals(tagName)) {
-						tags.add(existingTag);
-						break;
-					}
-				}
-			} else {
-				// If it does not exist - add the new one to the DB
+			// Adding non existing Tags to the DB
+			if(!tagsInDb.contains(newTag)) {
 				tags.add(newTag);
 				tagDao.saveOrUpdateTag(newTag);
 			}
 		}
+		
+		// These are all the Tags of the Issue (from DB and new Ones)
+		tags.addAll(tagsInDb);
 
 		// Adding the IssueTags to the Issue
 		Set<IssueTag> issueTags = new HashSet<>();
