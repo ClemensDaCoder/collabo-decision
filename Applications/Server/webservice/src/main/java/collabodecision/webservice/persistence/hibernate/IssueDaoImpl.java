@@ -6,6 +6,7 @@ import java.util.Set;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Repository;
 import collabodecision.webservice.persistence.IssueDao;
 import collabodecision.webservice.persistence.domain.Comment;
 import collabodecision.webservice.persistence.domain.Issue;
+import collabodecision.webservice.persistence.domain.IssueStatus;
+import collabodecision.webservice.persistence.domain.Tag;
 
 @Repository
 public class IssueDaoImpl extends BaseDao implements IssueDao {
@@ -36,8 +39,23 @@ public class IssueDaoImpl extends BaseDao implements IssueDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Issue> getIssues() {
-		return getCurrentSession().createCriteria(Issue.class).list();
+	public List<Issue> getIssues(IssueStatus status, List<Tag> tags) {
+		
+		Criteria crit = getCurrentSession().createCriteria(Issue.class, "issue");
+		
+		// If status is set -> Only Issues with that Status
+		if(status != null) {
+			crit.add(Restrictions.eq("issueStatus", status));
+		}
+		
+		// If tags are set -> Only Issues that have the same tags
+		if(tags != null) {
+			crit.createAlias("issue.issueTags", "issueTag");
+			crit.add(Restrictions.in("issueTag.tag", tags));
+			crit.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
+		}
+		
+		return crit.list();
 	}
 
 	@Override
