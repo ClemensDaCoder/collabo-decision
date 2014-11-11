@@ -11,6 +11,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 @Entity
 @Table
 public class Alternative {
@@ -31,18 +34,23 @@ public class Alternative {
 	private User creator;
 	
 	@OneToMany(mappedBy="alternative")
+	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
 	private Set<Comment> comments;
 	
 	@OneToMany(mappedBy="alternative")
+	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
 	private Set<File> files;
 	
 	@OneToMany(mappedBy="alternativeFrom")
+	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
 	private Set<AlternativeRelation> alternativeFromRelations;
 	
 	@OneToMany(mappedBy="alternativeTo")
+	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
 	private Set<AlternativeRelation> alternativeToRelations;
 	
 	@OneToMany(mappedBy="alternative")
+	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
 	private Set<AlternativeRanking> alternativeRankings;
 
 	public String getDescription() {

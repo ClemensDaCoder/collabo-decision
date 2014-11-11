@@ -1,17 +1,21 @@
-<div class="logo-wrapper">
-	<img src="../images/logo.jpg"/>
-</div>
 <div class="login-wrapper">
-	<h3>Login</h3>
-	<div class="container-fluid">
-		<form>
-			<div class="form-group">
-				<label class="control-label">E-Mail</label>
-				<input type="text" class="form-control" ng-model="email"></input> 
-				<label class="control-label">Password</label> 
-				<input type="password" class="form-control" ng-model="password"></input> 
-				<input type="submit" class="btn btn-primary pull-right" value="Login" ng-click="login(email, password)"></input>
+	<div class="login-inner-wrapper">
+		<div class="login-form-wrapper">
+			<div class="icon-wrapper">
+				<div class="glyphicon glyphicon-user"></div>
+				<div class="glyphicon glyphicon-ok"></div>
 			</div>
-		</form>
+			<div class="container-fluid">
+				<form>
+					<div class="form-group">
+						<label class="control-label">E-Mail</label>
+						<input type="text" class="form-control" ng-model="email"></input> 
+						<label class="control-label">Password</label> 
+						<input type="password" class="form-control" ng-model="password"></input><br/>
+						<input type="submit" class="btn btn-primary pull-right" value="Login" ng-click="login(email, password)"></input>
+					</div>
+				</form>
+			</div>
+		</div>
 	</div>
 </div>

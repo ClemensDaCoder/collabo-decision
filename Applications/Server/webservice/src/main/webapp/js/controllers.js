@@ -8,7 +8,7 @@ collaboControllers.controller('LoginController', ['Auth', '$location', '$scope',
 	}
 }]);
 
-collaboControllers.controller('IssuesController', ['$http', '$scope', function($http, $scope) {
+collaboControllers.controller('IssuesController', ['$http', '$scope', '$cookieStore', function($http, $scope, $cookieStore) {
 	$http.get("/api/issues").success(function(data) {
 		$scope.issues = angular.fromJson(data);
 	});

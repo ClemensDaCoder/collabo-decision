@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import collabodecision.webservice.data.requestWrapper.IssueRequestWrapper;
@@ -61,7 +62,7 @@ public class IssueController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	@Transactional(readOnly = true)
-	public List<Issue> getIssues(
+	public @ResponseBody List<Issue> getIssues(
 			@RequestParam(value = "status", required = false) String status,
 			@RequestParam(value = "tag", required = false) List<String> tags) {
 		
@@ -172,6 +173,8 @@ public class IssueController {
 		// Setting the properties of the Issue
 		issue.setTitle(issueRequest.getTitle());
 		issue.setDescription(issueRequest.getDescription());
+		
+		// TODO: Check issue Status: According to Process! Go with the flow!
 		issue.setIssueStatus(issueStatusDao.getIssueStatusByName("NEW"));
 		issue.setOwner(userDao.getUser(issueRequest.getIdOwner()));
 
@@ -187,7 +190,7 @@ public class IssueController {
 		for (String tagName : issueRequest.getTags()) {
 			Tag newTag = new Tag(tagName);
 			// Adding non existing Tags to the DB
-			if (!tagsInDb.contains(newTag)) {
+			if (tagsInDb == null || !tagsInDb.contains(newTag)) {
 				tags.add(newTag);
 				tagDao.saveOrUpdateTag(newTag);
 			}
@@ -212,6 +215,7 @@ public class IssueController {
 		if (issueRequest.getIdsDepends() != null) {
 			List<Issue> dependingIssues = issueDao.getIssuesByIds(issueRequest
 					.getIdsDepends());
+			
 			for (Issue dependingIssue : dependingIssues) {
 				issue.getIssueRelationsFrom().add(new IssueRelation(issue, dependingIssue,
 						relationTypeDao.getRelationTypeByType("DEPENDS")));
@@ -219,6 +223,7 @@ public class IssueController {
 
 			// If the issue depends on another issue -> it is considered
 			// blocked!
+			// TODO: Check only blocks when DD is not accepted!
 			issue.setBlocked(dependingIssues.size() > 0);
 		}
 		// This issue resolves other issues
@@ -248,6 +253,5 @@ public class IssueController {
 		if (idExistingIssue == null) {
 			issueDao.saveOrUpdateIssue(issue);
 		}
-
 	}
 }

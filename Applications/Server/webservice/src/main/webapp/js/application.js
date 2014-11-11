@@ -2,7 +2,7 @@ var collaboApp = angular.module('collaboApp', [ 'ngRoute', 'ngCookies',
 		'collaboControllers' ]);
 
 // Routing to the Views
-collaboApp.config([ '$routeProvider', function($routeProvider) {
+collaboApp.config([ '$routeProvider', '$httpProvider', function($routeProvider, $httpPovider) {
 	$routeProvider
 	.when('/login', {
 		templateUrl : 'partials/login.html',
@@ -15,26 +15,41 @@ collaboApp.config([ '$routeProvider', function($routeProvider) {
 	.otherwise({
 		redirectTo : "/issues"
 	});
+	
+	$httpPovider.defaults.headers.common.Accept = '*/*';
+	$httpPovider.interceptors.push('AuthInterceptor');
+	
+	
 } ]);
 
-// Redirect to login page when 401 Error (Must login againt - set the auth cookie new!)
-collaboApp.factory("HttpErrorInterceptorModule", [ "$q", "$rootScope", "$location", function($q, $rootScope, $location) {
-			var success = function(response) {
-				// pass through
-				return response;
-			}, error = function(response) {
-				if (response.status === 401) {
-					$location.path("/login");
-				}
-				return $q.reject(response);
-			};
+/**
+ * Authentication Hook / Interceptor: Adding the Authorization Header to the request (from cookie)
+ * If Response is 401 - Unauthorized: Redirect to login
+ */
+collaboApp.factory('AuthInterceptor', ['$cookieStore', '$q', '$location', function($cookieStore, $q, $location) {
+	return {
+		request: function(config) {
+            config.headers = config.headers || {};
+            if(typeof $cookieStore.get('authdata') != 'undefined') {
+            	config.headers.Authorization = 'Basic ' + $cookieStore.get('authdata')
+            }
+            return config || $q.when(config);
+        },
+        response: function(response) {
+            if (response.status === 401) {
+            	$location.path("/login");
+            }
+            return response || $q.when(response);
+        },
+        responseError: function(rejection) {
+        	if(rejection.status === 401) {
+        		$location.path("/login");
+        	}
+        	return $q.reject(rejection);
+        }
+	};
+}]);
 
-			return function(httpPromise) {
-				return httpPromise.then(success, error);
-			};
-		} ]).config([ "$httpProvider", function($httpProvider) {
-	$httpProvider.responseInterceptors.push("HttpErrorInterceptorModule");
-} ]);
 
 /**
  * Base 64 encryption and decryption
@@ -132,7 +147,6 @@ collaboApp.factory('Auth', [
 		'$cookieStore',
 		'$http',
 		function(Base64, $cookieStore, $http) {
-
 			return {
 				setCredentials : function(username, password) {
 					var encoded = Base64.encode(username + ':' + password);

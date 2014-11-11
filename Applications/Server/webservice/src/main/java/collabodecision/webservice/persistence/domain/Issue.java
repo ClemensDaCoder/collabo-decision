@@ -18,56 +18,56 @@ import org.hibernate.annotations.CascadeType;
 @Entity
 @Table
 public class Issue {
-	
+
 	@GeneratedValue
 	@Id
 	private long idIssue;
-	
+
 	@Column(nullable = false)
 	private String title;
-	
-	@Column(nullable=false)
+
+	@Column(nullable = false)
 	private String description;
-	
-	@Column(nullable=false)
+
+	@Column(nullable = false)
 	private boolean blocked;
-	
+
 	@ManyToOne
-	@JoinColumn(name="idIssueStatus", nullable=false)
+	@JoinColumn(name = "idIssueStatus", nullable = false)
 	private IssueStatus issueStatus;
-	
+
 	@ManyToOne
-	@JoinColumn(name="idOwner", nullable=false)
+	@JoinColumn(name = "idOwner", nullable = false)
 	private User owner;
-	
+
 	@ManyToOne
-	@JoinColumn(name="idCreator", nullable=false)
+	@JoinColumn(name = "idCreator", nullable = false)
 	private User creator;
-	
-	@OneToMany(mappedBy="issueFrom", orphanRemoval=true)
-	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
+
+	@OneToMany(mappedBy = "issueFrom", orphanRemoval = true)
+	@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
 	private Set<IssueRelation> issueRelationsFrom;
-	
-	@OneToMany(mappedBy="issueTo", orphanRemoval=true)
-	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE,})
+
+	@OneToMany(mappedBy = "issueTo", orphanRemoval = true)
+	@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
 	private Set<IssueRelation> issueRelationsTo;
-	
-	@OneToMany(mappedBy="issue")
-	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
+
+	@OneToMany(mappedBy = "issue", orphanRemoval = true)
+	@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
 	private Set<DesignDecision> designDecisions;
-	
-	@OneToMany(mappedBy="issue", orphanRemoval=true)
-	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
+
+	@OneToMany(mappedBy = "issue", orphanRemoval = true)
+	@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
 	private Set<File> files;
-	
-	@OneToMany(mappedBy="issue")
-	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
+
+	@OneToMany(mappedBy = "issue", orphanRemoval = true)
+	@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
 	private Set<Comment> comments;
-	
-	@OneToMany(mappedBy="issue", orphanRemoval=true)
-	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
+
+	@OneToMany(mappedBy = "issue", orphanRemoval = true)
+	@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
 	private Set<IssueTag> issueTags;
-	
+
 	public Issue() {
 		issueRelationsFrom = new HashSet<>();
 		issueRelationsTo = new HashSet<>();
@@ -76,7 +76,7 @@ public class Issue {
 		comments = new HashSet<>();
 		issueTags = new HashSet<>();
 	}
-	
+
 	public Issue(String title, String description, boolean blocked,
 			IssueStatus issueStatus, User owner, User creator,
 			Set<IssueRelation> issueRelationsFrom,

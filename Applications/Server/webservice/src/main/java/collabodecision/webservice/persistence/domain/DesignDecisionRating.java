@@ -11,6 +11,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 @Entity
 @Table
 public class DesignDecisionRating {
@@ -31,6 +34,7 @@ public class DesignDecisionRating {
 	private ShareHolder rater;
 	
 	@OneToMany(mappedBy="designDecisionRating")
+	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
 	private Set<Comment> comments;
 
 	public int getRating() {

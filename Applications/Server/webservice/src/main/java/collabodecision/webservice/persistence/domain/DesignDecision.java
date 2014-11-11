@@ -11,6 +11,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 @Entity
 @Table
 public class DesignDecision {
@@ -35,17 +38,25 @@ public class DesignDecision {
 	@ManyToOne
 	@JoinColumn(name = "idDesignDecisionStatus", nullable = false)
 	private DesignDecisionStatus designDecisionStatus;
+	
+	@OneToMany(mappedBy = "designDecision")
+	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
+	private Set<DesignDecisionRating> designDecisionRatings;
 
 	@OneToMany(mappedBy = "designDecision")
+	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
 	private Set<Alternative> alternatives;
 
 	@OneToMany(mappedBy = "designDecision")
+	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
 	private Set<Comment> comments;
 
 	@OneToMany(mappedBy = "designDecision")
+	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
 	private Set<File> files;
 
 	@OneToMany(mappedBy = "designDecision")
+	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
 	private Set<ShareHolder> shareHolders;
 
 	public String getTitle() {
