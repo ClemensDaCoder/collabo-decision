@@ -14,6 +14,4 @@ public abstract class BaseDao {
 	public Session getCurrentSession() {
 		return sessionFactory.getCurrentSession();
 	}
-	
-	
 }

@@ -1,5 +1,6 @@
 package collabodecision.webservice.persistence.domain;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -43,19 +44,19 @@ public class Issue {
 	@JoinColumn(name="idCreator", nullable=false)
 	private User creator;
 	
-	@OneToMany(mappedBy="issueFrom")
+	@OneToMany(mappedBy="issueFrom", orphanRemoval=true)
 	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
 	private Set<IssueRelation> issueRelationsFrom;
 	
-	@OneToMany(mappedBy="issueTo")
-	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
+	@OneToMany(mappedBy="issueTo", orphanRemoval=true)
+	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE,})
 	private Set<IssueRelation> issueRelationsTo;
 	
 	@OneToMany(mappedBy="issue")
 	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
 	private Set<DesignDecision> designDecisions;
 	
-	@OneToMany(mappedBy="issue")
+	@OneToMany(mappedBy="issue", orphanRemoval=true)
 	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
 	private Set<File> files;
 	
@@ -63,11 +64,17 @@ public class Issue {
 	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
 	private Set<Comment> comments;
 	
-	@OneToMany(mappedBy="issue")
+	@OneToMany(mappedBy="issue", orphanRemoval=true)
 	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
 	private Set<IssueTag> issueTags;
 	
 	public Issue() {
+		issueRelationsFrom = new HashSet<>();
+		issueRelationsTo = new HashSet<>();
+		designDecisions = new HashSet<>();
+		files = new HashSet<>();
+		comments = new HashSet<>();
+		issueTags = new HashSet<>();
 	}
 	
 	public Issue(String title, String description, boolean blocked,

@@ -94,5 +94,4 @@ public class IssueDaoImpl extends BaseDao implements IssueDao {
 		crit.add(Restrictions.in("idIssue", issueIds));
 		return crit.list();
 	}
-
 }

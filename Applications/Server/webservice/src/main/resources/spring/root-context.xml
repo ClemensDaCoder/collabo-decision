@@ -18,6 +18,7 @@
 				<property name="objectMapper">
 					<bean class="collabodecision.webservice.misc.HibernateAwareObjectMapper" />
 				</property>
+				<property name="supportedMediaTypes" value="text/plain;charset=UTF-8" />
 			</bean>
 		</mvc:message-converters>
 	</mvc:annotation-driven>

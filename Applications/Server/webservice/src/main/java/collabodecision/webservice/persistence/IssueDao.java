@@ -34,5 +34,4 @@ public interface IssueDao {
 	Issue getIssueWithRelations(long id);
 
 	void addComments(long id, Set<Comment> comments);
-
 }
