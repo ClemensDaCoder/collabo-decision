@@ -1,6 +1,9 @@
 package collabodecision.webservice.persistence.hibernate;
 
+import java.util.List;
+
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +34,21 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 	public User getUser(long id) {
 		return (User) getCurrentSession().createCriteria(User.class)
 				.add(Restrictions.eq("idUser", id)).uniqueResult();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional(readOnly = true)
+	public List<User> getUsersNameLike(String partialName) {
+		Query q = getCurrentSession().createQuery("FROM User WHERE forename || ' ' || surname like '%" + partialName + "%'");
+		return q.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional(readOnly = true)
+	public List<User> getUsers() {
+		return getCurrentSession().createCriteria(User.class).list();
 	}
 
 }

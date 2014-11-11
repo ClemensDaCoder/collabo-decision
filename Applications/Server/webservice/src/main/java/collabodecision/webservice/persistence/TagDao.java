@@ -13,4 +13,6 @@ public interface TagDao {
 	
 	List<Tag> getAllTags();
 	
+	List<Tag> getTagsNameLike(String partialName);
+	
 }

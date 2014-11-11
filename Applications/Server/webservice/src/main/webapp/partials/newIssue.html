@@ -1,0 +1,36 @@
+<div class="newIssue-wrapper">
+	<div class="modal-header">
+		<h3>New Issue</h3>
+	</div>
+	
+	<form class="form-horizontal">
+		<div class="form-group">
+			<label for="inputTitle" class="control-label">Title</label>
+			<input type="text" class="form-control" id="inputTitle" placeholder="Title">
+		</div>
+		<div class="form-group">
+			<label for="inputDescription" class="control-label">Description</label>
+			<textarea rows="10" cols="10" id="inputDescription" class="form-control" placeholder="Description"></textarea>
+		</div>
+		<div class="form-group">
+			<label for="inputDescription" class="control-label">Owner</label>
+			<input type="text" id="inputOwner" ng-model="asyncSelectedOwner" class="form-control" placeholder="Owner" 
+					typeahead-loading="loadingUsers" typeahead-min-length="3" typeahead="(user.forename + ' ' + user.surname) for user in getUser($viewValue)">
+			</input>
+			<i ng-show="loadingUsers" class="glyphicon glyphicon-refresh"></i>
+		</div>
+		<div class="form-group">
+			<label for="inputTag" class="control-label">Tags</label>
+			<input type="text" id="inputTag" ng-model="asyncSelectedTags" class="form-control" placeholder="Tags" 
+					typeahead-loading="loadingTags" typeahead="tag.name for tag in getTag($viewValue)">
+			</input>
+			<i ng-show="loadingTags" class="glyphicon glyphicon-refresh"></i>
+		</div>
+	</form>
+	
+	
+	<div class="modal-footer">
+		<button class="btn btn-success" ng-click="cancel()">Save</button>
+		<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+	</div>
+</div>

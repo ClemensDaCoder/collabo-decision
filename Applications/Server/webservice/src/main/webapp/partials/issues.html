@@ -1,3 +1,29 @@
-<ul>
-<li ng-repeat="issue in issues">{{issue.title}}</li>
-</ul>
+<div class="issues-wrapper">
+	<h2>{{currentTab}} - Issues</h2>
+	<div class="container-fluid">
+		<div class="btn-group">
+			<button class="btn btn-primary" ng-click="getIssues(null)">All</button>
+			<button class="btn btn-primary" ng-click="getIssues('NEW')">New</button>
+			<button class="btn btn-primary" ng-click="getIssues('IN_PROGRESS')">In
+				Progress</button>
+			<button class="btn btn-primary" ng-click="getIssues('RESOLVED')">Resolved</button>
+			<button class="btn btn-primary" ng-click="getIssues('OBSOLETE')">Obsolete</button>
+			<button class="btn btn-primary" ng-click="getIssues('REJECTED')">Rejected</button>
+		</div>
+		<div class="btn-group pull-right">
+			<button class="btn btn-success" ng-click="newIssue()">New Issue</button>
+		</div>
+	</div>
+	<table class="table">
+		<tr>
+			<th>Title</th>
+			<th>Status</th>
+			<th>Creator</th>
+		</tr>
+		<tr ng-repeat="issue in issues">
+			<td><a href="#" ng-click="showIssue(issue)">{{issue.title}}</a></td>
+			<td>{{issue.issueStatus.status}}</td>
+			<td>{{issue.creator.forename}} {{issue.creator.surname}}</td>
+		</tr>
+	</table>
+</div>

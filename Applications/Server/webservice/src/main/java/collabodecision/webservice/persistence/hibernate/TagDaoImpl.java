@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,14 @@ public class TagDaoImpl extends BaseDao implements TagDao {
 	@Transactional(readOnly = true)
 	public List<Tag> getAllTags() {
 		return getCurrentSession().createCriteria(Tag.class).list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional(readOnly = true)
+	public List<Tag> getTagsNameLike(String partialName) {
+		Query q = getCurrentSession().createQuery("FROM Tag WHERE name like '%" + partialName + "%'");
+		return q.list();
 	}
 
 }

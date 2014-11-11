@@ -1,5 +1,5 @@
 var collaboApp = angular.module('collaboApp', [ 'ngRoute', 'ngCookies',
-		'collaboControllers' ]);
+		'collaboControllers', 'ui.bootstrap' ]);
 
 // Routing to the Views
 collaboApp.config([ '$routeProvider', '$httpProvider', function($routeProvider, $httpPovider) {
@@ -11,6 +11,14 @@ collaboApp.config([ '$routeProvider', '$httpProvider', function($routeProvider, 
 	.when('/issues', {
 		templateUrl : 'partials/issues.html',
 		controller : 'IssuesController'
+	})
+	.when('/designDecisions', {
+		templateUrl : 'partials/designDecisions.html',
+		controller : 'DesignDecisionsController'
+	})
+	.when('/statistics', {
+		templateUrl : 'partials/statistics.html',
+		controller : 'StatisticsController'
 	})
 	.otherwise({
 		redirectTo : "/issues"
@@ -146,7 +154,8 @@ collaboApp.factory('Auth', [
 		'Base64',
 		'$cookieStore',
 		'$http',
-		function(Base64, $cookieStore, $http) {
+		'$location',
+		function(Base64, $cookieStore, $http, $location) {
 			return {
 				setCredentials : function(username, password) {
 					var encoded = Base64.encode(username + ':' + password);
@@ -158,6 +167,7 @@ collaboApp.factory('Auth', [
 					document.execCommand("ClearAuthenticationCache");
 					$cookieStore.remove('authdata');
 					$http.defaults.headers.common.Authorization = 'Basic ';
+					$location.path("/login")
 				}
 			};
 		} ]);
