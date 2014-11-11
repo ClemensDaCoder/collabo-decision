@@ -35,7 +35,7 @@ import collabodecision.webservice.persistence.domain.Tag;
 import collabodecision.webservice.persistence.domain.User;
 
 @RestController
-@RequestMapping("/issues")
+@RequestMapping("api/issues")
 public class IssueController {
 
 	@Autowired
@@ -64,8 +64,19 @@ public class IssueController {
 	public List<Issue> getIssues(
 			@RequestParam(value = "status", required = false) String status,
 			@RequestParam(value = "tag", required = false) List<String> tags) {
-		IssueStatus issueStatus = issueStatusDao.getIssueStatusByName(status);
-		List<Tag> tagsOfIssue = tagDao.getTagsByName(tags);
+		
+		IssueStatus issueStatus = null;
+		
+		if(status != null) {
+			issueStatus = issueStatusDao.getIssueStatusByName(status);
+		}
+		
+		List<Tag> tagsOfIssue = null;
+		
+		if(tags != null) {
+			tagsOfIssue = tagDao.getTagsByName(tags);
+		}
+		
 		return issueDao.getIssues(issueStatus, tagsOfIssue);
 	}
 

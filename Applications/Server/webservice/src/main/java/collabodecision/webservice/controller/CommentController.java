@@ -19,7 +19,7 @@ import collabodecision.webservice.persistence.UserDao;
 import collabodecision.webservice.persistence.domain.Comment;
 
 @RestController
-@RequestMapping("/comments")
+@RequestMapping("api/comments")
 public class CommentController {
 
 	@Autowired

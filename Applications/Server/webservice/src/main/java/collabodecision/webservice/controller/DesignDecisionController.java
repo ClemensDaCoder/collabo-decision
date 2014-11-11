@@ -24,7 +24,7 @@ import collabodecision.webservice.persistence.DesignDecisionDao;
 import collabodecision.webservice.persistence.UserDao;
 
 @RestController
-@RequestMapping("/designdecisions")
+@RequestMapping("api/designdecisions")
 @Transactional
 public class DesignDecisionController {
 	

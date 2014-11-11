@@ -1,18 +1,21 @@
 <!DOCTYPE htlm>
-<html ng-app="collabo-decision-client">
+<html ng-app="collaboApp">
 	<head>
 		<!-- Adding necessary JavaScript files -->
-		<script src="js/angular.min.js"></script>
+		<script src="js/angular.js"></script>
+		<script src="js/angular-route.js"></script>
+		<script src="js/angular-cookies.js"></script>
 		<script src="js/application.js"></script>
+		<script src="js/controllers.js"></script>
 		
 		<!-- Adding necessary CSS files -->
-		<link rel="stylesheet" type="text/css" href="styles/style.css">
-		<link rel="stylesheet" type="text/css" href="styles/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="css/style.css">
 		
 		<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	</head>
 	
-	<body ng-controller="MainController">
-		Hier kommt der Webclient!
-	</body>
+	<div class="mainWrapper container-fluid">
+		<div ng-view></div>
+	</div>
 </html>

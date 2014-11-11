@@ -6,9 +6,10 @@
 
 	<!-- Security configuration for REST services. -->
 	<security:http entry-point-ref="restServicesEntryPoint" create-session="stateless">
-
-		<security:intercept-url pattern="/**"
+		
+		<security:intercept-url pattern="/api/**"
 			access="ROLE_USER" />
+		
 		<security:http-basic />
 
 		<security:custom-filter ref="basicAuthenticationFilter"

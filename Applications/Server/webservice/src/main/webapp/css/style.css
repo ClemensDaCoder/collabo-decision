@@ -1,0 +1,18 @@
+body {
+	background: white;
+}
+
+
+.login-wrapper {
+	background: #F5F5F5;
+	border: 5px solid #D0D0D0;
+	border-radius: 5px;
+	padding: 0 20px 20px 20px	;
+	width: 500px;
+	margin: auto;
+}
+
+.logo-wrapper {
+	text-align: center;
+	padding: 20px 0;
+}
