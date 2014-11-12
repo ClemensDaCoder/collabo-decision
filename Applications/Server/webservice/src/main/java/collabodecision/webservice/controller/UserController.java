@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import collabodecision.webservice.persistence.UserDao;
-import collabodecision.webservice.persistence.domain.User;
+import collabodecision.webservice.persistence.domain.AppUser;
 
 @RestController
 @RequestMapping("api/users")
@@ -21,7 +21,7 @@ public class UserController {
 	
 	@Transactional(readOnly = true)
 	@RequestMapping(method=RequestMethod.GET)
-	public List<User> getUsers(@RequestParam(value="partialname", required=false) String partialName) {
+	public List<AppUser> getUsers(@RequestParam(value="partialname", required=false) String partialName) {
 		
 		if(partialName != null) {
 			return userDao.getUsersNameLike(partialName);

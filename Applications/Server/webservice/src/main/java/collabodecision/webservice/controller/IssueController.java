@@ -33,7 +33,7 @@ import collabodecision.webservice.persistence.domain.IssueRelation;
 import collabodecision.webservice.persistence.domain.IssueStatus;
 import collabodecision.webservice.persistence.domain.IssueTag;
 import collabodecision.webservice.persistence.domain.Tag;
-import collabodecision.webservice.persistence.domain.User;
+import collabodecision.webservice.persistence.domain.AppUser;
 
 @RestController
 @RequestMapping("api/issues")
@@ -179,7 +179,7 @@ public class IssueController {
 		issue.setOwner(userDao.getUser(issueRequest.getIdOwner()));
 
 		// Set the creator to the currently authenticated user
-		User creator = userDao.getUserByUsername(SecurityContextHolder
+		AppUser creator = userDao.getUserByUsername(SecurityContextHolder
 				.getContext().getAuthentication().getName());
 		issue.setCreator(creator);
 

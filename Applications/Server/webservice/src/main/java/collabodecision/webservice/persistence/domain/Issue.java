@@ -38,11 +38,11 @@ public class Issue {
 
 	@ManyToOne
 	@JoinColumn(name = "idOwner", nullable = false)
-	private User owner;
+	private AppUser owner;
 
 	@ManyToOne
 	@JoinColumn(name = "idCreator", nullable = false)
-	private User creator;
+	private AppUser creator;
 
 	@OneToMany(mappedBy = "issueFrom", orphanRemoval = true)
 	@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
@@ -78,7 +78,7 @@ public class Issue {
 	}
 
 	public Issue(String title, String description, boolean blocked,
-			IssueStatus issueStatus, User owner, User creator,
+			IssueStatus issueStatus, AppUser owner, AppUser creator,
 			Set<IssueRelation> issueRelationsFrom,
 			Set<IssueRelation> issueRelationsTo,
 			Set<DesignDecision> designDecisions, Set<File> files,
@@ -130,19 +130,19 @@ public class Issue {
 		this.issueStatus = issueStatus;
 	}
 
-	public User getOwner() {
+	public AppUser getOwner() {
 		return owner;
 	}
 
-	public void setOwner(User owner) {
+	public void setOwner(AppUser owner) {
 		this.owner = owner;
 	}
 
-	public User getCreator() {
+	public AppUser getCreator() {
 		return creator;
 	}
 
-	public void setCreator(User creator) {
+	public void setCreator(AppUser creator) {
 		this.creator = creator;
 	}
 

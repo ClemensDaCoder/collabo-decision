@@ -46,7 +46,7 @@ public class Comment {
 	
 	@ManyToOne
 	@JoinColumn(name="idCreator", nullable=false)
-	private User creator;
+	private AppUser creator;
 
 	public String getText() {
 		return text;
@@ -104,11 +104,11 @@ public class Comment {
 		this.designDecisionRating = designDecisionRating;
 	}
 
-	public User getCreator() {
+	public AppUser getCreator() {
 		return creator;
 	}
 
-	public void setCreator(User creator) {
+	public void setCreator(AppUser creator) {
 		this.creator = creator;
 	}
 

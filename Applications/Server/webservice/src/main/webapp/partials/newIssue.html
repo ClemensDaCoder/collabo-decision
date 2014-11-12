@@ -15,16 +15,17 @@
 		<div class="form-group">
 			<label for="inputDescription" class="control-label">Owner</label>
 			<input type="text" id="inputOwner" ng-model="asyncSelectedOwner" class="form-control" placeholder="Owner" 
-					typeahead-loading="loadingUsers" typeahead-min-length="3" typeahead="(user.forename + ' ' + user.surname) for user in getUser($viewValue)">
+					typeahead-loading="loadingUsers" typeahead="(user.forename + ' ' + user.surname) for user in getUser($viewValue)">
 			</input>
-			<i ng-show="loadingUsers" class="glyphicon glyphicon-refresh"></i>
+			<i ng-show="loadingUsers" class="glyphicon glyphicon-refresh loading"></i>
+			
 		</div>
 		<div class="form-group">
 			<label for="inputTag" class="control-label">Tags</label>
 			<input type="text" id="inputTag" ng-model="asyncSelectedTags" class="form-control" placeholder="Tags" 
 					typeahead-loading="loadingTags" typeahead="tag.name for tag in getTag($viewValue)">
 			</input>
-			<i ng-show="loadingTags" class="glyphicon glyphicon-refresh"></i>
+			<i ng-show="loadingTags" class="glyphicon glyphicon-refresh loading"></i>
 		</div>
 	</form>
 	

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import collabodecision.webservice.persistence.UserDao;
-import collabodecision.webservice.persistence.domain.User;
+import collabodecision.webservice.persistence.domain.AppUser;
 
 @Repository
 public class UserDaoImpl extends BaseDao implements UserDao {
@@ -23,32 +23,32 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 
 	@Override
 	@Transactional(readOnly = true)
-	public User getUserByUsername(String username) {
-		Criteria crit = getCurrentSession().createCriteria(User.class);
+	public AppUser getUserByUsername(String username) {
+		Criteria crit = getCurrentSession().createCriteria(AppUser.class);
 		crit.add(Restrictions.eq("mail", username));
-		return (User) crit.uniqueResult();
+		return (AppUser) crit.uniqueResult();
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public User getUser(long id) {
-		return (User) getCurrentSession().createCriteria(User.class)
+	public AppUser getUser(long id) {
+		return (AppUser) getCurrentSession().createCriteria(AppUser.class)
 				.add(Restrictions.eq("idUser", id)).uniqueResult();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional(readOnly = true)
-	public List<User> getUsersNameLike(String partialName) {
-		Query q = getCurrentSession().createQuery("FROM User WHERE forename || ' ' || surname like '%" + partialName + "%'");
+	public List<AppUser> getUsersNameLike(String partialName) {
+		Query q = getCurrentSession().createQuery("FROM AppUser WHERE forename || ' ' || surname like '%" + partialName + "%'");
 		return q.list();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional(readOnly = true)
-	public List<User> getUsers() {
-		return getCurrentSession().createCriteria(User.class).list();
+	public List<AppUser> getUsers() {
+		return getCurrentSession().createCriteria(AppUser.class).list();
 	}
 
 }

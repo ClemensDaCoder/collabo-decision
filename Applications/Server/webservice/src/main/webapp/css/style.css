@@ -7,6 +7,16 @@ body {
 	margin-right: 15px;
 }
 
+.newIssue-wrapper .form-group {
+	position: relative;
+}
+
+.newIssue-wrapper .loading {
+	position: absolute;
+	right: 5px;
+	top: 35px;
+}
+
 .issues-wrapper .table {
 	margin-top: 20px;
 }

@@ -18,17 +18,17 @@ public class ShareHolder {
 	
 	@ManyToOne
 	@JoinColumn(name="idUser", nullable=false)
-	private User user;
+	private AppUser user;
 	
 	@ManyToOne
 	@JoinColumn(name="idDesignDecision", nullable=false)
 	private DesignDecision designDecision;
 
-	public User getUser() {
+	public AppUser getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(AppUser user) {
 		this.user = user;
 	}
 

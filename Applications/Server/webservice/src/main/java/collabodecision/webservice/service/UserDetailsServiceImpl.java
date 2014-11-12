@@ -28,7 +28,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username)
 			throws UsernameNotFoundException {
 		
-		collabodecision.webservice.persistence.domain.User user = userDao.getUserByUsername(username);
+		collabodecision.webservice.persistence.domain.AppUser user = userDao.getUserByUsername(username);
 		
 		// Maybe different ROLES - according to issues maybe?
 		List<GrantedAuthority> authorities = new ArrayList<>();
