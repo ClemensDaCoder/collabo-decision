@@ -6,23 +6,23 @@
 	<form class="form-horizontal">
 		<div class="form-group">
 			<label for="inputTitle" class="control-label">Title</label>
-			<input type="text" class="form-control" id="inputTitle" placeholder="Title">
+			<input type="text" class="form-control" id="inputTitle" placeholder="Title" ng-model="title">
 		</div>
 		<div class="form-group">
 			<label for="inputDescription" class="control-label">Description</label>
-			<textarea rows="10" cols="10" id="inputDescription" class="form-control" placeholder="Description"></textarea>
+			<textarea rows="10" cols="10" id="inputDescription" class="form-control" placeholder="Description" ng-model="description"></textarea>
 		</div>
 		<div class="form-group">
 			<label for="inputDescription" class="control-label">Owner</label>
-			<input type="text" id="inputOwner" ng-model="asyncSelectedOwner" class="form-control" placeholder="Owner" 
-					typeahead-loading="loadingUsers" typeahead="(user.forename + ' ' + user.surname) for user in getUser($viewValue)">
+			<input type="text" id="inputOwner" ng-model="selectedOwner" class="form-control" placeholder="Owner" 
+					typeahead-loading="loadingUsers" typeahead="user as (user.forename + ' ' + user.surname) for user in getUser($viewValue)">
 			</input>
 			<i ng-show="loadingUsers" class="glyphicon glyphicon-refresh loading"></i>
 			
 		</div>
 		<div class="form-group">
 			<label for="inputTag" class="control-label">Tags</label>
-			<input type="text" id="inputTag" ng-model="asyncSelectedTags" class="form-control" placeholder="Tags" 
+			<input type="text" id="inputTag" ng-model="selectedTag" class="form-control" placeholder="Tags" 
 					typeahead-loading="loadingTags" typeahead="tag.name for tag in getTag($viewValue)">
 			</input>
 			<i ng-show="loadingTags" class="glyphicon glyphicon-refresh loading"></i>
@@ -31,7 +31,7 @@
 	
 	
 	<div class="modal-footer">
-		<button class="btn btn-success" ng-click="cancel()">Save</button>
+		<button class="btn btn-success" ng-click="save()">Save</button>
 		<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
 	</div>
 </div>

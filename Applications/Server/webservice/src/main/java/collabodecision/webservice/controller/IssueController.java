@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import collabodecision.webservice.data.requestWrapper.RequestDataWrapper;
 import collabodecision.webservice.data.requestWrapper.IssueRequestWrapper;
 import collabodecision.webservice.persistence.CommentDao;
 import collabodecision.webservice.persistence.IssueDao;
@@ -96,8 +97,8 @@ public class IssueController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	@Transactional(readOnly = false)
-	public void addIssue(@RequestBody IssueRequestWrapper request) {
-		addOrUpdateIssue(request, null);
+	public void addIssue(@RequestBody RequestDataWrapper<IssueRequestWrapper> request) {
+		addOrUpdateIssue(request.getData(), null);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)

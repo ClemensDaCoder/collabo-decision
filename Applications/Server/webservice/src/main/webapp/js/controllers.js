@@ -37,10 +37,16 @@ collaboControllers.controller('IssuesController', ['$http', '$scope', '$modal', 
 	}
 	
 	$scope.newIssue = function() {
-		$modal.open({
+		var modalInstance = $modal.open({
 			templateUrl : 'partials/newIssue.html',
 			controller : 'NewIssueController',
-			backdrop : false	
+			backdrop : false
+		});
+		
+		modalInstance.result.then(function() {
+			$scope.getIssues('NEW')
+		}, function() {
+			$scope.getIssues('NEW');
 		});
 	}
 	
@@ -61,6 +67,25 @@ collaboControllers.controller('NewIssueController', ['$scope', '$modalInstance',
 	
 	$scope.cancel = function() {
 		$modalInstance.dismiss('cancel');
+	}
+	
+	$scope.save = function() {
+		
+		var config = {
+				data : {
+					'title' : $scope.title,
+					'description' : $scope.description,
+					'idOwner' : $scope.selectedOwner.idUser,
+					'tags' : [$scope.selectedTag]
+				}
+		}
+		
+		$http.post("/api/issues", config).success(function() {
+			$scope.cancel();
+		}).error(function() {
+			alert("fehler");
+		});
+		
 	}
 	
 	$scope.getUser = function(partialName) {
