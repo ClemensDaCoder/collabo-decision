@@ -4,6 +4,7 @@
 	<groupId>collabo-decision</groupId>
 	<artifactId>webservice</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
 	<name>Webservice Collabo-Decision</name>
 
 	<parent>
@@ -58,7 +59,7 @@
 	</dependencies>
 
 	<properties>
-		<start-class>collabodecision.webservice</start-class>
+		<start-class>collabodecision.webservice.Application</start-class>
 	</properties>
 
 	<build>
