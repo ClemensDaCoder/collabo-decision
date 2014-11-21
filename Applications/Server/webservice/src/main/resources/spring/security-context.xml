@@ -7,7 +7,7 @@
 	<!-- Security configuration for REST services. -->
 	<security:http entry-point-ref="restServicesEntryPoint" create-session="stateless">
 		
-		<security:intercept-url pattern="/api/**"
+		<security:intercept-url pattern="/rest/**"
 			access="ROLE_USER" />
 		
 		<security:http-basic />
@@ -28,13 +28,13 @@
 
 	<!-- Authentication manager - Where are the users: Fetch from Database -->
 	<security:authentication-manager alias="authenticationManager">
-		<security:authentication-provider user-service-ref="userDetailsServiceImpl">
-			<!-- passwords are currently not encoded - Dummy Data! -->
-			<!-- <security:password-encoder ref="encoder"></security:password-encoder> -->
+		<security:authentication-provider user-service-ref="appUserServiceImpl">
+			<!-- passwords are being encoded with BCrypt -->
+			<security:password-encoder ref="encoder"></security:password-encoder>
 		</security:authentication-provider>
 	</security:authentication-manager>
 	
-	<!-- Encode Passwords with BCrypt -->
+	<!-- BCrypt password encoder -->
 	<bean id="encoder"
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 

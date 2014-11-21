@@ -1,13 +1,11 @@
-package collabodecision.webservice.data.requestWrapper;
+package collabodecision.webservice.data;
 
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonRootName;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
-@JsonRootName("data")
-public class IssueRequestWrapper {
+public class RequestWrapperIssue {
 
 	private String title;
 	

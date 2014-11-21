@@ -1,4 +1,4 @@
-package collabodecision.webservice.persistence.hibernate;
+package collabodecision.webservice.persistence.impl;
 
 import java.util.List;
 
@@ -10,20 +10,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import collabodecision.webservice.persistence.UserDao;
+import collabodecision.webservice.persistence.AppUserDao;
 import collabodecision.webservice.persistence.domain.AppUser;
 
 @Repository
-public class UserDaoImpl extends BaseDao implements UserDao {
+public class AppUserDaoImpl extends BaseDao implements AppUserDao {
 
 	@Autowired
-	public UserDaoImpl(SessionFactory sessionFactory) {
+	public AppUserDaoImpl(SessionFactory sessionFactory) {
 		super(sessionFactory);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public AppUser getUserByUsername(String username) {
+	public AppUser getAppUserByUsername(String username) {
 		Criteria crit = getCurrentSession().createCriteria(AppUser.class);
 		crit.add(Restrictions.eq("mail", username));
 		return (AppUser) crit.uniqueResult();
@@ -31,7 +31,7 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 
 	@Override
 	@Transactional(readOnly = true)
-	public AppUser getUser(long id) {
+	public AppUser getAppUser(long id) {
 		return (AppUser) getCurrentSession().createCriteria(AppUser.class)
 				.add(Restrictions.eq("idUser", id)).uniqueResult();
 	}
@@ -39,7 +39,7 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional(readOnly = true)
-	public List<AppUser> getUsersNameLike(String partialName) {
+	public List<AppUser> getAppUsersNameLike(String partialName) {
 		Query q = getCurrentSession().createQuery("FROM AppUser WHERE forename || ' ' || surname like '%" + partialName + "%'");
 		return q.list();
 	}
@@ -47,8 +47,13 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional(readOnly = true)
-	public List<AppUser> getUsers() {
+	public List<AppUser> getAppUsers() {
 		return getCurrentSession().createCriteria(AppUser.class).list();
+	}
+
+	@Override
+	public void saveOrUpdateAppUser(AppUser appUser) {
+		getCurrentSession().saveOrUpdate(appUser);
 	}
 
 }

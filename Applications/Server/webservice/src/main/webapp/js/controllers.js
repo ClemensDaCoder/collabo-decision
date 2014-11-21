@@ -18,7 +18,7 @@ collaboControllers.controller('IssuesController', ['$http', '$scope', '$modal', 
 	
 	$scope.getIssues = function(status) {
 		
-		var uri = "/api/issues";
+		var uri = "/rest/issues";
 		
 		if(status != null) {
 			$scope.currentTab = status;
@@ -80,7 +80,7 @@ collaboControllers.controller('NewIssueController', ['$scope', '$modalInstance',
 				}
 		}
 		
-		$http.post("/api/issues", config).success(function() {
+		$http.post("/rest/issues", config).success(function() {
 			$scope.cancel();
 		}).error(function() {
 			alert("fehler");
@@ -90,7 +90,7 @@ collaboControllers.controller('NewIssueController', ['$scope', '$modalInstance',
 	
 	$scope.getUser = function(partialName) {
 		
-		return $http.get('/api/users', {
+		return $http.get('/rest/appusers', {
 			params : {
 				'partialname' : partialName
 			}
@@ -105,7 +105,7 @@ collaboControllers.controller('NewIssueController', ['$scope', '$modalInstance',
 	}
 	
 	$scope.getTag = function(partialName) {
-		return $http.get('api/tags', {
+		return $http.get('/rest/tags', {
 			params : {
 				'partialname' : partialName
 			}

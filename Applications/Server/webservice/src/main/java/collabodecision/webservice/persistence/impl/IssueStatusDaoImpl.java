@@ -1,4 +1,4 @@
-package collabodecision.webservice.persistence.hibernate;
+package collabodecision.webservice.persistence.impl;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
