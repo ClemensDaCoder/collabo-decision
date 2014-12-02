@@ -85,8 +85,7 @@ collaboControllers.controller('NewIssueController', ['$scope', '$modalInstance',
 		}).error(function() {
 			alert("fehler");
 		});
-		
-	}
+	};
 	
 	$scope.getUser = function(partialName) {
 		
@@ -102,7 +101,7 @@ collaboControllers.controller('NewIssueController', ['$scope', '$modalInstance',
 			
 			return partials;
 		})
-	}
+	};
 	
 	$scope.getTag = function(partialName) {
 		return $http.get('/rest/tags', {
@@ -116,7 +115,17 @@ collaboControllers.controller('NewIssueController', ['$scope', '$modalInstance',
 			
 			return partials;
 		});
+	};
+	
+	$scope.getIssuesMatchingTags = function(tags) {
 		
-	}
+		$http.get('/rest/issues', {
+			params : {
+				'tag' : tags
+			}
+		}).success(function(data) {
+			$scope.issuesMatchingTags = angular.fromJson(data);
+		});
+	};
 	
 }]);

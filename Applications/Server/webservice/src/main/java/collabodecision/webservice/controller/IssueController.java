@@ -38,7 +38,8 @@ public class IssueController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public void addIssue(@RequestBody RequestWrapperData<RequestWrapperIssue> request) {
+	public void addIssue(
+			@RequestBody RequestWrapperData<RequestWrapperIssue> request) {
 		issueService.addIssue(request.getData());
 	}
 

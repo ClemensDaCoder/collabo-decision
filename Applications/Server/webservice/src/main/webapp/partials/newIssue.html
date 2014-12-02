@@ -3,32 +3,48 @@
 		<h3>New Issue</h3>
 	</div>
 	
-	<form class="form-horizontal">
-		<div class="form-group">
-			<label for="inputTitle" class="control-label">Title</label>
-			<input type="text" class="form-control" id="inputTitle" placeholder="Title" ng-model="title">
+	<div class="container-fluid">
+		<div class="row">
+		<div class="col-md-5">
+			<form class="form-horizontal">
+				<div class="form-group">
+					<label for="inputTitle" class="control-label">Title</label>
+					<input type="text" class="form-control" id="inputTitle" placeholder="Title" ng-model="title">
+				</div>
+				<div class="form-group">
+					<label for="inputDescription" class="control-label">Description</label>
+					<textarea rows="10" cols="10" id="inputDescription" class="form-control" placeholder="Description" ng-model="description"></textarea>
+				</div>
+				<div class="form-group">
+					<label for="inputDescription" class="control-label">Owner</label>
+					<input type="text" id="inputOwner" ng-model="selectedOwner" class="form-control" placeholder="Owner" 
+							typeahead-loading="loadingUsers" typeahead="user as (user.forename + ' ' + user.surname) for user in getUser($viewValue)">
+					</input>
+					<i ng-show="loadingUsers" class="glyphicon glyphicon-refresh loading"></i>
+					
+				</div>
+				<div class="form-group">
+					<label for="inputTag" class="control-label">Tags</label>
+					<input type="text" id="inputTag" ng-model="selectedTag" class="form-control" placeholder="Tags" 
+							typeahead-loading="loadingTags" typeahead="tag.name for tag in getTag($viewValue)" ng-change="getIssuesMatchingTags($viewValue)">
+					</input>
+					<i ng-show="loadingTags" class="glyphicon glyphicon-refresh loading"></i>
+				</div>
+			</form>
 		</div>
-		<div class="form-group">
-			<label for="inputDescription" class="control-label">Description</label>
-			<textarea rows="10" cols="10" id="inputDescription" class="form-control" placeholder="Description" ng-model="description"></textarea>
+			<div class="col-md-7">
+				<h4>Issue with matching tags</h4>
+				<table class="table matchingTags">
+					<tr ng-repeat="issueMatchingTags in issuesMatchingTags">
+						<td style="width: 70%; min-width: 200px;"><a href="#">{{issueMatchingTags.title}}</a></td>
+						<td><button class="btn btn-warning" ng-click="addDepends(issueMatchingTags)">Add depends</button></td>
+						<td><button class="btn btn-success" ng-click="addResolves(issueMatchingTags)">Add resolves</button></td>
+						<td><button class="btn btn-primary" ng-click="addRelates(issueMatchingTags)">Add relates</button></td>
+					</tr>
+				</table>
+			</div>
 		</div>
-		<div class="form-group">
-			<label for="inputDescription" class="control-label">Owner</label>
-			<input type="text" id="inputOwner" ng-model="selectedOwner" class="form-control" placeholder="Owner" 
-					typeahead-loading="loadingUsers" typeahead="user as (user.forename + ' ' + user.surname) for user in getUser($viewValue)">
-			</input>
-			<i ng-show="loadingUsers" class="glyphicon glyphicon-refresh loading"></i>
-			
-		</div>
-		<div class="form-group">
-			<label for="inputTag" class="control-label">Tags</label>
-			<input type="text" id="inputTag" ng-model="selectedTag" class="form-control" placeholder="Tags" 
-					typeahead-loading="loadingTags" typeahead="tag.name for tag in getTag($viewValue)">
-			</input>
-			<i ng-show="loadingTags" class="glyphicon glyphicon-refresh loading"></i>
-		</div>
-	</form>
-	
+	</div>
 	
 	<div class="modal-footer">
 		<button class="btn btn-success" ng-click="save()">Save</button>
