@@ -16,7 +16,7 @@ import collabodecision.webservice.persistence.domain.DesignDecision;
 import collabodecision.webservice.service.AlternativeService;
 
 @RestController
-@RequestMapping("rest/issues")
+@RequestMapping("rest/alternatives")
 public class AlternativesController {
 
 	
