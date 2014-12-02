@@ -2,15 +2,29 @@ package collabodecision.webservice.service.impl;
 
 import java.util.List;
 
+import org.springframework.transaction.annotation.Transactional;
+
+import collabodecision.webservice.persistence.CommentDao;
 import collabodecision.webservice.persistence.domain.Alternative;
+import collabodecision.webservice.persistence.domain.Comment;
 import collabodecision.webservice.service.AlternativeService;
+import collabodecision.webservice.service.utils.CommentHelper;
 
 public class AlternativesServiceImpl implements AlternativeService
 {
 
+	CommentDao commentDao;
+	AlternativeDao alternativeDao;
+	CommentHelper commentHelper;
+	
 	@Override
+	@Transactional(readOnly = false)
 	public void addComment(long id, String message, String date) {
 		// TODO Auto-generated method stub
+		
+		Comment comment = commentHelper.getComment(message, date);
+		comment.setIssue(issueDao.getIssue(id));
+		commentDao.saveOrUpdateComment(comment);
 		
 	}
 

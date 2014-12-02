@@ -17,7 +17,7 @@ import collabodecision.webservice.service.AlternativeService;
 
 @RestController
 @RequestMapping("rest/alternatives")
-public class AlternativesController {
+public class AlternativeController {
 
 	
 	@Autowired
