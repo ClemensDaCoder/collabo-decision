@@ -38,20 +38,6 @@ angular.module('collaboApp').controller('NewIssueController', ['$scope', '$modal
 		})
 	};
 	
-	$scope.getTag = function(partialName) {
-		return $http.get('/rest/tags', {
-			params : {
-				'partialname' : partialName
-			}
-		}).then(function(response) {
-			var partials = response.data.map(function(e) {
-				return e;
-			});
-			
-			return partials;
-		});
-	};
-	
 	$scope.getIssuesMatchingTags = function(tags) {
 		
 		var tagString = "";

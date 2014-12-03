@@ -25,10 +25,7 @@
 				</div>
 				<div class="form-group">
 					<label for="inputTag" class="control-label">Tags</label>
-					<input type="text" id="inputTag" ng-model="selectedTag" class="form-control" placeholder="Tags" 
-							typeahead-loading="loadingTags" typeahead="tag.name for tag in getTag($viewValue)" ng-change="getIssuesMatchingTags(selectedTag)">
-					</input>
-					<i ng-show="loadingTags" class="glyphicon glyphicon-refresh loading"></i>
+					<tageditor></tageditor>
 				</div>
 			</form>
 		</div>
