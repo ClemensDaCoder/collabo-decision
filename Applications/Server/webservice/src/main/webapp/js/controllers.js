@@ -119,12 +119,14 @@ collaboControllers.controller('NewIssueController', ['$scope', '$modalInstance',
 	
 	$scope.getIssuesMatchingTags = function(tags) {
 		
-		$http.get('/rest/issues', {
-			params : {
-				'tag' : tags
-			}
-		}).success(function(data) {
-			$scope.issuesMatchingTags = angular.fromJson(data);
+		var tagString = "";
+		var tagArray =  tags.split(" ");
+		for(var i in tagArray) {
+			tagString += "tag=" + tagArray[i] + "&";
+		}
+		
+		$http.get('/rest/issues?' + tagString).success(function(data) {
+			$scope.issuesMatchingTags = (!data || data.length === 0)  ?  null : angular.fromJson(data);
 		});
 	};
 	

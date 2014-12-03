@@ -32,43 +32,50 @@ public class IssueServiceImpl implements IssueService {
 
 	@Autowired
 	private TagDao tagDao;
-	
+
 	@Autowired
 	private IssueStatusDao issueStatusDao;
-	
+
 	@Autowired
 	private IssueDao issueDao;
-	
+
 	@Autowired
 	private CommentDao commentDao;
-	
+
 	@Autowired
 	private RelationTypeDao relationTypeDao;
-	
+
 	@Autowired
 	private AppUserService userService;
-	
+
 	@Autowired
 	private CommentHelper commentHelper;
-	
+
 	@Autowired
 	private SessionFactory sessionFactory;
-	
+
 	@Override
 	@Transactional(readOnly = true)
 	public List<Issue> getIssues(String status, List<String> tags) {
 		IssueStatus issueStatus = null;
-		
-		if(status != null) {
+
+		if (status != null) {
 			issueStatus = issueStatusDao.getIssueStatusByName(status);
 		}
-		
+
 		List<Tag> tagsOfIssue = null;
-		
-		if(tags != null) {
+
+		if (tags != null) {
 			tagsOfIssue = tagDao.getTagsByName(tags);
+
+			// If Issues with similar tags should be found, but no matching tags
+			// were found: means that there cannot possibly be an issue with
+			// these tags
+			if (tagsOfIssue == null || tagsOfIssue.isEmpty()) {
+				return null;
+			}
 		}
-		
+
 		return issueDao.getIssues(issueStatus, tagsOfIssue);
 	}
 
@@ -76,10 +83,10 @@ public class IssueServiceImpl implements IssueService {
 	@Transactional(readOnly = true)
 	public Issue getIssue(long id, boolean withRelations) {
 
-		if(withRelations) {
+		if (withRelations) {
 			return issueDao.getIssueWithRelations(id);
 		}
-		
+
 		return issueDao.getIssue(id);
 	}
 
@@ -111,9 +118,9 @@ public class IssueServiceImpl implements IssueService {
 
 	@Override
 	public void addFile(long id, String pathToFile) {
-		
+
 	}
-	
+
 	/**
 	 * Help method to create a new issue, or to update an existing one
 	 * 
@@ -126,34 +133,35 @@ public class IssueServiceImpl implements IssueService {
 	private void addOrUpdateIssue(RequestWrapperIssue issueRequest,
 			Long idExistingIssue) {
 
-		
 		// Fetching the Issue from DB if Update ; otherwise create new
 		Issue issue = idExistingIssue != null ? issueDao
 				.getIssue(idExistingIssue) : new Issue();
-				
-		// On Update - Delete all OneToMany Relations in advance (are added again later)
-		if(idExistingIssue != null) {
+
+		// On Update - Delete all OneToMany Relations in advance (are added
+		// again later)
+		if (idExistingIssue != null) {
 			issue.getIssueTags().clear();
 			issue.getIssueRelationsFrom().clear();
 			issue.getIssueRelationsTo().clear();
 			issue.getFiles().clear();
-			
-			// Must be done - Otherwise Hibernate would result in Violation Constraint!
+
+			// Must be done - Otherwise Hibernate would result in Violation
+			// Constraint!
 			sessionFactory.getCurrentSession().flush();
 		}
-		
 
 		// Setting the properties of the Issue
 		issue.setTitle(issueRequest.getTitle());
 		issue.setDescription(issueRequest.getDescription());
-		
+
 		// TODO: Check issue Status: According to Process! Go with the flow!
 		issue.setIssueStatus(issueStatusDao.getIssueStatusByName("NEW"));
 		issue.setOwner(userService.getAppUser(issueRequest.getIdOwner()));
 
 		// Set the creator to the currently authenticated user
-		AppUser creator = userService.getAppUserByUsername(SecurityContextHolder
-				.getContext().getAuthentication().getName());
+		AppUser creator = userService
+				.getAppUserByUsername(SecurityContextHolder.getContext()
+						.getAuthentication().getName());
 		issue.setCreator(creator);
 
 		// Get all the tags that are already in the DB
@@ -170,7 +178,7 @@ public class IssueServiceImpl implements IssueService {
 		}
 
 		// These are all the Tags of the Issue (from DB and new Ones)
-		tags.addAll(tagsInDb);	
+		tags.addAll(tagsInDb);
 
 		// Adding the IssueTags to the Issue
 		for (Tag tag : tags) {
@@ -188,10 +196,12 @@ public class IssueServiceImpl implements IssueService {
 		if (issueRequest.getIdsDepends() != null) {
 			List<Issue> dependingIssues = issueDao.getIssuesByIds(issueRequest
 					.getIdsDepends());
-			
+
 			for (Issue dependingIssue : dependingIssues) {
-				issue.getIssueRelationsFrom().add(new IssueRelation(issue, dependingIssue,
-						relationTypeDao.getRelationTypeByType("DEPENDS")));
+				issue.getIssueRelationsFrom().add(
+						new IssueRelation(issue, dependingIssue,
+								relationTypeDao
+										.getRelationTypeByType("DEPENDS")));
 			}
 
 			// If the issue depends on another issue -> it is considered
@@ -204,8 +214,9 @@ public class IssueServiceImpl implements IssueService {
 			List<Issue> resolvesIssues = issueDao.getIssuesByIds(issueRequest
 					.getIdsResolves());
 			for (Issue resolvesIssue : resolvesIssues) {
-				issue.getIssueRelationsFrom().add(new IssueRelation(issue, resolvesIssue,
-						relationTypeDao.getRelationTypeByType("RESOLVES")));
+				issue.getIssueRelationsFrom().add(
+						new IssueRelation(issue, resolvesIssue, relationTypeDao
+								.getRelationTypeByType("RESOLVES")));
 			}
 		}
 
@@ -215,10 +226,12 @@ public class IssueServiceImpl implements IssueService {
 			List<Issue> relatedIssues = issueDao.getIssuesByIds(issueRequest
 					.getIdsRelates());
 			for (Issue relatedIssue : relatedIssues) {
-				issue.getIssueRelationsFrom().add(new IssueRelation(issue, relatedIssue,
-						relationTypeDao.getRelationTypeByType("RELATES")));
-				issue.getIssueRelationsTo().add(new IssueRelation(relatedIssue, issue,
-						relationTypeDao.getRelationTypeByType("RELATES")));
+				issue.getIssueRelationsFrom().add(
+						new IssueRelation(issue, relatedIssue, relationTypeDao
+								.getRelationTypeByType("RELATES")));
+				issue.getIssueRelationsTo().add(
+						new IssueRelation(relatedIssue, issue, relationTypeDao
+								.getRelationTypeByType("RELATES")));
 			}
 		}
 

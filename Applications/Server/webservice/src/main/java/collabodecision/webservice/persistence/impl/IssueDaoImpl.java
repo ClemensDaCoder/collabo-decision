@@ -36,7 +36,7 @@ public class IssueDaoImpl extends BaseDao implements IssueDao {
 	public void deleteIssue(long id) {
 		Criteria crit = getCurrentSession().createCriteria(Issue.class);
 		crit.add(Restrictions.eq("idIssue", id));
-		getCurrentSession().delete((Issue)crit.uniqueResult());
+		getCurrentSession().delete((Issue) crit.uniqueResult());
 	}
 
 	@SuppressWarnings("unchecked")
@@ -44,20 +44,21 @@ public class IssueDaoImpl extends BaseDao implements IssueDao {
 	@Transactional(readOnly = true)
 	public List<Issue> getIssues(IssueStatus status, List<Tag> tags) {
 		
-		Criteria crit = getCurrentSession().createCriteria(Issue.class, "issue");
-		
+		Criteria crit = getCurrentSession()
+				.createCriteria(Issue.class, "issue");
+
 		// If status is set -> Only Issues with that Status
-		if(status != null) {
+		if (status != null) {
 			crit.add(Restrictions.eq("issueStatus", status));
 		}
-		
+
 		// If tags are set -> Only Issues that have the same tags
-		if(tags != null) {
+		if (tags != null) {
 			crit.createAlias("issue.issueTags", "issueTag");
 			crit.add(Restrictions.in("issueTag.tag", tags));
 			crit.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
 		}
-		
+
 		return crit.list();
 	}
 
@@ -65,7 +66,7 @@ public class IssueDaoImpl extends BaseDao implements IssueDao {
 	public Issue getIssue(long id) {
 		Criteria crit = getCurrentSession().createCriteria(Issue.class);
 		crit.add(Restrictions.eq("idIssue", id));
-		return (Issue)crit.uniqueResult();
+		return (Issue) crit.uniqueResult();
 	}
 
 	@Override
@@ -88,7 +89,7 @@ public class IssueDaoImpl extends BaseDao implements IssueDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public List<Issue> getIssuesByIds(Collection<Long> issueIds) {
 		Criteria crit = getCurrentSession().createCriteria(Issue.class);
 		crit.add(Restrictions.in("idIssue", issueIds));
