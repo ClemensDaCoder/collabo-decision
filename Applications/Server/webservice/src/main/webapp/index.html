@@ -2,20 +2,33 @@
 <html ng-app="collaboApp">
 	<head>
 		<!-- Adding necessary JavaScript files -->
-		<script src="js/angular.js"></script>
-		<script src="js/angular-route.js"></script>
-		<script src="js/angular-cookies.js"></script>
-		<script src="js/ui-bootstrap.js"></script>
-		<script src="js/application.js"></script>
-		<script src="js/controllers.js"></script>
+		<script src="assets/js/angular.js"></script>
+		<script src="assets/js/angular-route.js"></script>
+		<script src="assets/js/angular-cookies.js"></script>
+		<script src="assets/js/ui-bootstrap.js"></script>
+		
+		<!-- Adding Angular Module and route -->
+		<script src="app/app.module.js"></script>
+		<script src="app/app.route.js"></script>
+		
+		<!-- Adding shared stuff -->
+		<script src="app/shared/logout/logoutController.js"></script>
+		<script src="app/shared/authentication/authentication.js"></script>
+		<script src="app/shared/authentication/authInterceptor.js"></script>
+		
+		<!-- Adding components -->
+		<script src="app/components/login/controllers/loginController.js"></script>
+		<script src="app/components/issues/controllers/issuesController.js"></script>
+		<script src="app/components/issues/controllers/newIssueController.js"></script>
+		<script src="app/components/designdecisions/controllers/designDecisionsController.js"></script>
 		
 		<!-- Adding necessary CSS files -->
-		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="assets/css/style.css" />
 		
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	</head>
-	<body ng-controller="BodyController">
+	<body>
 		<nav class="navbar-inverse navbar-static-top">
 			<div class="container">
 				<div class="navbar-header">
@@ -25,9 +38,8 @@
 					<ul class="nav navbar-nav">
 						<li><a href="#/issues">Issues</a></li>
 						<li><a href="#/designDecisions">Design Decisions</a></li>
-						<li><a href="#/statistics">Statistics</a></li>
 					</ul>
-					<ul class="nav navbar-nav navbar-right">
+					<ul class="nav navbar-nav navbar-right" ng-controller="LogoutController">
 						<li><a href="#" ng-click="logout()">Logout <span class="glyphicon glyphicon-log-out"></span></a></li>
 					</ul>
 				</div>

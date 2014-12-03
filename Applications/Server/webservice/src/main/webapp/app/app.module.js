@@ -1,0 +1,1 @@
+var collaboApp = angular.module('collaboApp', [ 'ngRoute', 'ngCookies',	'ui.bootstrap' ]);
