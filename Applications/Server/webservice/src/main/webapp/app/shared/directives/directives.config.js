@@ -6,4 +6,12 @@ angular.module('collaboApp').directive('tageditor', function() {
 			tags : "="
 		}
 	}
+}).directive('issueeditor', function() {
+	return {
+		restrict: 'E',
+		templateUrl : 'app/shared/directives/issueeditor/views/issueeditorView.html',
+		scope : {
+			issues : "="
+		}
+	}
 });

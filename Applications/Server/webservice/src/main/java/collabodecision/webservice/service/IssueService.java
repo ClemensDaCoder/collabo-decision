@@ -6,7 +6,7 @@ import collabodecision.webservice.data.RequestWrapperIssue;
 import collabodecision.webservice.persistence.domain.Issue;
 
 public interface IssueService extends CommentService, FileService {
-	List<Issue> getIssues(String status, List<String> tags);
+	List<Issue> getIssues(String status, List<String> tags, String partialName);
 	
 	Issue getIssue(long id, boolean withRelations);
 	

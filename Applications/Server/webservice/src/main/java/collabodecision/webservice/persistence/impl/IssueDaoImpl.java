@@ -42,7 +42,7 @@ public class IssueDaoImpl extends BaseDao implements IssueDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional(readOnly = true)
-	public List<Issue> getIssues(IssueStatus status, List<Tag> tags) {
+	public List<Issue> getIssues(IssueStatus status, List<Tag> tags, String partialTitle) {
 		
 		Criteria crit = getCurrentSession()
 				.createCriteria(Issue.class, "issue");
@@ -58,8 +58,19 @@ public class IssueDaoImpl extends BaseDao implements IssueDao {
 			crit.add(Restrictions.in("issueTag.tag", tags));
 			crit.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
 		}
+		
+		if(partialTitle != null) {
+			crit.add(Restrictions.like("title", "%" + partialTitle + "%"));
+		}
 
-		return crit.list();
+		List<Issue> issues = crit.list();
+		
+		// Fetching IssueTags for list of Issues (normally needed)
+		for(Issue issue : issues) {
+			Hibernate.initialize(issue.getIssueTags());
+		}
+		
+		return issues;
 	}
 
 	@Override

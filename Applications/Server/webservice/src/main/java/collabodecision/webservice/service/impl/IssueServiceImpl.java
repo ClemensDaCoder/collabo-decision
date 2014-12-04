@@ -56,7 +56,7 @@ public class IssueServiceImpl implements IssueService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<Issue> getIssues(String status, List<String> tags) {
+	public List<Issue> getIssues(String status, List<String> tags, String partialTitle) {
 		IssueStatus issueStatus = null;
 
 		if (status != null) {
@@ -75,8 +75,8 @@ public class IssueServiceImpl implements IssueService {
 				return null;
 			}
 		}
-
-		return issueDao.getIssues(issueStatus, tagsOfIssue);
+		
+		return issueDao.getIssues(issueStatus, tagsOfIssue, partialTitle);
 	}
 
 	@Override

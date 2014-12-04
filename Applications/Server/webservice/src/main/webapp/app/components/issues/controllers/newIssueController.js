@@ -6,12 +6,21 @@ angular.module('collaboApp').controller('NewIssueController', ['$scope', '$modal
 	
 	$scope.save = function() {
 		
+		var idsDepends = getIdsFromIssueArray($scope.dependsIssues);
+		var idsResolves = getIdsFromIssueArray($scope.resolvesIssues);
+		var idsRelates = getIdsFromIssueArray($scope.relatesIssues);
+		
+		
+		
 		var config = {
 				data : {
 					'title' : $scope.title,
 					'description' : $scope.description,
 					'idOwner' : $scope.selectedOwner.idUser,
-					'tags' : $scope.currentTags
+					'tags' : $scope.currentTags,
+					'idsDepends' : idsDepends,
+					'idsResolves' : idsResolves,
+					'idsRelates' : idsRelates
 				}
 		}
 		
@@ -59,4 +68,40 @@ angular.module('collaboApp').controller('NewIssueController', ['$scope', '$modal
 		}
 	})
 	
+	$scope.dependsIssues = [];
+	$scope.resolvesIssues = [];
+	$scope.relatesIssues = [];
+	
+	$scope.addDepends = function(issue) {
+		// Only add if not already existing
+		if($scope.dependsIssues.indexOf(issue) < 0) {
+			$scope.dependsIssues.push(issue);
+		}
+	}
+	
+	$scope.addResolves = function(issue) {
+		// Only add if not already existing
+		if($scope.resolvesIssues.indexOf(issue) < 0) {
+			$scope.resolvesIssues.push(issue);
+		}
+	}
+	
+	$scope.addRelates = function(issue) {
+		// Only add if not already existing
+		if($scope.relatesIssues.indexOf(issue) < 0) {
+			$scope.relatesIssues.push(issue);
+		}
+	}
+	
 }]);
+
+function getIdsFromIssueArray(array) {
+	
+	var ids = [];
+	
+	for(var i in array) {
+		ids.push(array[i].idIssue);
+	}
+	
+	return ids;
+}

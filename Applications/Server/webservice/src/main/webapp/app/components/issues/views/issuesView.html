@@ -21,7 +21,7 @@
 			<th>Creator</th>
 		</tr>
 		<tr ng-repeat="issue in issues">
-			<td><a href="#" ng-click="showIssue(issue)">{{issue.title}}</a></td>
+			<td><a href="#" ng-click="showIssue(issue)">{{issue.title}}</a><br/><div class="tagwrapper" ng-repeat="issueTag in issue.issueTags">{{issueTag.tag.name}}</div></td>
 			<td>{{issue.issueStatus.status}}</td>
 			<td>{{issue.creator.forename}} {{issue.creator.surname}}</td>
 		</tr>
