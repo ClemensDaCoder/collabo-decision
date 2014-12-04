@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import collabodecision.webservice.data.RequestWrapperData;
 import collabodecision.webservice.persistence.domain.Alternative;
 import collabodecision.webservice.persistence.domain.DesignDecision;
+import collabodecision.webservice.persistence.domain.Issue;
 import collabodecision.webservice.service.AlternativeService;
 
 @RestController
@@ -47,6 +48,14 @@ public class AlternativeController {
 			// #TODO: ranking
 			@RequestParam(value = "rank") String stringRank) {
 		alternativeService.rankAlternative(idAlternative, idRanker, stringRank);
+	}
+	
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public Alternative getAlternative(
+			@PathVariable long id,
+			@RequestParam(value = "withRelations", defaultValue = "false") boolean withRelations) {
+		return alternativeService.getAlternative(id, withRelations);
 	}
 	
 	

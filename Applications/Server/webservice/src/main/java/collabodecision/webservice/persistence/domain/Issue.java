@@ -15,6 +15,9 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table
 public class Issue {
@@ -66,6 +69,7 @@ public class Issue {
 
 	@OneToMany(mappedBy = "issue", orphanRemoval = true)
 	@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
+	@JsonManagedReference
 	private Set<IssueTag> issueTags;
 
 	public Issue() {
@@ -189,6 +193,7 @@ public class Issue {
 	public Set<IssueTag> getIssueTags() {
 		return issueTags;
 	}
+	
 
 	public void setIssueTags(Set<IssueTag> issueTags) {
 		this.issueTags = issueTags;
