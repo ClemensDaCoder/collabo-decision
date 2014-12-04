@@ -1,5 +1,7 @@
 package collabodecision.webservice.persistence;
 
+import collabodecision.webservice.persistence.domain.Alternative;
+
 
 public interface AlternativeDao {
 
@@ -13,5 +15,7 @@ public interface AlternativeDao {
 	
 	DesignDecision getDesignDecisionWithRelations(long id);
 	*/
+	Alternative getAlternative(long id);
 	
+	Alternative getAlternativeWithRelations(long id);
 }

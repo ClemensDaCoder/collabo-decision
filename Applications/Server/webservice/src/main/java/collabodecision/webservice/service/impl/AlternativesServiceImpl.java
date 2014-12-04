@@ -10,6 +10,7 @@ import collabodecision.webservice.persistence.AlternativeDao;
 import collabodecision.webservice.persistence.CommentDao;
 import collabodecision.webservice.persistence.domain.Alternative;
 import collabodecision.webservice.persistence.domain.Comment;
+import collabodecision.webservice.persistence.domain.Issue;
 import collabodecision.webservice.service.AlternativeService;
 import collabodecision.webservice.service.utils.CommentHelper;
 
@@ -33,7 +34,7 @@ public class AlternativesServiceImpl implements AlternativeService
 		Comment comment = commentHelper.getComment(message, date);
 		
 		// AlternativeDao wird so eine funkion brauchen.
-//		comment.setAlternative(alternativeDao.getAlternative(id));
+		comment.setAlternative(alternativeDao.getAlternative(id));
 		commentDao.saveOrUpdateComment(comment);
 		
 	}
@@ -51,10 +52,17 @@ public class AlternativesServiceImpl implements AlternativeService
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Alternative getAlternative(long id, boolean withRelations) {
-		// TODO Auto-generated method stub
-		return null;
+		if (withRelations) {
+			return alternativeDao.getAlternativeWithRelations(id);
+		}
+
+		return alternativeDao.getAlternative(id);
 	}
+	
+
+
 
 	@Override
 	public void deleteAlternative(long id) {
