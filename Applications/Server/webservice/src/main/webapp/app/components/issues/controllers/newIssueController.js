@@ -11,7 +11,7 @@ angular.module('collaboApp').controller('NewIssueController', ['$scope', '$modal
 					'title' : $scope.title,
 					'description' : $scope.description,
 					'idOwner' : $scope.selectedOwner.idUser,
-					'tags' : [$scope.selectedTag]
+					'tags' : $scope.currentTags
 				}
 		}
 		
@@ -38,17 +38,25 @@ angular.module('collaboApp').controller('NewIssueController', ['$scope', '$modal
 		})
 	};
 	
-	$scope.getIssuesMatchingTags = function(tags) {
+	$scope.currentTags = [];
+	
+	// Fetch issues with Matching Tags (when tageditor directive adds tag to array)
+	$scope.$watchCollection('currentTags', function() {
 		
-		var tagString = "";
-		var tagArray =  tags.split(" ");
-		for(var i in tagArray) {
-			tagString += "tag=" + tagArray[i] + "&";
+		if($scope.currentTags && $scope.currentTags.length > 0) {
+			var tags = $scope.currentTags;
+			var tagString = "";
+			
+			for(var i in tags) {
+				tagString += "tag=" + tags[i] + "&";
+			}
+			
+			$http.get('/rest/issues?' + tagString).success(function(data) {
+				$scope.issuesMatchingTags = (!data || data.length === 0)  ?  null : angular.fromJson(data);
+			});
+		} else {
+			$scope.issuesMatchingTags = null;
 		}
-		
-		$http.get('/rest/issues?' + tagString).success(function(data) {
-			$scope.issuesMatchingTags = (!data || data.length === 0)  ?  null : angular.fromJson(data);
-		});
-	};
+	})
 	
 }]);

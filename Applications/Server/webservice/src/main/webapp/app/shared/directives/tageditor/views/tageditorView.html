@@ -7,9 +7,9 @@
 	</input>
 	<i ng-show="loadingTags" class="glyphicon glyphicon-refresh loading"></i>
 	<div class="selectedTags">
-		<div class="selectedTag" ng-repeat="selectedTag in selectedTags">
-			<div>{{selectedTag}}</div>
-			<div class="glyphicon glyphicon-remove" ng-click="removeTag(selectedTag)"></div>
+		<div class="selectedTag" ng-repeat="tag in tags">
+			<div>{{tag}}</div>
+			<div class="glyphicon glyphicon-remove" ng-click="removeTag(tag)"></div>
 		</div>
 	</div>
 </div>

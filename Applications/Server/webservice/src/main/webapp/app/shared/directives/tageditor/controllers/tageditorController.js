@@ -2,7 +2,6 @@ angular.module('collaboApp')
 .controller('TageditorController', ['$scope', '$http', function($scope, $http) {
 
 	$scope.tageditorText = '';
-	$scope.selectedTags = [];
 	
 	$scope.getTag = function(partialName) {
 		return $http.get('/rest/tags', {
@@ -28,17 +27,17 @@ angular.module('collaboApp')
 		if(text.slice(-1) === " ") {
 			
 			// Only add if not already in Array
-			if($scope.selectedTags.indexOf(text) < 0) {
-				$scope.selectedTags.push(text);
+			if($scope.tags.indexOf(text) < 0) {
+				$scope.tags.push(text.trim());
 			}
 			$scope.tageditorText = '';
 		}
 	});
 	
 	$scope.removeTag = function(tag) {
-		var index = $scope.selectedTags.indexOf(tag);
+		var index = $scope.tags.indexOf(tag);
 		if(index > -1) {
-			$scope.selectedTags.splice(index, 1);
+			$scope.tags.splice(index, 1);
 		}
 	}
 	

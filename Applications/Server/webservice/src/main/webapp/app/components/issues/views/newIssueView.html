@@ -25,12 +25,12 @@
 				</div>
 				<div class="form-group">
 					<label for="inputTag" class="control-label">Tags</label>
-					<tageditor></tageditor>
+					<tageditor tags="currentTags"></tageditor>
 				</div>
 			</form>
 		</div>
 			<div class="col-md-7">
-				<h4>Issue with matching tags</h4>
+				<h4>Issues with matching tags</h4>
 				<table class="table matchingTags">
 					<tr ng-repeat="issueMatchingTags in issuesMatchingTags">
 						<td style="width: 70%; min-width: 200px;"><a href="#">{{issueMatchingTags.title}}</a></td>
