@@ -18,4 +18,7 @@ public interface AlternativeDao {
 	Alternative getAlternative(long id);
 	
 	Alternative getAlternativeWithRelations(long id);
+	
+	void deleteAlternative(long id);
+	
 }

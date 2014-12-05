@@ -56,7 +56,7 @@ public class IssueServiceImpl implements IssueService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<Issue> getIssues(String status, List<String> tags) {
+	public List<Issue> getIssues(String status, List<String> tags, String partialTitle) {
 		IssueStatus issueStatus = null;
 
 		if (status != null) {
@@ -75,8 +75,8 @@ public class IssueServiceImpl implements IssueService {
 				return null;
 			}
 		}
-
-		return issueDao.getIssues(issueStatus, tagsOfIssue);
+		
+		return issueDao.getIssues(issueStatus, tagsOfIssue, partialTitle);
 	}
 
 	@Override
@@ -193,7 +193,7 @@ public class IssueServiceImpl implements IssueService {
 		}
 
 		// This issue depends on other issues
-		if (issueRequest.getIdsDepends() != null) {
+		if (issueRequest.getIdsDepends() != null && !issueRequest.getIdsDepends().isEmpty()) {
 			List<Issue> dependingIssues = issueDao.getIssuesByIds(issueRequest
 					.getIdsDepends());
 
@@ -210,7 +210,7 @@ public class IssueServiceImpl implements IssueService {
 			issue.setBlocked(dependingIssues.size() > 0);
 		}
 		// This issue resolves other issues
-		if (issueRequest.getIdsResolves() != null) {
+		if (issueRequest.getIdsResolves() != null && !issueRequest.getIdsResolves().isEmpty()) {
 			List<Issue> resolvesIssues = issueDao.getIssuesByIds(issueRequest
 					.getIdsResolves());
 			for (Issue resolvesIssue : resolvesIssues) {
@@ -222,7 +222,7 @@ public class IssueServiceImpl implements IssueService {
 
 		// This issue is related to other issues
 		// other issues are related to this issue
-		if (issueRequest.getIdsRelates() != null) {
+		if (issueRequest.getIdsRelates() != null && !issueRequest.getIdsRelates().isEmpty()) {
 			List<Issue> relatedIssues = issueDao.getIssuesByIds(issueRequest
 					.getIdsRelates());
 			for (Issue relatedIssue : relatedIssues) {

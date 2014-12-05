@@ -1,0 +1,11 @@
+<div ng-controller="IssueeditorController">
+	
+	<input type="text" id="inputIssue" ng-model="issueeditorText" ng-trim="false"
+		class="form-control" placeholder="Issue title"
+		typeahead="issue.title for issue in getIssues($viewValue)" typeahead-editable="false" typeahead-on-select="onIssueSelect($item, $model, $label)"> 
+	</input>
+	<div class="tagwrapper" ng-repeat="issue in issues">
+		{{issue.title}}
+		<div class="glyphicon glyphicon-remove" ng-click="removeIssue(issue)"></div>
+	</div>
+</div>

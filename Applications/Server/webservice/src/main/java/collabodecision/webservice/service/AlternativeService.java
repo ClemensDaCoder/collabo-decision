@@ -5,12 +5,11 @@ import java.util.List;
 import collabodecision.webservice.persistence.domain.Alternative;
 
 public interface AlternativeService extends CommentService, FileService{
-	
-	List<Alternative> getAlternatives(String status, List<String> tags);
-	
-	Alternative getAlternative(long id, boolean withRelations);
+		
 	
 	void deleteAlternative(long id);
+	
+	Alternative getAlternative(long id, boolean withRelations);
 	
 	void addAlternative(Alternative alternative);
 	

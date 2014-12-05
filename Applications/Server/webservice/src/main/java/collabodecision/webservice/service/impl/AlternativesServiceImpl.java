@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import collabodecision.webservice.data.RequestWrapperIssue;
 import collabodecision.webservice.persistence.AlternativeDao;
 import collabodecision.webservice.persistence.CommentDao;
 import collabodecision.webservice.persistence.domain.Alternative;
@@ -45,11 +46,6 @@ public class AlternativesServiceImpl implements AlternativeService
 		
 	}
 
-	@Override
-	public List<Alternative> getAlternatives(String status, List<String> tags) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	@Transactional(readOnly = true)
@@ -66,20 +62,20 @@ public class AlternativesServiceImpl implements AlternativeService
 
 	@Override
 	public void deleteAlternative(long id) {
-		// TODO Auto-generated method stub
+		alternativeDao.deleteAlternative(id);
 		
 	}
 
 	@Override
 	public void addAlternative(Alternative alternative) {
 		// TODO Auto-generated method stub
-		
+		addOrUpdateAlternative(alternative, null);
 	}
 
 	@Override
 	public void updateAlternative(long id, Alternative alternative) {
 		// TODO Auto-generated method stub
-		
+		addOrUpdateAlternative(alternative, id);
 	}
 
 	@Override
@@ -87,5 +83,12 @@ public class AlternativesServiceImpl implements AlternativeService
 		// TODO Auto-generated method stub
 		
 	}
+	
+	private void addOrUpdateAlternative(Alternative alternative,
+			Long idExistingIssue) {
+	}
+	
+
+
 
 }

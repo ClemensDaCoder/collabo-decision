@@ -26,8 +26,9 @@ public class IssueController {
 	@RequestMapping(method = RequestMethod.GET)
 	public @ResponseBody List<Issue> getIssues(
 			@RequestParam(value = "status", required = false) String status,
-			@RequestParam(value = "tag", required = false) List<String> tags) {
-		return issueService.getIssues(status, tags);
+			@RequestParam(value = "tag", required = false) List<String> tags,
+			@RequestParam(value = "partialtitle", required=false) String partialTitle) {
+		return issueService.getIssues(status, tags, partialTitle);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)

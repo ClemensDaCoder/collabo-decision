@@ -24,7 +24,7 @@ public interface IssueDao {
 	 *            All Issues with that specific tags - if null all Issues
 	 * @return List of Issues filtered by the parameters
 	 */
-	List<Issue> getIssues(IssueStatus status, List<Tag> tags);
+	List<Issue> getIssues(IssueStatus status, List<Tag> tags, String partialTitle);
 
 	List<Issue> getIssuesByIds(Collection<Long> issueIds);
 	

@@ -26,6 +26,8 @@ angular.module('collaboApp')
 		// If so, add the Text to the selected Tags
 		if(text.slice(-1) === " ") {
 			
+			text = text.trim();
+			
 			// Only add if not already in Array
 			if($scope.tags.indexOf(text) < 0) {
 				$scope.tags.push(text.trim());
@@ -33,6 +35,15 @@ angular.module('collaboApp')
 			$scope.tageditorText = '';
 		}
 	});
+	
+	// When a tag is selected
+	$scope.onTagSelect = function($item, $model, $label) {
+		
+		if($scope.tags.indexOf($item.name) < 0) {
+			$scope.tags.push($item.name);
+		}
+		$scope.tageditorText = '';
+	}
 	
 	$scope.removeTag = function(tag) {
 		var index = $scope.tags.indexOf(tag);
