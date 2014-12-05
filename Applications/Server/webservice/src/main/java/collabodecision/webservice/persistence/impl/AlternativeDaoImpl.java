@@ -42,5 +42,11 @@ public class AlternativeDaoImpl extends BaseDao implements AlternativeDao {
 	
 		return alternative;
 	}
+
+	@Override
+	public void deleteAlternative(long id) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
