@@ -1,0 +1,49 @@
+<div class="designDecisionDetail-wrapper">
+	<div class="modal-header">
+		<h3>Design Decision - Detail View</h3>
+	</div>
+	
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-5">
+				<form class="form-horizontal">
+					<div class="form-group">
+						<label for="inputDesignDecisionTitle" class="control-label">Title</label>
+						<input type="text" class="form-control" id="inputDesignDecisionTitle" placeholder="Title" ng-model="title">
+					</div>
+					<div class="form-group">
+						<label for="inputIssueTitle" class="control-label">Issue</label>
+						<input type="text" class="form-control" id="inputIssueTitle" placeholder="Issue" ng-model="issue">
+					</div>
+					<div class="form-group">
+						<label for="inputOwner" class="control-label">Owner</label>
+						<input type="text" class="form-control" id="inputOwner" placeholder="Owner" ng-model="owner">
+					</div>
+					<div class="form-group">
+						<label for="inputShareholders" class="control-label">Shareholders</label>
+						<input type="text" class="form-control" id="inputShareholders" placeholder="Shareholders" ng-model="shareholders">
+					</div>
+					<div class="form-group">
+						<label for="inputRationale" class="control-label">Rationale</label>
+						<textarea rows="10" cols="10" id="inputRationale" class="form-control" placeholder="Rationale" ng-model="rationale"></textarea>
+					</div>
+					<div class="form-group">
+						<label for="inputAssumption" class="control-label">Assumption</label>
+						<textarea rows="10" cols="10" id="inputAssumption" class="form-control" placeholder="Assumption" ng-model="assumption"></textarea>
+					</div>
+					<div class="form-group">
+						Here will be the file upload.
+					</div>
+					<div class="form-group">
+						Here will be the alternatives.
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<div class="modal-footer">
+			<button class="btn btn-success" ng-click="save()">Save changes</button>
+			<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+		</div>
+	</div>
+</div>

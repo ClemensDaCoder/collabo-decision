@@ -1,1 +1,28 @@
-The View for the Design Decisions
+<div class="designDecisions-wrapper">
+	<h2>{{currentTab}} - Design Decisions</h2>
+	<div class="container-fluid">
+		<div class="btn-group">
+			<button class="btn btn-primary" ng-click="getDesignDecisions(null)">All</button>
+			<button class="btn btn-primary" ng-click="getDesignDecisions('COLLECTING_ALTERNATIVES')">Collecting Alternatives</button>
+			<button class="btn btn-primary" ng-click="getDesignDecisions('SELECTING_ALTERNATIVES')">Selecting Alternatives</button>
+			<button class="btn btn-primary" ng-click="getDesignDecisions('DECIDED')">Decided</button>
+			<button class="btn btn-primary" ng-click="getDesignDecisions('OBSOLETE')">Obsolete</button>
+			<button class="btn btn-primary" ng-click="getDesignDecisions('INAPPROPRIATE_SOLUTION')">Inappropriate Solutions</button>
+			<button class="btn btn-primary" ng-click="getDesignDecisions('BLOCKED')">Blocked</button>
+		</div>
+	</div>
+	<table class="table">
+		<tr>
+			<th>Title</th>
+			<th>Status</th>
+			<th>Owner</th>
+			<th>Creation Date</th>
+			<th>Rating</th>
+		</tr>
+		<tr ng-repeat="designDecision in designDecisions">
+			<td><a href ng-click="showDesignDecision(designDecision.idDesignDecision)">{{designDecision.title}}</a></td>
+			<td>{{designDecision.designDecisionStatus.status}}</td>
+			<td>{{designDecision.issue.owner.forename}} {{designDecision.issue.owner.surname}}</td><td>no date</td><td>no rating</td>
+		</tr>
+	</table>
+</div>

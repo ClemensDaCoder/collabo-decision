@@ -9,16 +9,16 @@ body {
 	margin-right: 15px;
 }
 
-.newIssue-wrapper .form-group {
+.newIssue-wrapper .designDecisionDetail-wrapper .form-group {
 	margin-left: 15px;
 	margin-right: 15px;
 }
 
-.newIssue-wrapper .form-group {
+.newIssue-wrapper .designDecisionDetail-wrapper .form-group {
 	position: relative;
 }
 
-.newIssue-wrapper .loading {
+.newIssue-wrapper .designDecisionDetail-wrapper .loading {
 	position: absolute;
 	right: 5px;
 	top: 35px;
