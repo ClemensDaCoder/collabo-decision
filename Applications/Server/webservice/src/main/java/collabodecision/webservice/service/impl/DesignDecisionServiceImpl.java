@@ -17,6 +17,7 @@ import collabodecision.webservice.persistence.domain.AppUser;
 import collabodecision.webservice.persistence.domain.Comment;
 import collabodecision.webservice.persistence.domain.DesignDecision;
 import collabodecision.webservice.persistence.domain.File;
+import collabodecision.webservice.persistence.impl.DesignDecisionStatusDaoImpl;
 import collabodecision.webservice.service.AppUserService;
 import collabodecision.webservice.service.DesignDecisionService;
 import collabodecision.webservice.service.utils.CommentHelper;
@@ -26,8 +27,6 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 
 	@Autowired
 	private DesignDecisionDao designDecisionDao;
-	
-
 
 	@Autowired
 	private CommentHelper commentHelper;
@@ -41,8 +40,8 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 	@Autowired
 	private SessionFactory sessionFactory;
 	
-	@Autowired
-	private DesignDecisionStatusDao designDecisionStatusDao;
+	//@Autowired
+	private DesignDecisionStatusDao designDecisionStatusDao =  new DesignDecisionStatusDaoImpl(null);
 	
 	@Override
 	@Transactional(readOnly=true)
