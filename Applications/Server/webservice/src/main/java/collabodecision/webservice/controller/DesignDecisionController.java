@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import collabodecision.webservice.data.RequestWrapperData;
+import collabodecision.webservice.data.RequestWrapperDesignDecision;
 import collabodecision.webservice.data.ResponseWrapperDesignDecision;
 import collabodecision.webservice.persistence.domain.DesignDecision;
 import collabodecision.webservice.service.DesignDecisionService;
@@ -41,7 +42,7 @@ public class DesignDecisionController {
 
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public void addDesignDecision(@RequestBody RequestWrapperData<DesignDecision> request) {
+	public void addDesignDecision(@RequestBody RequestWrapperData<RequestWrapperDesignDecision> request) {
 		designDecisionService.addDesignDecision(request.getData());
 	}
 

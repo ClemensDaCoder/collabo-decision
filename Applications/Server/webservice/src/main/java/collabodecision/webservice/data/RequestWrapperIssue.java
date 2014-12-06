@@ -27,6 +27,8 @@ public class RequestWrapperIssue {
 	
 	private List<String> files;
 
+	
+	
 	public String getTitle() {
 		return title;
 	}
