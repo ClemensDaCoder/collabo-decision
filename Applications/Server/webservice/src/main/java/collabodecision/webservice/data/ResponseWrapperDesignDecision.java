@@ -9,7 +9,7 @@ public class ResponseWrapperDesignDecision {
 	
 	private boolean isOwner;
 	
-	private boolean showInapropiateSolution;
+	private boolean showInaproppiateSolution;
 	
 	private boolean showStartRanking;
 	
@@ -17,7 +17,12 @@ public class ResponseWrapperDesignDecision {
 	
 	private boolean showSelectAlternative;
 	
-	private boolean booleanDecided;
+	private boolean isDecided;
+	
+	private boolean editable;
+	
+	private boolean isShareholder;
+	
 	
 	
 	public DesignDecision getDesignDecision() {
@@ -36,12 +41,12 @@ public class ResponseWrapperDesignDecision {
 		this.isOwner = isOwner;
 	}
 
-	public boolean isShowInapropiateSolution() {
-		return showInapropiateSolution;
+	public boolean isShowInaproppiateSolution() {
+		return showInaproppiateSolution;
 	}
 
-	public void setShowInapropiateSolution(boolean showInapropiateSolution) {
-		this.showInapropiateSolution = showInapropiateSolution;
+	public void setShowInaproppiateSolution(boolean showInapropiateSolution) {
+		this.showInaproppiateSolution = showInapropiateSolution;
 	}
 
 	public boolean isShowStartRanking() {
@@ -57,7 +62,7 @@ public class ResponseWrapperDesignDecision {
 	}
 
 	public void setFinishRanking(boolean finishRanking) {
-		finishRanking = finishRanking;
+		this.finishRanking = finishRanking;
 	}
 
 	public boolean isShowSelectAlternative() {
@@ -65,15 +70,31 @@ public class ResponseWrapperDesignDecision {
 	}
 
 	public void setShowSelectAlternative(boolean showSelectAlternative) {
-		showSelectAlternative = showSelectAlternative;
+		this.showSelectAlternative = showSelectAlternative;
 	}
 
-	public boolean isBooleanDecided() {
-		return booleanDecided;
+	public boolean isDecided() {
+		return isDecided;
 	}
 
-	public void setBooleanDecided(boolean booleanDecided) {
-		this.booleanDecided = booleanDecided;
+	public void setDecided(boolean booleanDecided) {
+		this.isDecided = booleanDecided;
+	}
+
+	public boolean isEditable() {
+		return editable;
+	}
+
+	public void setEditable(boolean editable) {
+		this.editable = editable;
+	}
+
+	public boolean isShareholder() {
+		return isShareholder;
+	}
+
+	public void setShareholder(boolean isShareholder) {
+		this.isShareholder = isShareholder;
 	}
 
 	

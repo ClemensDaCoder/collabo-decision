@@ -2,6 +2,7 @@ package collabodecision.webservice.service.impl;
 
 import java.util.List;
 
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import collabodecision.webservice.persistence.DesignDecisionDao;
 import collabodecision.webservice.persistence.domain.AppUser;
 import collabodecision.webservice.persistence.domain.Comment;
 import collabodecision.webservice.persistence.domain.DesignDecision;
+import collabodecision.webservice.persistence.domain.File;
 import collabodecision.webservice.service.AppUserService;
 import collabodecision.webservice.service.DesignDecisionService;
 import collabodecision.webservice.service.utils.CommentHelper;
@@ -23,6 +25,8 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 
 	@Autowired
 	private DesignDecisionDao designDecisionDao;
+	
+
 
 	@Autowired
 	private CommentHelper commentHelper;
@@ -33,7 +37,8 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 	@Autowired
 	private AppUserService userService;
 
-	
+	@Autowired
+	private SessionFactory sessionFactory;
 	
 	@Override
 	@Transactional(readOnly=true)
@@ -73,13 +78,15 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 		response.setDesignDecision(decision);
 		
 		//TODO set rights .. 
-		response.setBooleanDecided(true);
+		response.setDecided(true);
 		response.setFinishRanking(true);
 		response.setOwner(true);
-		response.setShowInapropiateSolution(true);
+		response.setShowInaproppiateSolution(true);
 		response.setShowSelectAlternative(true);
 		response.setShowStartRanking(true);
-		
+		response.setEditable(true);
+		response.setShareholder(true);
+
 		return response;
 	}
 	
@@ -88,6 +95,7 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 	@Transactional(readOnly=false)
 	public void addDesignDecision(DesignDecision designDecision) {
 		designDecisionDao.saveOrUpdateDesignDecision(designDecision);
+
 	}
 
 	@Override
@@ -118,11 +126,62 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 
 	@Override
 	public void addRequestWrapperDesignDecision(
-			RequestWrapperDesignDecision responseWrapperDesignDecision) {
+			RequestWrapperDesignDecision DesignDecisionrequest) {
 		// TODO Auto-generated method stub
+		addOrUpdateDesignDecision(DesignDecisionrequest, null);
+	}
+	
+	public void addOrUpdateDesignDecision(RequestWrapperDesignDecision decisionRequest, Long idExistingDesignDecision) {
+		
+		//get DesignDecision from DB if update; otherwise new Design Decion
+		
+		DesignDecision decision = null;
+		
+		if(idExistingDesignDecision == null)
+		{
+			decision = new DesignDecision();
+		}
+		else
+		{
+			designDecisionDao.getDesignDecision(idExistingDesignDecision);
+		}
+		// On Update - Delete all OneToMany Relations in advance (are added
+				// again later)
+		if(idExistingDesignDecision != null)
+		{
+			decision.getFiles().clear();
+			// Must be done - Otherwise Hibernate would result in Violation
+			// Constraint!
+			sessionFactory.getCurrentSession().flush();
+		}
+		
+		//Setting the properties of the DesignDecision
+		
+		decision.setTitle(decisionRequest.getTitle());
+		decision.setRationale(decisionRequest.getRationale());
+		decision.setAssumption(decisionRequest.getAssumption());
+		
+		//TODO: set Status
+		//decision.setDesignDecisionStatus(decisionSt);
+
+		if(decisionRequest.getFiles() != null){
+			for(String file:decisionRequest.getFiles())
+			{
+			  decision.getFiles().add(new File(file, decision));
+			}
+			
+		}
+		
+				// Only needed when new (not update)
+				if (idExistingDesignDecision == null) {
+					designDecisionDao.saveOrUpdateDesignDecision(decision);
+				}
+
+	
 		
 	}
-
-
-
 }
+
+
+
+

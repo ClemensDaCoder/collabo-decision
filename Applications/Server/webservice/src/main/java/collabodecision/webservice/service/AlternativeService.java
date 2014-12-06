@@ -1,7 +1,5 @@
 package collabodecision.webservice.service;
 
-import java.util.List;
-
 import collabodecision.webservice.persistence.domain.Alternative;
 
 public interface AlternativeService extends CommentService, FileService{

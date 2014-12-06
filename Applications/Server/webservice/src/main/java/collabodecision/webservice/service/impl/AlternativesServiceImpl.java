@@ -1,17 +1,13 @@
 package collabodecision.webservice.service.impl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import collabodecision.webservice.data.RequestWrapperIssue;
 import collabodecision.webservice.persistence.AlternativeDao;
 import collabodecision.webservice.persistence.CommentDao;
 import collabodecision.webservice.persistence.domain.Alternative;
 import collabodecision.webservice.persistence.domain.Comment;
-import collabodecision.webservice.persistence.domain.Issue;
 import collabodecision.webservice.service.AlternativeService;
 import collabodecision.webservice.service.utils.CommentHelper;
 
