@@ -5,7 +5,7 @@ import collabodecision.webservice.persistence.domain.DesignDecision;
 public class ResponseWrapperDesignDecision {
 
 	
-	private DesignDecision designdecision;
+	private DesignDecision designDecision;
 	
 	private boolean isOwner;
 	
@@ -20,12 +20,12 @@ public class ResponseWrapperDesignDecision {
 	private boolean booleanDecided;
 	
 	
-	public DesignDecision getDesigndecision() {
-		return designdecision;
+	public DesignDecision getDesignDecision() {
+		return designDecision;
 	}
 
-	public void setDesigndecision(DesignDecision designdecision) {
-		this.designdecision = designdecision;
+	public void setDesignDecision(DesignDecision designDecision) {
+		this.designDecision = designDecision;
 	}
 
 	public boolean isOwner() {
