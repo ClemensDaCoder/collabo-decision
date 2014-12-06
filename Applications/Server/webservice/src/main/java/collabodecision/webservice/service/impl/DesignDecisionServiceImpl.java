@@ -82,13 +82,13 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 		
 		//TODO set rights .. 
 		response.setDecided(true);
-		response.setFinishRanking(true);
+		response.setShowFinishRanking(true);
 		response.setOwner(true);
-		response.setShowInaproppiateSolution(true);
+		response.setShowInaproppriateSolution(true);
 		response.setShowSelectAlternative(true);
 		response.setShowStartRanking(true);
 		response.setEditable(true);
-		response.setShareholder(true);
+		response.setIsShareholder(true);
 
 		return response;
 	}

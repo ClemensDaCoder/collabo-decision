@@ -9,11 +9,11 @@ public class ResponseWrapperDesignDecision {
 	
 	private boolean isOwner;
 	
-	private boolean showInaproppiateSolution;
+	private boolean showInaproppriateSolution;
 	
 	private boolean showStartRanking;
 	
-	private boolean finishRanking;
+	private boolean showFinishRanking;
 	
 	private boolean showSelectAlternative;
 	
@@ -41,12 +41,12 @@ public class ResponseWrapperDesignDecision {
 		this.isOwner = isOwner;
 	}
 
-	public boolean isShowInaproppiateSolution() {
-		return showInaproppiateSolution;
+	public boolean isShowInaproppriateSolution() {
+		return showInaproppriateSolution;
 	}
 
-	public void setShowInaproppiateSolution(boolean showInapropiateSolution) {
-		this.showInaproppiateSolution = showInapropiateSolution;
+	public void setShowInaproppriateSolution(boolean showInapropriateSolution) {
+		this.showInaproppriateSolution = showInapropriateSolution;
 	}
 
 	public boolean isShowStartRanking() {
@@ -57,12 +57,12 @@ public class ResponseWrapperDesignDecision {
 		this.showStartRanking = showStartRanking;
 	}
 
-	public boolean isFinishRanking() {
-		return finishRanking;
+	public boolean isShowFinishRanking() {
+		return showFinishRanking;
 	}
 
-	public void setFinishRanking(boolean finishRanking) {
-		this.finishRanking = finishRanking;
+	public void setShowFinishRanking(boolean showFinishRanking) {
+		this.showFinishRanking = showFinishRanking;
 	}
 
 	public boolean isShowSelectAlternative() {
@@ -93,7 +93,7 @@ public class ResponseWrapperDesignDecision {
 		return isShareholder;
 	}
 
-	public void setShareholder(boolean isShareholder) {
+	public void setIsShareholder(boolean isShareholder) {
 		this.isShareholder = isShareholder;
 	}
 
