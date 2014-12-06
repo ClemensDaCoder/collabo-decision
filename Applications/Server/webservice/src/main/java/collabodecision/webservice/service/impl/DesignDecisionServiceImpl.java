@@ -40,8 +40,8 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 	@Autowired
 	private SessionFactory sessionFactory;
 	
-	//@Autowired
-	private DesignDecisionStatusDao designDecisionStatusDao =  new DesignDecisionStatusDaoImpl(null);
+	@Autowired
+	private DesignDecisionStatusDao designDecisionStatusDao; //  new DesignDecisionStatusDaoImpl(null);
 	
 	@Override
 	@Transactional(readOnly=true)
@@ -165,7 +165,7 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 		decision.setAssumption(decisionRequest.getAssumption());
 		
 		//TODO: set Status
-		decision.setDesignDecisionStatus(designDecisionStatusDao.getIssueStatusByName("NEW"));
+		decision.setDesignDecisionStatus(designDecisionStatusDao.getDesignDecisionStatusByName("NEW"));
 
 		if(decisionRequest.getFiles() != null){
 			for(String file:decisionRequest.getFiles())
