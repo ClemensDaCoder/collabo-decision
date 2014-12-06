@@ -7,6 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import collabodecision.webservice.data.RequestWrapperDesignDecision;
 import collabodecision.webservice.data.ResponseWrapperDesignDecision;
 import collabodecision.webservice.persistence.CommentDao;
 import collabodecision.webservice.persistence.DesignDecisionDao;
@@ -69,7 +70,7 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 		}
 		
 		ResponseWrapperDesignDecision response = new ResponseWrapperDesignDecision();
-		response.setDesigndecision(decision);
+		response.setDesignDecision(decision);
 		
 		//TODO set rights .. 
 		response.setBooleanDecided(true);
@@ -111,6 +112,13 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 
 	@Override
 	public void addFile(long id, String pathToFile) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addRequestWrapperDesignDecision(
+			RequestWrapperDesignDecision responseWrapperDesignDecision) {
 		// TODO Auto-generated method stub
 		
 	}

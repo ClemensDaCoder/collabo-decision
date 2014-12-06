@@ -43,7 +43,7 @@ public class DesignDecisionController {
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public void addDesignDecision(@RequestBody RequestWrapperData<RequestWrapperDesignDecision> request) {
-		designDecisionService.addDesignDecision(request.getData());
+		designDecisionService.addRequestWrapperDesignDecision(request.getData());
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)

@@ -13,9 +13,9 @@ public class ResponseWrapperDesignDecision {
 	
 	private boolean showStartRanking;
 	
-	private boolean FinishRanking;
+	private boolean finishRanking;
 	
-	private boolean ShowSelectAlternative;
+	private boolean showSelectAlternative;
 	
 	private boolean booleanDecided;
 	
@@ -53,19 +53,19 @@ public class ResponseWrapperDesignDecision {
 	}
 
 	public boolean isFinishRanking() {
-		return FinishRanking;
+		return finishRanking;
 	}
 
 	public void setFinishRanking(boolean finishRanking) {
-		FinishRanking = finishRanking;
+		finishRanking = finishRanking;
 	}
 
 	public boolean isShowSelectAlternative() {
-		return ShowSelectAlternative;
+		return showSelectAlternative;
 	}
 
 	public void setShowSelectAlternative(boolean showSelectAlternative) {
-		ShowSelectAlternative = showSelectAlternative;
+		showSelectAlternative = showSelectAlternative;
 	}
 
 	public boolean isBooleanDecided() {
