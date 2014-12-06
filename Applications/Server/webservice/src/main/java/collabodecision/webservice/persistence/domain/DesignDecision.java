@@ -59,6 +59,14 @@ public class DesignDecision {
 	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
 	private Set<ShareHolder> shareHolders;
 
+	public Set<ShareHolder> getShareHolders() {
+		return shareHolders;
+	}
+
+	public void setShareHolders(Set<ShareHolder> shareHolders) {
+		this.shareHolders = shareHolders;
+	}
+
 	public String getTitle() {
 		return title;
 	}
