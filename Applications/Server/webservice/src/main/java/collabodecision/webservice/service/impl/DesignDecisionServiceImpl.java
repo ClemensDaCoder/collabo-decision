@@ -12,6 +12,7 @@ import collabodecision.webservice.data.RequestWrapperDesignDecision;
 import collabodecision.webservice.data.ResponseWrapperDesignDecision;
 import collabodecision.webservice.persistence.CommentDao;
 import collabodecision.webservice.persistence.DesignDecisionDao;
+import collabodecision.webservice.persistence.DesignDecisionStatusDao;
 import collabodecision.webservice.persistence.domain.AppUser;
 import collabodecision.webservice.persistence.domain.Comment;
 import collabodecision.webservice.persistence.domain.DesignDecision;
@@ -39,6 +40,9 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 
 	@Autowired
 	private SessionFactory sessionFactory;
+	
+	@Autowired
+	private DesignDecisionStatusDao designDecisionStatusDao;
 	
 	@Override
 	@Transactional(readOnly=true)
@@ -94,14 +98,14 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 	@Override
 	@Transactional(readOnly=false)
 	public void addDesignDecision(DesignDecision designDecision) {
-		designDecisionDao.saveOrUpdateDesignDecision(designDecision);
+		//designDecisionDao.saveOrUpdateDesignDecision(designDecision);
 
 	}
 
 	@Override
 	@Transactional(readOnly=false)
 	public void updateDesignDecision(long id, DesignDecision designDecision) {
-		designDecisionDao.saveOrUpdateDesignDecision(designDecision);
+		//designDecisionDao.saveOrUpdateDesignDecision(designDecision);
 	}
 
 	@Override
@@ -162,7 +166,7 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 		decision.setAssumption(decisionRequest.getAssumption());
 		
 		//TODO: set Status
-		//decision.setDesignDecisionStatus(decisionSt);
+		decision.setDesignDecisionStatus(designDecisionStatusDao.getIssueStatusByName("NEW"));
 
 		if(decisionRequest.getFiles() != null){
 			for(String file:decisionRequest.getFiles())
