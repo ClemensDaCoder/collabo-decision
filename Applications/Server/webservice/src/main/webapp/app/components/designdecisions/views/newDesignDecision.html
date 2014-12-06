@@ -1,0 +1,33 @@
+<div class="designDecisionDetail-wrapper">
+	<div class="modal-header">
+		<h3>Create new Design Decision</h3>
+	</div>
+	
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-5">
+				<form class="form-horizontal">
+					<div class="form-group">
+						<label for="inputDesignDecisionTitle" class="control-label">Title</label>
+						<input type="text" class="form-control" id="inputDesignDecisionTitle" placeholder="Title" ng-model="title">
+					</div>
+					<div class="form-group">
+						<label for="inputShareholders" class="control-label">Shareholders</label>
+						<input type="text" class="form-control" id="inputShareholders" placeholder="Shareholders" ng-model="shareholders">
+					</div>
+					<div class="form-group">
+						<label for="inputAssumption" class="control-label">Assumption</label>
+						<textarea rows="5" cols="10" id="inputAssumption" class="form-control" placeholder="Assumption" ng-model="assumption"></textarea>
+					</div>
+					<div class="form-group">
+						Here will be the file upload.
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-success" ng-click="save()">Save</button>
+			<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+		</div>
+	</div>
+</div>

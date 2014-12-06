@@ -34,6 +34,26 @@ angular.module('collaboApp').controller('IssuesController', ['$http', '$scope', 
 		});
 	}
 	
+	//TODO: move to issue detail view
+	$scope.createDesignDecision = function(idIssue){
+		var modalInstance = $modal.open({
+			templateUrl : 'app/components/designdecisions/views/newDesignDecision.html',
+			controller : 'NewDesignDecisionController',
+			resolve: {
+				idIssue : function() {
+					return idIssue;
+				}
+			}
+		});
+		
+		//TODO: check if needed
+		modalInstance.result.then(function() {
+			$scope.getDesignDecisions(null);
+		}, function() {
+			$scope.getDesignDecisions(null);
+		});
+	};
+	
 	// On load show all
 	$scope.getIssues(null);
 }]);

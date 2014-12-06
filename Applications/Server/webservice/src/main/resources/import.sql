@@ -6,4 +6,6 @@ INSERT INTO issuestatus (idIssueStatus, status) VALUES (2, 'IN_PROGRESS'), (1, '
 
 INSERT INTO relationtype (idRelationType, type) VALUES (1, 'DEPENDS'), (3, 'RELATES'), (2, 'RESOLVES');
 
-INSERT INTO Tag (idTag, name) VALUES (9, 'Java'), (4, 'Database'), (1, 'Organizational'), (2, 'Enterprise');  
+INSERT INTO Tag (idTag, name) VALUES (9, 'Java'), (4, 'Database'), (1, 'Organizational'), (2, 'Enterprise');
+
+INSERT INTO designdecisionstatus (idDesignDecisionStatus, status) VALUES (1, 'COLLECTING_ALTERNATIVES'), (2, 'SELECTING_ALTERNATIVES'), (3, 'DECIDED'), (4, 'OBSOLETE'), (5, 'INAPPROPRIATE_SOLUTION'), (6, 'BLOCKED');

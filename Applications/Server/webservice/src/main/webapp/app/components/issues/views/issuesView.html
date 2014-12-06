@@ -19,11 +19,13 @@
 			<th>Title</th>
 			<th>Status</th>
 			<th>Creator</th>
+			<th>Create Design Decision</th>
 		</tr>
 		<tr ng-repeat="issue in issues">
 			<td><a href="#" ng-click="showIssue(issue)">{{issue.title}}</a><br/><div class="tagwrapper" ng-repeat="issueTag in issue.issueTags">{{issueTag.tag.name}}</div></td>
 			<td>{{issue.issueStatus.status}}</td>
 			<td>{{issue.creator.forename}} {{issue.creator.surname}}</td>
+			<td><button class="btn btn-danger" ng-click="createDesignDecision(issue.idIssue)">Create Design Decision</button></td>
 		</tr>
 	</table>
 </div>

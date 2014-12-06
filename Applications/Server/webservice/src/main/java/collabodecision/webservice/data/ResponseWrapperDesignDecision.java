@@ -9,7 +9,7 @@ public class ResponseWrapperDesignDecision {
 	
 	private boolean isOwner;
 	
-	private boolean showInaproppriateSolution;
+	private boolean showInappropriateSolution;
 	
 	private boolean showStartRanking;
 	
@@ -41,12 +41,12 @@ public class ResponseWrapperDesignDecision {
 		this.isOwner = isOwner;
 	}
 
-	public boolean isShowInaproppriateSolution() {
-		return showInaproppriateSolution;
+	public boolean isShowInappropriateSolution() {
+		return showInappropriateSolution;
 	}
 
-	public void setShowInaproppriateSolution(boolean showInapropriateSolution) {
-		this.showInaproppriateSolution = showInapropriateSolution;
+	public void setShowInappropriateSolution(boolean showInappropriateSolution) {
+		this.showInappropriateSolution = showInappropriateSolution;
 	}
 
 	public boolean isShowStartRanking() {

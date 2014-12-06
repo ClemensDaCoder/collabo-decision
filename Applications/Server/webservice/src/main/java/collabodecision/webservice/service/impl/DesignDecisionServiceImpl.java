@@ -20,71 +20,73 @@ import collabodecision.webservice.persistence.domain.File;
 import collabodecision.webservice.persistence.impl.DesignDecisionStatusDaoImpl;
 import collabodecision.webservice.service.AppUserService;
 import collabodecision.webservice.service.DesignDecisionService;
+import collabodecision.webservice.service.IssueService;
 import collabodecision.webservice.service.utils.CommentHelper;
 
 @Service
 public class DesignDecisionServiceImpl implements DesignDecisionService {
 
 	@Autowired
+	private IssueService issueService;
+	
+	@Autowired
 	private DesignDecisionDao designDecisionDao;
 
 	@Autowired
 	private CommentHelper commentHelper;
-	
+
 	@Autowired
 	private CommentDao commentDao;
-	
+
 	@Autowired
 	private AppUserService userService;
 
 	@Autowired
 	private SessionFactory sessionFactory;
-	
+
 	@Autowired
-	private DesignDecisionStatusDao designDecisionStatusDao; //  new DesignDecisionStatusDaoImpl(null);
-	
+	private DesignDecisionStatusDao designDecisionStatusDao; // new
+																// DesignDecisionStatusDaoImpl(null);
+
 	@Override
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public List<DesignDecision> getDesignDecisions() {
 		return designDecisionDao.getDesignDecisions();
 	}
 
 	@Override
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public DesignDecision getDesignDecision(long id, boolean withRelations) {
-		if(withRelations) {
+		if (withRelations) {
 			return designDecisionDao.getDesignDecisionWithRelations(id);
 		}
-		
+
 		return designDecisionDao.getDesignDecision(id);
 	}
-	
+
 	@Override
 	public ResponseWrapperDesignDecision getResponseWrapperDesignDesicion(
 			long id, boolean withRelations) {
 		DesignDecision decision;
-		
+
 		AppUser creator = userService
-			     .getAppUserByUsername(SecurityContextHolder.getContext()
-			       .getAuthentication().getName());
-		
-		if(withRelations)
-		{
-			decision= designDecisionDao.getDesignDecisionWithRelations(id);
-		}
-		else
-		{
+				.getAppUserByUsername(SecurityContextHolder.getContext()
+						.getAuthentication().getName());
+
+		if (withRelations) {
+			decision = designDecisionDao.getDesignDecisionWithRelations(id);
+		} else {
 			decision = designDecisionDao.getDesignDecision(id);
 		}
-		
+
 		ResponseWrapperDesignDecision response = new ResponseWrapperDesignDecision();
 		response.setDesignDecision(decision);
-		
-		//TODO set rights .. 
+
+		// TODO set rights ..
 		response.setDecided(true);
 		response.setShowFinishRanking(true);
 		response.setOwner(true);
-		response.setShowInaproppriateSolution(true);
+		response.setShowInappropriateSolution(true);
 		response.setShowSelectAlternative(true);
 		response.setShowStartRanking(true);
 		response.setEditable(true);
@@ -92,29 +94,28 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 
 		return response;
 	}
-	
 
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional(readOnly = false)
 	public void addDesignDecision(DesignDecision designDecision) {
-		//designDecisionDao.saveOrUpdateDesignDecision(designDecision);
+		// designDecisionDao.saveOrUpdateDesignDecision(designDecision);
 
 	}
 
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional(readOnly = false)
 	public void updateDesignDecision(long id, DesignDecision designDecision) {
-		//designDecisionDao.saveOrUpdateDesignDecision(designDecision);
+		// designDecisionDao.saveOrUpdateDesignDecision(designDecision);
 	}
 
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional(readOnly = false)
 	public void deleteDesignDecision(long id) {
 		designDecisionDao.deleteDesignDecision(id);
 	}
-	
+
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional(readOnly = false)
 	public void addComment(long id, String message, String date) {
 		Comment comment = commentHelper.getComment(message, date);
 		comment.setDesignDecision(designDecisionDao.getDesignDecision(id));
@@ -124,7 +125,7 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 	@Override
 	public void addFile(long id, String pathToFile) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -133,58 +134,53 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 		// TODO Auto-generated method stub
 		addOrUpdateDesignDecision(DesignDecisionrequest, null);
 	}
-	
-	public void addOrUpdateDesignDecision(RequestWrapperDesignDecision decisionRequest, Long idExistingDesignDecision) {
-		
-		//get DesignDecision from DB if update; otherwise new Design Decion
-		
+
+	public void addOrUpdateDesignDecision(
+			RequestWrapperDesignDecision decisionRequest,
+			Long idExistingDesignDecision) {
+
+		// get DesignDecision from DB if update; otherwise new Design Decion
+
 		DesignDecision decision = null;
-		
-		if(idExistingDesignDecision == null)
-		{
+
+		if (idExistingDesignDecision == null) {
 			decision = new DesignDecision();
-		}
-		else
-		{
+		} else {
 			designDecisionDao.getDesignDecision(idExistingDesignDecision);
 		}
 		// On Update - Delete all OneToMany Relations in advance (are added
-				// again later)
-		if(idExistingDesignDecision != null)
-		{
+		// again later)
+		if (idExistingDesignDecision != null) {
 			decision.getFiles().clear();
 			// Must be done - Otherwise Hibernate would result in Violation
 			// Constraint!
 			sessionFactory.getCurrentSession().flush();
 		}
-		
-		//Setting the properties of the DesignDecision
-		
+
+		// Setting the properties of the DesignDecision
 		decision.setTitle(decisionRequest.getTitle());
-		decision.setRationale(decisionRequest.getRationale());
 		decision.setAssumption(decisionRequest.getAssumption());
+		decision.setIssue(issueService.getIssue(decisionRequest.getIdIssue(), true));
+		decision.setShareHolders(decisionRequest.getShareholders());
 		
-		//TODO: set Status
-		decision.setDesignDecisionStatus(designDecisionStatusDao.getDesignDecisionStatusByName("NEW"));
-
-		if(decisionRequest.getFiles() != null){
-			for(String file:decisionRequest.getFiles())
-			{
-			  decision.getFiles().add(new File(file, decision));
+		//TODO: make column rationale nullable and remove
+		decision.setRationale("");
+		
+		// TODO: set Status
+		decision.setDesignDecisionStatus(designDecisionStatusDao
+				.getDesignDecisionStatusByName("COLLECTING_ALTERNATIVES"));
+		
+		if (decisionRequest.getFiles() != null) {
+			for (String file : decisionRequest.getFiles()) {
+				decision.getFiles().add(new File(file, decision));
 			}
-			
-		}
-		
-				// Only needed when new (not update)
-				if (idExistingDesignDecision == null) {
-					designDecisionDao.saveOrUpdateDesignDecision(decision);
-				}
 
-	
-		
+		}
+
+		// Only needed when new (not update)
+		if (idExistingDesignDecision == null) {
+			designDecisionDao.saveOrUpdateDesignDecision(decision);
+		}
+
 	}
 }
-
-
-
-
