@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import collabodecision.webservice.data.RequestWrapperData;
 import collabodecision.webservice.persistence.domain.Alternative;
-import collabodecision.webservice.persistence.domain.DesignDecision;
-import collabodecision.webservice.persistence.domain.Issue;
 import collabodecision.webservice.service.AlternativeService;
 
 @RestController

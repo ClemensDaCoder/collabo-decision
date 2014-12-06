@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import collabodecision.webservice.data.RequestWrapperData;
+import collabodecision.webservice.data.ResponseWrapperDesignDecision;
 import collabodecision.webservice.persistence.domain.DesignDecision;
 import collabodecision.webservice.service.DesignDecisionService;
 
@@ -31,11 +32,11 @@ public class DesignDecisionController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public DesignDecision getDesignDecision(
+	public ResponseWrapperDesignDecision getDesignDecision(
 			@PathVariable long id,
 			@RequestParam(value = "withRelations", defaultValue = "false") boolean withRelations) {
 
-		return designDecisionService.getDesignDecision(id, withRelations);
+		return designDecisionService.getResponseWrapperDesignDesicion(id, withRelations);
 	}
 
 	

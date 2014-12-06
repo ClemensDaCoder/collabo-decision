@@ -3,13 +3,17 @@ package collabodecision.webservice.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import collabodecision.webservice.data.ResponseWrapperDesignDecision;
 import collabodecision.webservice.persistence.CommentDao;
 import collabodecision.webservice.persistence.DesignDecisionDao;
+import collabodecision.webservice.persistence.domain.AppUser;
 import collabodecision.webservice.persistence.domain.Comment;
 import collabodecision.webservice.persistence.domain.DesignDecision;
+import collabodecision.webservice.service.AppUserService;
 import collabodecision.webservice.service.DesignDecisionService;
 import collabodecision.webservice.service.utils.CommentHelper;
 
@@ -24,6 +28,11 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 	
 	@Autowired
 	private CommentDao commentDao;
+	
+	@Autowired
+	private AppUserService userService;
+
+	
 	
 	@Override
 	@Transactional(readOnly=true)
@@ -40,6 +49,39 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 		
 		return designDecisionDao.getDesignDecision(id);
 	}
+	
+	@Override
+	public ResponseWrapperDesignDecision getResponseWrapperDesignDesicion(
+			long id, boolean withRelations) {
+		DesignDecision decision;
+		
+		AppUser creator = userService
+			     .getAppUserByUsername(SecurityContextHolder.getContext()
+			       .getAuthentication().getName());
+		
+		if(withRelations)
+		{
+			decision= designDecisionDao.getDesignDecisionWithRelations(id);
+		}
+		else
+		{
+			decision = designDecisionDao.getDesignDecision(id);
+		}
+		
+		ResponseWrapperDesignDecision response = new ResponseWrapperDesignDecision();
+		response.setDesigndecision(decision);
+		
+		//TODO set rights .. 
+		response.setBooleanDecided(true);
+		response.setFinishRanking(true);
+		response.setOwner(true);
+		response.setShowInapropiateSolution(true);
+		response.setShowSelectAlternative(true);
+		response.setShowStartRanking(true);
+		
+		return response;
+	}
+	
 
 	@Override
 	@Transactional(readOnly=false)
@@ -72,5 +114,7 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 		// TODO Auto-generated method stub
 		
 	}
+
+
 
 }

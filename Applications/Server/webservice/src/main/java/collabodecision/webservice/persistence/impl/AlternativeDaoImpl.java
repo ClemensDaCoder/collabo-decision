@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import collabodecision.webservice.persistence.AlternativeDao;
 import collabodecision.webservice.persistence.domain.Alternative;
-import collabodecision.webservice.persistence.domain.Issue;
 
 @Repository
 public class AlternativeDaoImpl extends BaseDao implements AlternativeDao {
