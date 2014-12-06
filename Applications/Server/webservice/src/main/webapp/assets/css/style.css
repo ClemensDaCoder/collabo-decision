@@ -9,22 +9,41 @@ body {
 	margin-right: 15px;
 }
 
-.newIssue-wrapper .designDecisionDetail-wrapper .form-group {
+.newIssue-wrapper .form-group {
 	margin-left: 15px;
 	margin-right: 15px;
 }
 
-.newIssue-wrapper .designDecisionDetail-wrapper .form-group {
+.designDecisionDetail-wrapper .form-group {
+	margin-left: 15px;
+	margin-right: 15px;
+}
+
+.newIssue-wrapper .form-group {
 	position: relative;
 }
 
-.newIssue-wrapper .designDecisionDetail-wrapper .loading {
+.designDecisionDetail-wrapper .form-group {
+	position: relative;
+}
+
+.newIssue-wrapper .loading {
 	position: absolute;
 	right: 5px;
 	top: 35px;
 }
 
-.issues-wrapper .designDecisions-wrapper .table {
+.designDecisionDetail-wrapper .loading {
+	position: absolute;
+	right: 5px;
+	top: 35px;
+}
+
+.issues-wrapper .table {
+	margin-top: 20px;
+}
+
+.designDecisions-wrapper .table {
 	margin-top: 20px;
 }
 
