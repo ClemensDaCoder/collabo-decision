@@ -1,6 +1,7 @@
 package collabodecision.webservice.service;
 
 import collabodecision.webservice.persistence.domain.Alternative;
+import collabodecision.webservice.data.RequestWrapperAlternative;
 
 public interface AlternativeService extends CommentService, FileService{
 		
@@ -14,5 +15,8 @@ public interface AlternativeService extends CommentService, FileService{
 	void updateAlternative(long id, Alternative alternative);
 
 	void rankAlternative(long id, long ranker, String rank);
+	
+	void addRequestWrapperAlternative(RequestWrapperAlternative alternativeRequest);
+
 }
 
