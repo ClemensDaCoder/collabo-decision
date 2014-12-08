@@ -32,5 +32,10 @@ public class IssueStatusDaoImpl extends BaseDao implements IssueStatusDao {
 	public IssueStatus getIssueStatusByName(String name) {
 		return getIssueStatusByValue(IssueStatusValue.valueOf(name));
 	}
+	
+	@Override
+	public IssueStatus getIssueById(long id) {
+		return (IssueStatus) getCurrentSession().createCriteria(IssueStatus.class).add(Restrictions.eq("id", id)).uniqueResult();
+	}
 
 }

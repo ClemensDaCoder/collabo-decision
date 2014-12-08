@@ -215,7 +215,6 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 //		//TODO: make column rationale nullable and remove
 //		decision.setRationale("");
 		
-		// TODO: set Status
 		decision.setDesignDecisionStatus(designDecisionStatusDao
 				.getDesignDecisionStatusByValue(DesignDecisionStatusValue.COLLECTING_ALTERNATIVES));
 		

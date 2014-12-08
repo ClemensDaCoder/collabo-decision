@@ -8,5 +8,7 @@ public interface IssueStatusDao {
 	IssueStatus getIssueStatusByValue(IssueStatusValue value);
 	
 	IssueStatus getIssueStatusByName(String name);
+
+	IssueStatus getIssueById(long id);
 	
 }

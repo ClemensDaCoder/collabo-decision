@@ -156,7 +156,7 @@ public class IssueServiceImpl implements IssueService {
 		issue.setDescription(issueRequest.getDescription());
 
 		// TODO: Check issue Status: According to Process! Go with the flow!
-		issue.setIssueStatus(issueStatusDao.getIssueStatusByValue(IssueStatusValue.NEW));
+		issue.setIssueStatus(issueStatusDao.getIssueById(issueRequest.getIdIssueStatus()));
 		issue.setOwner(userService.getAppUser(issueRequest.getIdOwner()));
 
 		// Set the creator to the currently authenticated user
