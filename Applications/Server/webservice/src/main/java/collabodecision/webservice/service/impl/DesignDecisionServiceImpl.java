@@ -216,7 +216,7 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 //		decision.setRationale("");
 		
 		decision.setDesignDecisionStatus(designDecisionStatusDao
-				.getDesignDecisionStatusByValue(DesignDecisionStatusValue.COLLECTING_ALTERNATIVES));
+				.getDesignDecisionStatusById(decisionRequest.getIdDesignDecisionStatus()));
 		
 		if (decisionRequest.getFiles() != null) {
 			for (String file : decisionRequest.getFiles()) {
