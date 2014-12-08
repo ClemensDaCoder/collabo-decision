@@ -7,13 +7,12 @@ import collabodecision.webservice.persistence.domain.ShareHolder;
 
 public class RequestWrapperDesignDecision {
 
-	// private long idDesignDecision;
-
 	private String title;
 	private String assumption;
 	private long idIssue;
 	private List<String> files;
 	private Set<ShareHolder> shareholders;
+	private long idDesignDecisionStatus;
 
 	public String getTitle() {
 		return title;
@@ -53,6 +52,14 @@ public class RequestWrapperDesignDecision {
 
 	public void setIdIssue(long idIssue) {
 		this.idIssue = idIssue;
+	}
+
+	public long getIdDesignDecisionStatus() {
+		return idDesignDecisionStatus;
+	}
+
+	public void setIdDesignDecisionStatus(long idDesignDecisionStatus) {
+		this.idDesignDecisionStatus = idDesignDecisionStatus;
 	}
 
 }

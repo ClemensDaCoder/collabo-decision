@@ -30,6 +30,12 @@ public class DesignDecisionStatusDaoImpl extends BaseDao implements DesignDecisi
 	public DesignDecisionStatus getDesignDecisionStatusByName(String name) {
 		return getDesignDecisionStatusByValue(DesignDecisionStatusValue.valueOf(name));
 	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public DesignDecisionStatus getDesignDecisionStatusById(long id) {
+		return (DesignDecisionStatus) getCurrentSession().createCriteria(DesignDecisionStatus.class).add(Restrictions.eq("idDesignDecisionStatus", id)).uniqueResult();
+	}
 		
 		
 }

@@ -29,13 +29,15 @@ public class IssueStatusDaoImpl extends BaseDao implements IssueStatusDao {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public IssueStatus getIssueStatusByName(String name) {
 		return getIssueStatusByValue(IssueStatusValue.valueOf(name));
 	}
 	
 	@Override
+	@Transactional(readOnly = true)
 	public IssueStatus getIssueById(long id) {
-		return (IssueStatus) getCurrentSession().createCriteria(IssueStatus.class).add(Restrictions.eq("id", id)).uniqueResult();
+		return (IssueStatus) getCurrentSession().createCriteria(IssueStatus.class).add(Restrictions.eq("idIssueStatus", id)).uniqueResult();
 	}
 
 }

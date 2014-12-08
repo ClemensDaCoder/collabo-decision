@@ -9,5 +9,7 @@ public interface DesignDecisionStatusDao {
 	DesignDecisionStatus getDesignDecisionStatusByValue(DesignDecisionStatusValue name);
 	
 	public DesignDecisionStatus getDesignDecisionStatusByName(String name);
+	
+	public DesignDecisionStatus getDesignDecisionStatusById(long id);
 
 }
