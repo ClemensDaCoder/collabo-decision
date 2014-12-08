@@ -1,5 +1,6 @@
 package collabodecision.webservice.persistence.domain;
 
+import java.sql.Date;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -25,11 +26,14 @@ public class DesignDecision {
 	@Column(nullable = false)
 	private String title;
 
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private String rationale;
 
 	@Column(nullable = false)
 	private String assumption;
+	
+	@Column(nullable = false)
+	private Date creationDate;
 
 	@ManyToOne
 	@JoinColumn(name = "idIssue", nullable = false)
@@ -134,5 +138,13 @@ public class DesignDecision {
 
 	public long getIdDesignDecision() {
 		return idDesignDecision;
+	}
+
+	public Date getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
 	}
 }

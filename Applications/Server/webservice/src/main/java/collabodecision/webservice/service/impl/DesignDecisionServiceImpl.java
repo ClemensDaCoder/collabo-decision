@@ -1,5 +1,6 @@
 package collabodecision.webservice.service.impl;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
@@ -17,7 +18,6 @@ import collabodecision.webservice.persistence.domain.AppUser;
 import collabodecision.webservice.persistence.domain.Comment;
 import collabodecision.webservice.persistence.domain.DesignDecision;
 import collabodecision.webservice.persistence.domain.File;
-import collabodecision.webservice.persistence.impl.DesignDecisionStatusDaoImpl;
 import collabodecision.webservice.service.AppUserService;
 import collabodecision.webservice.service.DesignDecisionService;
 import collabodecision.webservice.service.IssueService;
@@ -83,15 +83,24 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 		response.setDesignDecision(decision);
 
 		// TODO set rights ..
-		response.setDecided(true);
-		response.setShowFinishRanking(true);
-		response.setOwner(true);
+		//if user == owner
+		if (creator.equals(decision.getIssue().getOwner())) {
+			response.setOwner(true);
+		}
+		
+		//if user == shareholder
+		if (decision.getShareHolders().contains(creator)) {
+			response.setEditable(true);
+			response.setIsShareholder(true);
+		}
+		
+		
+		
 		response.setShowInappropriateSolution(true);
+		response.setShowDecided(true);
+		response.setShowFinishRanking(true);
 		response.setShowSelectAlternative(true);
 		response.setShowStartRanking(true);
-		response.setEditable(true);
-		response.setIsShareholder(true);
-
 		return response;
 	}
 
@@ -145,6 +154,7 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 
 		if (idExistingDesignDecision == null) {
 			decision = new DesignDecision();
+			decision.setCreationDate(new Date(System.currentTimeMillis()));
 		} else {
 			designDecisionDao.getDesignDecision(idExistingDesignDecision);
 		}
@@ -163,8 +173,8 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 		decision.setIssue(issueService.getIssue(decisionRequest.getIdIssue(), true));
 		decision.setShareHolders(decisionRequest.getShareholders());
 		
-		//TODO: make column rationale nullable and remove
-		decision.setRationale("");
+//		//TODO: make column rationale nullable and remove
+//		decision.setRationale("");
 		
 		// TODO: set Status
 		decision.setDesignDecisionStatus(designDecisionStatusDao

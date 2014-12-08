@@ -17,7 +17,7 @@ public class ResponseWrapperDesignDecision {
 	
 	private boolean showSelectAlternative;
 	
-	private boolean isDecided;
+	private boolean showDecided;
 	
 	private boolean editable;
 	
@@ -73,12 +73,12 @@ public class ResponseWrapperDesignDecision {
 		this.showSelectAlternative = showSelectAlternative;
 	}
 
-	public boolean isDecided() {
-		return isDecided;
+	public boolean isShowDecided() {
+		return showDecided;
 	}
 
-	public void setDecided(boolean booleanDecided) {
-		this.isDecided = booleanDecided;
+	public void setShowDecided(boolean booleanDecided) {
+		this.showDecided = booleanDecided;
 	}
 
 	public boolean isEditable() {
