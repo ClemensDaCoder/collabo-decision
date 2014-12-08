@@ -17,6 +17,9 @@ import collabodecision.webservice.persistence.DesignDecisionStatusDao;
 import collabodecision.webservice.persistence.domain.AppUser;
 import collabodecision.webservice.persistence.domain.Comment;
 import collabodecision.webservice.persistence.domain.DesignDecision;
+import collabodecision.webservice.persistence.domain.DesignDecisionStatus;
+import collabodecision.webservice.persistence.domain.IssueStatus;
+import collabodecision.webservice.persistence.domain.Tag;
 import collabodecision.webservice.persistence.domain.DesignDecisionStatus.DesignDecisionStatusValue;
 import collabodecision.webservice.persistence.domain.File;
 import collabodecision.webservice.service.AppUserService;
@@ -48,11 +51,23 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 	@Autowired
 	private DesignDecisionStatusDao designDecisionStatusDao; // new
 																// DesignDecisionStatusDaoImpl(null);
-	
+
+	@Override
+	public List<DesignDecision> getDesignDecisions(String status,
+			List<String> tags, String partialName) {
+		// TODO Auto-generated method stub
+		DesignDecisionStatus designdecisionstatus = null;
+		IssueStatus issueStatus = null;
+
+		//TODO: function
+		return null;
+		
+	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public List<DesignDecision> getDesignDecisions() {
+		
 		return designDecisionDao.getDesignDecisions();
 	}
 
@@ -206,4 +221,5 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 		}
 
 	}
+
 }
