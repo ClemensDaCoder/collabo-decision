@@ -47,6 +47,7 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 	@Autowired
 	private DesignDecisionStatusDao designDecisionStatusDao; // new
 																// DesignDecisionStatusDaoImpl(null);
+	
 
 	@Override
 	@Transactional(readOnly = true)
@@ -82,25 +83,36 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 		ResponseWrapperDesignDecision response = new ResponseWrapperDesignDecision();
 		response.setDesignDecision(decision);
 
-		// TODO set rights ..
 		//if user == owner
 		if (creator.equals(decision.getIssue().getOwner())) {
 			response.setOwner(true);
+			//TODO if status == collecting alternatives show "start ranking"
+			if (designDecisionStatusDao.getDesignDecisionStatusByName("COLLECTING_ALTERNATIVES").equals(decision.getDesignDecisionStatus())) {
+				response.setShowStartRanking(true);
+			} 	
+			else if (designDecisionStatusDao.getDesignDecisionStatusByName("NEW_STATUS").equals(decision.getDesignDecisionStatus())) {
+				//after all shareholders have finished ranking -> new status required?
+				response.setShowSelectAlternative(true);
+			}
+
 		}
 		
 		//if user == shareholder
 		if (decision.getShareHolders().contains(creator)) {
 			response.setEditable(true);
 			response.setIsShareholder(true);
+			if (designDecisionStatusDao.getDesignDecisionStatusByName("SELECTING_ALTERNATIVE").equals(decision.getDesignDecisionStatus())) {
+				response.setShowFinishRanking(true);
+			}
 		}
 		
-		
-		
-		response.setShowInappropriateSolution(true);
-		response.setShowDecided(true);
-		response.setShowFinishRanking(true);
-		response.setShowSelectAlternative(true);
-		response.setShowStartRanking(true);
+		if (decision.getDesignDecisionStatus().equals(designDecisionStatusDao.getDesignDecisionStatusByName("DECIDED"))) {
+			response.setShowDecided(true);
+ 		} else if (decision.getDesignDecisionStatus().equals(designDecisionStatusDao.getDesignDecisionStatusByName("INAPPROPRIATE_SOLUTION"))) {
+ 			response.setShowInappropriateSolution(true);
+ 		} else if (decision.getDesignDecisionStatus().equals(designDecisionStatusDao.getDesignDecisionStatusByName("OBSOLETE"))) {
+ 			response.setShowObsolete(true);
+ 		}
 		return response;
 	}
 

@@ -19,6 +19,8 @@ public class ResponseWrapperDesignDecision {
 	
 	private boolean showDecided;
 	
+	private boolean showObsolete;
+	
 	private boolean editable;
 	
 	private boolean isShareholder;
@@ -97,7 +99,11 @@ public class ResponseWrapperDesignDecision {
 		this.isShareholder = isShareholder;
 	}
 
-	
-	
-	
+	public boolean isShowObsolete() {
+		return showObsolete;
+	}
+
+	public void setShowObsolete(boolean showObsolete) {
+		this.showObsolete = showObsolete;
+	}
 }
