@@ -31,7 +31,7 @@ public class DesignDecision {
 
 	@Column(nullable = false)
 	private String assumption;
-	
+
 	@Column(nullable = false)
 	private Date creationDate;
 
@@ -42,25 +42,25 @@ public class DesignDecision {
 	@ManyToOne
 	@JoinColumn(name = "idDesignDecisionStatus", nullable = false)
 	private DesignDecisionStatus designDecisionStatus;
-	
+
 	@OneToMany(mappedBy = "designDecision")
-	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
+	@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
 	private Set<DesignDecisionRating> designDecisionRatings;
 
 	@OneToMany(mappedBy = "designDecision")
-	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
+	@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
 	private Set<Alternative> alternatives;
 
 	@OneToMany(mappedBy = "designDecision")
-	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
+	@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
 	private Set<Comment> comments;
 
 	@OneToMany(mappedBy = "designDecision")
-	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
+	@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
 	private Set<File> files;
 
 	@OneToMany(mappedBy = "designDecision")
-	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
+	@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
 	private Set<ShareHolder> shareHolders;
 
 	public Set<ShareHolder> getShareHolders() {
@@ -107,8 +107,7 @@ public class DesignDecision {
 		return designDecisionStatus;
 	}
 
-	public void setDesignDecisionStatus(
-			DesignDecisionStatus designDecisionStatus) {
+	public void setDesignDecisionStatus(DesignDecisionStatus designDecisionStatus) {
 		this.designDecisionStatus = designDecisionStatus;
 	}
 

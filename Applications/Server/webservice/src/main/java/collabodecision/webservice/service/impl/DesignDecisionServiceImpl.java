@@ -17,6 +17,7 @@ import collabodecision.webservice.persistence.DesignDecisionStatusDao;
 import collabodecision.webservice.persistence.domain.AppUser;
 import collabodecision.webservice.persistence.domain.Comment;
 import collabodecision.webservice.persistence.domain.DesignDecision;
+import collabodecision.webservice.persistence.domain.DesignDecisionStatus.DesignDecisionStatusValue;
 import collabodecision.webservice.persistence.domain.File;
 import collabodecision.webservice.service.AppUserService;
 import collabodecision.webservice.service.DesignDecisionService;
@@ -87,11 +88,11 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 		if (creator.equals(decision.getIssue().getOwner())) {
 			response.setOwner(true);
 			//TODO if status == collecting alternatives show "start ranking"
-			if (designDecisionStatusDao.getDesignDecisionStatusByName("COLLECTING_ALTERNATIVES").equals(decision.getDesignDecisionStatus())) {
+			if (DesignDecisionStatusValue.COLLECTING_ALTERNATIVES.equals(decision.getDesignDecisionStatus().getStatus())) {
 				response.setShowStartRanking(true);
 			} 	
-			else if (designDecisionStatusDao.getDesignDecisionStatusByName("NEW_STATUS").equals(decision.getDesignDecisionStatus())) {
-				//after all shareholders have finished ranking -> new status required?
+			else if (DesignDecisionStatusValue.SELECTING_ALTERNATIVES.equals(decision.getDesignDecisionStatus().getStatus())) {
+				//after all shareholders have finished ranking
 				response.setShowSelectAlternative(true);
 			}
 
@@ -101,16 +102,16 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 		if (decision.getShareHolders().contains(creator)) {
 			response.setEditable(true);
 			response.setIsShareholder(true);
-			if (designDecisionStatusDao.getDesignDecisionStatusByName("SELECTING_ALTERNATIVE").equals(decision.getDesignDecisionStatus())) {
+			if (DesignDecisionStatusValue.RANK_ALTERNATIVES.equals(decision.getDesignDecisionStatus().getStatus())) {
 				response.setShowFinishRanking(true);
 			}
 		}
 		
-		if (decision.getDesignDecisionStatus().equals(designDecisionStatusDao.getDesignDecisionStatusByName("DECIDED"))) {
+		if (DesignDecisionStatusValue.DECIDED.equals(decision.getDesignDecisionStatus().getStatus())) {
 			response.setShowDecided(true);
- 		} else if (decision.getDesignDecisionStatus().equals(designDecisionStatusDao.getDesignDecisionStatusByName("INAPPROPRIATE_SOLUTION"))) {
+ 		} else if(DesignDecisionStatusValue.INAPPROPRIATE_SOLUTION.equals(decision.getDesignDecisionStatus().getStatus())) {
  			response.setShowInappropriateSolution(true);
- 		} else if (decision.getDesignDecisionStatus().equals(designDecisionStatusDao.getDesignDecisionStatusByName("OBSOLETE"))) {
+ 		} else if (DesignDecisionStatusValue.OBSOLETE.equals(decision.getDesignDecisionStatus().getStatus())) {
  			response.setShowObsolete(true);
  		}
 		return response;
@@ -190,7 +191,7 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 		
 		// TODO: set Status
 		decision.setDesignDecisionStatus(designDecisionStatusDao
-				.getDesignDecisionStatusByName("COLLECTING_ALTERNATIVES"));
+				.getDesignDecisionStatusByName(DesignDecisionStatusValue.COLLECTING_ALTERNATIVES));
 		
 		if (decisionRequest.getFiles() != null) {
 			for (String file : decisionRequest.getFiles()) {
