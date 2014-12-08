@@ -44,7 +44,7 @@ public class AlternativesServiceImpl implements AlternativeService
 		
 		Comment comment = commentHelper.getComment(message, date);
 		
-		// AlternativeDao wird so eine funkion brauchen.
+		
 		comment.setAlternative(alternativeDao.getAlternative(id));
 		commentDao.saveOrUpdateComment(comment);
 		
@@ -76,24 +76,22 @@ public class AlternativesServiceImpl implements AlternativeService
 	@Override
 	public void addAlternative(Alternative alternative) {
 		// TODO Auto-generated method stub
-		addOrUpdateAlternative(alternative, null);
+		
 	}
 
 	@Override
 	public void updateAlternative(long id, Alternative alternative) {
 		// TODO Auto-generated method stub
-		addOrUpdateAlternative(alternative, id);
+		
 	}
 
 	@Override
 	public void rankAlternative(long id, long ranker, String rank) {
 		// TODO Auto-generated method stub
 		
+		
 	}
 	
-	private void addOrUpdateAlternative(Alternative alternative,
-			Long idExistingIssue) {
-	}
 
 	@Override
 	public void addRequestWrapperAlternative(
