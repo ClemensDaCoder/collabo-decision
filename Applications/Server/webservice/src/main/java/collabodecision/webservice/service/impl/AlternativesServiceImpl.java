@@ -94,6 +94,7 @@ public class AlternativesServiceImpl implements AlternativeService
 	
 
 	@Override
+	@Transactional(readOnly = false)
 	public void addRequestWrapperAlternative(
 			RequestWrapperAlternative alternativeRequest) {
 		// TODO Auto-generated method stub
