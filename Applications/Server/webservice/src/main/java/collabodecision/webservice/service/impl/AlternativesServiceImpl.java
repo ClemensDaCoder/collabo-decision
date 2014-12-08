@@ -1,6 +1,5 @@
 package collabodecision.webservice.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
@@ -15,12 +14,7 @@ import collabodecision.webservice.persistence.CommentDao;
 import collabodecision.webservice.persistence.domain.Alternative;
 import collabodecision.webservice.persistence.domain.AppUser;
 import collabodecision.webservice.persistence.domain.Comment;
-import collabodecision.webservice.persistence.domain.DesignDecision;
 import collabodecision.webservice.persistence.domain.File;
-import collabodecision.webservice.persistence.domain.Issue;
-import collabodecision.webservice.persistence.domain.IssueRelation;
-import collabodecision.webservice.persistence.domain.IssueTag;
-import collabodecision.webservice.persistence.domain.Tag;
 import collabodecision.webservice.service.AlternativeService;
 import collabodecision.webservice.service.AppUserService;
 import collabodecision.webservice.service.utils.CommentHelper;
@@ -154,19 +148,25 @@ public class AlternativesServiceImpl implements AlternativeService
 		//this alternative has From Relations
 		
 		
-		if(alternativeRequest.getIdalternativeFromsRelations() != null && alternativeRequest.getIdalternativeFromsRelations().isEmpty())
+		if(alternativeRequest.getIdAlternativeFromsRelations() != null && alternativeRequest.getIdAlternativeFromsRelations().isEmpty())
 		{
-			
+			List<Alternative> alternativeFromRelations = alternativeDao.getAlternativeByIds(alternativeRequest.getIdAlternativeFromsRelations());
+			for(Alternative alternativeFromRelation : alternativeFromRelations)
+			{
+				
+			}
 			
 		}
 		
+		
 		//This alternative has to Relations.
+		
 		
 		// This issue depends on other issues
 		// Only needed when new (not update)
 		if (idexistingAlternative == null) {
 			
-			//issueDao.saveOrUpdateIssue(issue);
+			alternativeDao.saveOrUpdateAlternative(alternative);
 		}
 	}
 	

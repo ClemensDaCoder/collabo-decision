@@ -1,11 +1,15 @@
 package collabodecision.webservice.persistence.impl;
 
+import java.util.Collection;
+import java.util.List;
+
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import collabodecision.webservice.persistence.AlternativeDao;
 import collabodecision.webservice.persistence.domain.Alternative;
@@ -46,6 +50,23 @@ public class AlternativeDaoImpl extends BaseDao implements AlternativeDao {
 	public void deleteAlternative(long id) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void saveOrUpdateAlternative(Alternative alternative) {
+		getCurrentSession().saveOrUpdate(alternative);
+		// TODO Auto-generated method stub
+		
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional(readOnly = true)
+	public List<Alternative> getAlternativeByIds(Collection<Long> alternativeIds) {
+		Criteria crit = getCurrentSession().createCriteria(Alternative.class);
+		crit.add(Restrictions.in("idAlternative", alternativeIds));
+		return crit.list();
+
 	}
 	
 }

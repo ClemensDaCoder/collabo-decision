@@ -12,9 +12,9 @@ public class RequestWrapperAlternative {
 	
 	private long idOwner;
 	
-	private List<Long> idalternativeFromsRelations;
+	private List<Long> idAlternativeFromsRelations;
 	
-	private List<Long> idalternativesToRelations;
+	private List<Long> idAlternativesToRelations;
 	
 	private List<String> files;
 
@@ -51,21 +51,21 @@ public class RequestWrapperAlternative {
 		this.idOwner = idOwner;
 	}
 
-	public List<Long> getIdalternativeFromsRelations() {
-		return idalternativeFromsRelations;
+	public List<Long> getIdAlternativeFromsRelations() {
+		return idAlternativeFromsRelations;
 	}
 
-	public void setIdalternativeFromsRelations(
+	public void setIdAlternativeFromsRelations(
 			List<Long> idalternativeFromsRelations) {
-		this.idalternativeFromsRelations = idalternativeFromsRelations;
+		this.idAlternativeFromsRelations = idalternativeFromsRelations;
 	}
 
-	public List<Long> getIdalternativesToRelations() {
-		return idalternativesToRelations;
+	public List<Long> getIdAlternativesToRelations() {
+		return idAlternativesToRelations;
 	}
 
-	public void setIdalternativesToRelations(List<Long> idalternativesToRelations) {
-		this.idalternativesToRelations = idalternativesToRelations;
+	public void setIdAlternativesToRelations(List<Long> idAlternativesToRelations) {
+		this.idAlternativesToRelations = idAlternativesToRelations;
 	}
 	
 	
