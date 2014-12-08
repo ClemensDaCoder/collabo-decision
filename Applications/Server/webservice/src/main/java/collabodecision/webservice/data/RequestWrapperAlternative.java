@@ -8,9 +8,7 @@ public class RequestWrapperAlternative {
 
 	private String description;
 
-	private long designDecisionid;
-	
-	private long idOwner;
+	private long idDesignDecision;
 	
 	private List<Long> idAlternativeFromsRelations;
 	
@@ -35,20 +33,12 @@ public class RequestWrapperAlternative {
 		this.description = description;
 	}
 
-	public long getDesignDecisionid() {
-		return designDecisionid;
+	public long getIdDesignDecision() {
+		return idDesignDecision;
 	}
 
-	public void setDesignDecisionid(long designDecisionid) {
-		this.designDecisionid = designDecisionid;
-	}
-
-	public long getIdOwner() {
-		return idOwner;
-	}
-
-	public void setIdOwner(long idOwner) {
-		this.idOwner = idOwner;
+	public void setIdDesignDecision(long designDecisionid) {
+		this.idDesignDecision = designDecisionid;
 	}
 
 	public List<Long> getIdAlternativeFromsRelations() {

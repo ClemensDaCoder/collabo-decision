@@ -14,4 +14,12 @@ angular.module('collaboApp').directive('tageditor', function() {
 			issues : "="
 		}
 	}
+}).directive('shareholdereditor', function() {
+	return {
+		restrict: 'E',
+		templateUrl : 'app/shared/directives/shareholdereditor/views/shareholdereditorView.html',
+		scope : { 
+			shareholders : "="
+		}
+	}
 });

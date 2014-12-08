@@ -12,6 +12,7 @@ import collabodecision.webservice.data.RequestWrapperAlternative;
 import collabodecision.webservice.data.ResponseWrapperAlternative;
 import collabodecision.webservice.persistence.AlternativeDao;
 import collabodecision.webservice.persistence.CommentDao;
+import collabodecision.webservice.persistence.DesignDecisionDao;
 import collabodecision.webservice.persistence.domain.Alternative;
 import collabodecision.webservice.persistence.domain.AppUser;
 import collabodecision.webservice.persistence.domain.Comment;
@@ -36,6 +37,9 @@ public class AlternativesServiceImpl implements AlternativeService
 	private SessionFactory sessionFactory;
 	@Autowired
 	private AppUserService userService;
+	
+	 @Autowired
+	 private DesignDecisionDao designDecisionDao;
 	
 	@Override
 	@Transactional(readOnly = false)
@@ -129,6 +133,7 @@ public class AlternativesServiceImpl implements AlternativeService
 		
 		// Setting the properties of the DesignDecision
 		alternative.setDescription(alternativeRequest.getDescription());
+		alternative.setDesignDecision(designDecisionDao.getDesignDecision(alternativeRequest.getIdDesignDecision()));
 		
 		// Set the creator to the currently authenticated user
 		AppUser creator = userService

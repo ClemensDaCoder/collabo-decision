@@ -45,13 +45,6 @@ angular.module('collaboApp').controller('IssuesController', ['$http', '$scope', 
 				}
 			}
 		});
-		
-		//TODO: check if needed
-		modalInstance.result.then(function() {
-			$scope.getDesignDecisions(null);
-		}, function() {
-			$scope.getDesignDecisions(null);
-		});
 	};
 	
 	// On load show all

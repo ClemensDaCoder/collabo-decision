@@ -10,8 +10,9 @@ angular.module('collaboApp').controller('NewDesignDecisionController', ['$scope'
 				data : {
 					'title' : $scope.title,
 					'idIssue' : idIssue,
-					//'shareholders' : $scope.shareholders,
-					'assumption' : $scope.assumption
+					'shareholders' : $scope.currentShareholders,
+					'assumption' : $scope.assumption,
+					'idDesignDecisionStatus' : 1
 				}
 		}
 		
@@ -21,5 +22,7 @@ angular.module('collaboApp').controller('NewDesignDecisionController', ['$scope'
 			alert("fehler");
 		});
 	};
+	
+	$scope.currentShareholders = [];
 	
 }]);

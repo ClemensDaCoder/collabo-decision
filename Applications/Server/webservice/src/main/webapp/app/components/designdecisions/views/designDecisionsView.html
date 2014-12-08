@@ -4,6 +4,7 @@
 		<div class="btn-group">
 			<button class="btn btn-primary" ng-click="getDesignDecisions(null)">All</button>
 			<button class="btn btn-primary" ng-click="getDesignDecisions('COLLECTING_ALTERNATIVES')">Collecting Alternatives</button>
+			<button class="btn btn-primary" ng-click="getDesignDecisions('RANK_ALTERNATIVES')">Rank Alternatives</button>
 			<button class="btn btn-primary" ng-click="getDesignDecisions('SELECTING_ALTERNATIVES')">Selecting Alternatives</button>
 			<button class="btn btn-primary" ng-click="getDesignDecisions('DECIDED')">Decided</button>
 			<button class="btn btn-primary" ng-click="getDesignDecisions('OBSOLETE')">Obsolete</button>
@@ -22,7 +23,7 @@
 		<tr ng-repeat="designDecision in designDecisions">
 			<td><a href ng-click="showDesignDecision(designDecision.idDesignDecision)">{{designDecision.title}}</a></td>
 			<td>{{designDecision.designDecisionStatus.status}}</td>
-			<td>{{designDecision.issue.owner.forename}} {{designDecision.issue.owner.surname}}</td><td>no date</td><td>no rating</td>
+			<td>{{designDecision.issue.owner.forename}} {{designDecision.issue.owner.surname}}</td><td>{{designDecision.creationDate}}</td><td>no rating</td>
 		</tr>
 	</table>
 </div>

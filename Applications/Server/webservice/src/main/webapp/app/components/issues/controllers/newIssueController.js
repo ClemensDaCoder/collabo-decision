@@ -20,9 +20,11 @@ angular.module('collaboApp').controller('NewIssueController', ['$scope', '$modal
 					'tags' : $scope.currentTags,
 					'idsDepends' : idsDepends,
 					'idsResolves' : idsResolves,
-					'idsRelates' : idsRelates
+					'idsRelates' : idsRelates,
+					'idIssueStatus' : 1
 				}
 		}
+
 		
 		$http.post("/rest/issues", config).success(function() {
 			$scope.cancel();

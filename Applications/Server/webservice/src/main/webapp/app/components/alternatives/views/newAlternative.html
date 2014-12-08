@@ -1,0 +1,25 @@
+<div class="alternative-wrapper">
+	<div class="modal-header">
+		<h3>Create new Alternative!</h3>
+	</div>
+	
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-5">
+				<form class="form-horizontal">
+					<div class="form-group">
+						<label for="inputDescription" class="control-label">Description</label>
+						<textarea rows="5" cols="10" id="inputDescription" class="form-control" placeholder="Description" ng-model="description"></textarea>
+					</div>
+					<div class="form-group">
+						Here will be the file upload.
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-success" ng-click="save()">Save</button>
+			<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+		</div>
+	</div>
+</div>

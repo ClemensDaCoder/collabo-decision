@@ -28,31 +28,41 @@
 						<input type="text" class="form-control" id="inputShareholders" placeholder="Shareholders" ng-model="shareholders">
 					</div>
 					<div class="form-group">
-						<label for="inputRationale" class="control-label">Rationale</label>
-						<textarea rows="5" cols="10" id="inputRationale" class="form-control" placeholder="Rationale" ng-model="designDecisionWrapper.designDecision.rationale"></textarea>
-					</div>
-					<div class="form-group">
 						<label for="inputAssumption" class="control-label">Assumption</label>
 						<textarea rows="5" cols="10" id="inputAssumption" class="form-control" placeholder="Assumption" ng-model="designDecisionWrapper.designDecision.assumption"></textarea>
 					</div>
 					<div class="form-group">
-						Here will be the file upload.
+						<label for="inputRationale" class="control-label">Rationale</label>
+						<textarea rows="5" cols="10" id="inputRationale" class="form-control" placeholder="Rationale" ng-model="designDecisionWrapper.designDecision.rationale"></textarea>
 					</div>
 					<div class="form-group">
-						Here will be the alternatives.
+						<label for="listAlternatives" class="control-label">Alternatives</label>
+						<table class="table">
+							<tr>
+								<th>id</th>
+								<th>Creator</th>
+							</tr>
+							<tr ng-repeat="alternative in designDecisionWrapper.designDecision.alternatives">
+								<td><a href ng-click="showAlternative(alternative.idAlternative)">{{alternative.idAlternative}}</a></td>
+								<td>{{alternative.creator.forename}} {{alternative.creator.surname</td>
+							</tr>
+						</table>
+						<button class="btn btn-primary" ng-click="addAlternative()">Add Alternative</button>
+					</div>
+					<div class="form-group">
+						Here will be the file upload.
 					</div>
 				</form>
 			</div>
 			<div class="col-md-3">
 				<div class="form-group">
-					<button class=""btn btn-primary" ng-show="designDecisionWrapper.showInappropriateSolution">Inappropriate Solution</button>
+					<button class=""btn btn-primary" ng-show="designDecisionWrapper.showInappropriateSolution" ng-click="setInappropriateSolution()">Inappropriate Solution</button>
 				</div>
 				<div class="form-group">
-					<button class=""btn btn-primary" ng-show="designDecisionWrapper.showStartRanking">Start Ranking</button>
+					<button class="btn btn-primary" ng-show="designDecisionWrapper.showStartRanking" ng-click="startRanking()">Start Ranking</button>
 				</div>
-				<div class="form-group">
-					<button class=""btn btn-primary" ng-show="designDecisionWrapper.showFinishRanking">Finish Ranking</button>
-				</div>
+				<!-- showFinishRanking -->
+				<!-- editable -->
 				<!-- showSelectAlternative -->
 				<!-- showDecided -->
 				<!-- isOwner -->
