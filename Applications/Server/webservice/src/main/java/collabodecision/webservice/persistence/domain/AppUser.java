@@ -86,4 +86,19 @@ public class AppUser {
 	public long getIdUser() {
 		return idUser;
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o instanceof AppUser) {
+			AppUser other = (AppUser) o;
+			if (this.idUser == other.getIdUser()) {
+				return true;
+			}
+		}
+		return false;
+		
+	}
 }
