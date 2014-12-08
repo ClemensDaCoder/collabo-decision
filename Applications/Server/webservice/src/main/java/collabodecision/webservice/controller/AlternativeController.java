@@ -1,7 +1,5 @@
 package collabodecision.webservice.controller;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,7 +8,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import collabodecision.webservice.data.RequestWrapperAlternative;
 import collabodecision.webservice.data.RequestWrapperData;
+import collabodecision.webservice.data.ResponseWrapperAlternative;
 import collabodecision.webservice.persistence.domain.Alternative;
 import collabodecision.webservice.service.AlternativeService;
 
@@ -23,8 +23,8 @@ public class AlternativeController {
 	private AlternativeService alternativeService;
 
 	@RequestMapping(method = RequestMethod.POST)
-	public void addAlternative(@RequestBody RequestWrapperData<Alternative> request) {
-		alternativeService.addAlternative(request.getData());
+	public void addAlternative(@RequestBody RequestWrapperData<RequestWrapperAlternative> request) {
+		alternativeService.addRequestWrapperAlternative(request.getData());
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
@@ -50,10 +50,10 @@ public class AlternativeController {
 	
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public Alternative getAlternative(
+	public ResponseWrapperAlternative getAlternative(
 			@PathVariable long id,
 			@RequestParam(value = "withRelations", defaultValue = "false") boolean withRelations) {
-		return alternativeService.getAlternative(id, withRelations);
+		return alternativeService.getResponseWrapperAlternative(id, withRelations);
 	}
 	
 	

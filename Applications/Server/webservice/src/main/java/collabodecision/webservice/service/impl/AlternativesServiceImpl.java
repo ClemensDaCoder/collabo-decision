@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import collabodecision.webservice.data.RequestWrapperAlternative;
+import collabodecision.webservice.data.ResponseWrapperAlternative;
 import collabodecision.webservice.persistence.AlternativeDao;
 import collabodecision.webservice.persistence.CommentDao;
 import collabodecision.webservice.persistence.domain.Alternative;
@@ -153,7 +154,7 @@ public class AlternativesServiceImpl implements AlternativeService
 			List<Alternative> alternativeFromRelations = alternativeDao.getAlternativeByIds(alternativeRequest.getIdAlternativeFromsRelations());
 			for(Alternative alternativeFromRelation : alternativeFromRelations)
 			{
-				
+				//TODO: Relations
 			}
 			
 		}
@@ -168,6 +169,33 @@ public class AlternativesServiceImpl implements AlternativeService
 			
 			alternativeDao.saveOrUpdateAlternative(alternative);
 		}
+	}
+
+	@Override
+	public ResponseWrapperAlternative getResponseWrapperAlternative(long id,
+			boolean withRelations) {
+		// TODO Auto-generated method stub
+		Alternative alternative;
+		
+
+		AppUser creator = userService
+				.getAppUserByUsername(SecurityContextHolder.getContext()
+						.getAuthentication().getName());
+
+		if (withRelations) {
+			alternative = alternativeDao.getAlternative(id);
+		} else {
+			alternative = alternativeDao.getAlternativeWithRelations(id);
+		}
+		
+		ResponseWrapperAlternative response = new ResponseWrapperAlternative();
+		response.setAlternative(alternative);
+		
+		//TODO: set Rights
+		response.setEditable(true);
+		
+
+		return response;
 	}
 	
 

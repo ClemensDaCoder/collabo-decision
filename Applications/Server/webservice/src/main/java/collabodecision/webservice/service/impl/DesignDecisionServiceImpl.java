@@ -17,7 +17,6 @@ import collabodecision.webservice.persistence.domain.AppUser;
 import collabodecision.webservice.persistence.domain.Comment;
 import collabodecision.webservice.persistence.domain.DesignDecision;
 import collabodecision.webservice.persistence.domain.File;
-import collabodecision.webservice.persistence.impl.DesignDecisionStatusDaoImpl;
 import collabodecision.webservice.service.AppUserService;
 import collabodecision.webservice.service.DesignDecisionService;
 import collabodecision.webservice.service.IssueService;
