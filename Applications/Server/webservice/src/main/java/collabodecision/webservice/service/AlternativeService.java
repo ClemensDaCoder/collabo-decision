@@ -16,6 +16,7 @@ public interface AlternativeService extends CommentService, FileService{
 	void addAlternative(Alternative alternative);
 	
 	void updateAlternative(long id, Alternative alternative);
+	void updateRequestWrapperAlternative(long existingid, RequestWrapperAlternative alternative);
 
 	void rankAlternative(long id, long ranker, String rank);
 	

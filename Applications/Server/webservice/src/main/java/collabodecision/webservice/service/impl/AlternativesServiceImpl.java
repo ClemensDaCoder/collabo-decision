@@ -197,6 +197,13 @@ public class AlternativesServiceImpl implements AlternativeService
 
 		return response;
 	}
+
+	@Override
+	public void updateRequestWrapperAlternative(long existingid,
+			RequestWrapperAlternative alternative) {
+		addorUpdateAlternative(alternative, existingid);
+		
+	}
 	
 
 

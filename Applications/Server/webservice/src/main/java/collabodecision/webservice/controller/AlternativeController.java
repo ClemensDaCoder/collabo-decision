@@ -29,8 +29,8 @@ public class AlternativeController {
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public void updateAlternative(@PathVariable long id,
-			@RequestBody RequestWrapperData<Alternative> request) {
-		alternativeService.updateAlternative(id, request.getData());
+			@RequestBody RequestWrapperData<RequestWrapperAlternative> request) {
+		alternativeService.updateRequestWrapperAlternative(id, request.getData());
 	}
 	
 	@RequestMapping(value = "/{idAlternative}/comments", method = RequestMethod.POST)
