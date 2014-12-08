@@ -14,6 +14,8 @@ import collabodecision.webservice.data.ResponseWrapperDesignDecision;
 import collabodecision.webservice.persistence.CommentDao;
 import collabodecision.webservice.persistence.DesignDecisionDao;
 import collabodecision.webservice.persistence.DesignDecisionStatusDao;
+import collabodecision.webservice.persistence.IssueDao;
+import collabodecision.webservice.persistence.IssueStatusDao;
 import collabodecision.webservice.persistence.domain.AppUser;
 import collabodecision.webservice.persistence.domain.Comment;
 import collabodecision.webservice.persistence.domain.DesignDecision;
@@ -22,6 +24,7 @@ import collabodecision.webservice.persistence.domain.IssueStatus;
 import collabodecision.webservice.persistence.domain.Tag;
 import collabodecision.webservice.persistence.domain.DesignDecisionStatus.DesignDecisionStatusValue;
 import collabodecision.webservice.persistence.domain.File;
+import collabodecision.webservice.persistence.domain.IssueStatus.IssueStatusValue;
 import collabodecision.webservice.service.AppUserService;
 import collabodecision.webservice.service.DesignDecisionService;
 import collabodecision.webservice.service.IssueService;
@@ -35,7 +38,13 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 	
 	@Autowired
 	private DesignDecisionDao designDecisionDao;
-
+	
+	@Autowired
+	private IssueStatusDao issueStatusDao;
+	
+	@Autowired
+	private IssueDao issueDao;
+	
 	@Autowired
 	private CommentHelper commentHelper;
 
@@ -183,6 +192,8 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 		if (idExistingDesignDecision == null) {
 			decision = new DesignDecision();
 			decision.setCreationDate(new Date(System.currentTimeMillis()));
+			decision.setIssue(issueDao.getIssue(decisionRequest.getIdIssue()));
+			decision.getIssue().setIssueStatus(issueStatusDao.getIssueStatusByValue(IssueStatusValue.IN_PROGRESS));
 		} else {
 			designDecisionDao.getDesignDecision(idExistingDesignDecision);
 		}
@@ -206,7 +217,7 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 		
 		// TODO: set Status
 		decision.setDesignDecisionStatus(designDecisionStatusDao
-				.getDesignDecisionStatusByName(DesignDecisionStatusValue.COLLECTING_ALTERNATIVES));
+				.getDesignDecisionStatusByValue(DesignDecisionStatusValue.COLLECTING_ALTERNATIVES));
 		
 		if (decisionRequest.getFiles() != null) {
 			for (String file : decisionRequest.getFiles()) {

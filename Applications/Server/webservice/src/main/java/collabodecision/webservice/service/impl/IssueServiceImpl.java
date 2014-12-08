@@ -23,6 +23,7 @@ import collabodecision.webservice.persistence.domain.IssueRelation;
 import collabodecision.webservice.persistence.domain.IssueStatus;
 import collabodecision.webservice.persistence.domain.IssueTag;
 import collabodecision.webservice.persistence.domain.Tag;
+import collabodecision.webservice.persistence.domain.IssueStatus.IssueStatusValue;
 import collabodecision.webservice.service.AppUserService;
 import collabodecision.webservice.service.IssueService;
 import collabodecision.webservice.service.utils.CommentHelper;
@@ -155,7 +156,7 @@ public class IssueServiceImpl implements IssueService {
 		issue.setDescription(issueRequest.getDescription());
 
 		// TODO: Check issue Status: According to Process! Go with the flow!
-		issue.setIssueStatus(issueStatusDao.getIssueStatusByName("NEW"));
+		issue.setIssueStatus(issueStatusDao.getIssueStatusByValue(IssueStatusValue.NEW));
 		issue.setOwner(userService.getAppUser(issueRequest.getIdOwner()));
 
 		// Set the creator to the currently authenticated user

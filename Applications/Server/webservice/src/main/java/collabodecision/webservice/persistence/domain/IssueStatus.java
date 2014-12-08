@@ -2,8 +2,9 @@ package collabodecision.webservice.persistence.domain;
 
 import java.util.Set;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -14,21 +15,29 @@ import javax.persistence.Table;
 @Table
 public class IssueStatus {
 
+	public enum IssueStatusValue {
+		NEW,
+		OBSOLETE,
+		REJECTED,
+		RESOLVED,
+		IN_PROGRESS
+	}
+	
 	@GeneratedValue
 	@Id
 	private long idIssueStatus;
 	
-	@Column(nullable=false, unique=true)
-	private String status;
+	@Enumerated(EnumType.STRING)
+	private IssueStatusValue status;
 	
 	@OneToMany(mappedBy="issueStatus")
 	private Set<Issue> issues;
 
-	public String getStatus() {
+	public IssueStatusValue getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(IssueStatusValue status) {
 		this.status = status;
 	}
 

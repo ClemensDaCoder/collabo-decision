@@ -11,7 +11,7 @@ import collabodecision.webservice.persistence.domain.DesignDecisionStatus;
 import collabodecision.webservice.persistence.domain.DesignDecisionStatus.DesignDecisionStatusValue;
 
 @Repository
-public class DesignDecisionStatusDaoImpl extends BaseDao implements DesignDecisionStatusDao{
+public class DesignDecisionStatusDaoImpl extends BaseDao implements DesignDecisionStatusDao {
 
 	@Autowired
 	public DesignDecisionStatusDaoImpl(SessionFactory sessionFactory) {
@@ -21,8 +21,15 @@ public class DesignDecisionStatusDaoImpl extends BaseDao implements DesignDecisi
 
 	@Override
 	@Transactional(readOnly = true)
-	public DesignDecisionStatus getDesignDecisionStatusByName(DesignDecisionStatusValue status) {
+	public DesignDecisionStatus getDesignDecisionStatusByValue(DesignDecisionStatusValue status) {
 		return (DesignDecisionStatus) getCurrentSession().createCriteria(DesignDecisionStatus.class).add(Restrictions.eq("status", status)).uniqueResult();
 	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public DesignDecisionStatus getDesignDecisionStatusByName(String name) {
+		return getDesignDecisionStatusByValue(DesignDecisionStatusValue.valueOf(name));
+	}
+		
 		
 }

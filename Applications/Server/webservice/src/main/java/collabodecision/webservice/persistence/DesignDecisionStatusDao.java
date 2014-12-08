@@ -6,6 +6,8 @@ import collabodecision.webservice.persistence.domain.DesignDecisionStatus.Design
 
 public interface DesignDecisionStatusDao {
 
-	DesignDecisionStatus getDesignDecisionStatusByName(DesignDecisionStatusValue name);
+	DesignDecisionStatus getDesignDecisionStatusByValue(DesignDecisionStatusValue name);
+	
+	public DesignDecisionStatus getDesignDecisionStatusByName(String name);
 
 }
