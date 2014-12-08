@@ -11,4 +11,4 @@ INSERT INTO relationtype (idRelationType, type) VALUES (1, 'DEPENDS'), (3, 'RELA
 
 INSERT INTO Tag (idTag, name) VALUES (9, 'Java'), (4, 'Database'), (1, 'Organizational'), (2, 'Enterprise');
 
-INSERT INTO designdecisionstatus (idDesignDecisionStatus, status) VALUES (1, 'COLLECTING_ALTERNATIVES'), (2, 'SELECTING_ALTERNATIVES'), (3, 'DECIDED'), (4, 'OBSOLETE'), (5, 'INAPPROPRIATE_SOLUTION'), (6, 'BLOCKED');
+INSERT INTO designdecisionstatus (idDesignDecisionStatus, status) VALUES (1, 'COLLECTING_ALTERNATIVES'), (2, 'RANK_ALTERNATIVES'), (3, 'SELECTING_ALTERNATIVES'), (4, 'DECIDED'), (5, 'OBSOLETE'), (6, 'INAPPROPRIATE_SOLUTION'), (7, 'BLOCKED');
