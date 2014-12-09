@@ -53,7 +53,20 @@ angular.module('collaboApp').controller('DesignDecisionDetailViewController', ['
 	};
 	
 	$scope.showAlternative = function(idAlternative){
-		
+		var modalInstance = $modal.open({
+			templateUrl : 'app/components/alternatives/views/alternativeDetailView.html',
+			controller : 'AlternativeDetailController',
+			resolve: {
+				idAlternative : function() {
+					return idAlternative;
+				}
+			}
+		});
+		modalInstance.result.then(function() {
+			$scope.initialize();
+		}, function() {
+			$scope.initialize();
+		});
 	};
 	
 	$scope.cancel = function() {
