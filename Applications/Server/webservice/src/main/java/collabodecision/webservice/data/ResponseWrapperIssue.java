@@ -1,5 +1,8 @@
 package collabodecision.webservice.data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import collabodecision.webservice.persistence.domain.Issue;
 
 public class ResponseWrapperIssue {
@@ -12,6 +15,25 @@ public class ResponseWrapperIssue {
 	private boolean showObsolete;
 	private boolean showResolved;
 	private boolean isOwner;
+
+	private List<Issue> dependsIssuesTo;
+	
+	private List<Issue> dependsIssuesFrom;
+	
+	private List<Issue> resolvesIssuesTo;
+	
+	private List<Issue> resolvesIssuesFrom;
+	
+	private List<Issue> relatesIssues;
+	
+	
+	public ResponseWrapperIssue() {
+		this.dependsIssuesTo = new ArrayList<>();
+		this.dependsIssuesFrom = new ArrayList<>();
+		this.resolvesIssuesTo = new ArrayList<>();
+		this.resolvesIssuesFrom = new ArrayList<>();
+		this.relatesIssues = new ArrayList<>();
+	}
 	
 	
 	public Issue getIssue() {
@@ -50,12 +72,61 @@ public class ResponseWrapperIssue {
 	public void setShowResolved(boolean showResolved) {
 		this.showResolved = showResolved;
 	}
+	
 	public boolean isOwner() {
 		return isOwner;
 	}
 	public void setOwner(boolean isOwner) {
 		this.isOwner = isOwner;
 	}
-	
-	
+
+
+	public List<Issue> getDependsIssuesTo() {
+		return dependsIssuesTo;
+	}
+
+
+	public void setDependsIssuesTo(List<Issue> dependsIssuesTo) {
+		this.dependsIssuesTo = dependsIssuesTo;
+	}
+
+
+	public List<Issue> getDependsIssuesFrom() {
+		return dependsIssuesFrom;
+	}
+
+
+	public void setDependsIssuesFrom(List<Issue> dependsIssuesFrom) {
+		this.dependsIssuesFrom = dependsIssuesFrom;
+	}
+
+
+	public List<Issue> getResolvesIssuesTo() {
+		return resolvesIssuesTo;
+	}
+
+
+	public void setResolvesIssuesTo(List<Issue> resolvesIssuesTo) {
+		this.resolvesIssuesTo = resolvesIssuesTo;
+	}
+
+
+	public List<Issue> getResolvesIssuesFrom() {
+		return resolvesIssuesFrom;
+	}
+
+
+	public void setResolvesIssuesFrom(List<Issue> resolvesIssuesFrom) {
+		this.resolvesIssuesFrom = resolvesIssuesFrom;
+	}
+
+
+	public List<Issue> getRelatesIssues() {
+		return relatesIssues;
+	}
+
+
+	public void setRelatesIssues(List<Issue> relatesIssues) {
+		this.relatesIssues = relatesIssues;
+	}
 }

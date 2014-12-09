@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import collabodecision.webservice.persistence.IssueDao;
 import collabodecision.webservice.persistence.domain.Comment;
 import collabodecision.webservice.persistence.domain.Issue;
-import collabodecision.webservice.persistence.domain.IssueStatus;
+import collabodecision.webservice.persistence.domain.Issue.IssueStatus;
 import collabodecision.webservice.persistence.domain.Tag;
 
 @Repository

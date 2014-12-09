@@ -1,5 +1,6 @@
 package collabodecision.webservice.persistence.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -8,8 +9,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
-@Table(uniqueConstraints=@UniqueConstraint(columnNames={"idIssueFrom", "idIssueTo", "idRelationType"}))
+@Table(uniqueConstraints=@UniqueConstraint(columnNames={"idIssueFrom", "idIssueTo", "relationType"}))
 public class IssueRelation {
 
 	@GeneratedValue
@@ -18,14 +21,15 @@ public class IssueRelation {
 	
 	@ManyToOne
 	@JoinColumn(name="idIssueFrom", nullable=false)
+	@JsonBackReference
 	private Issue issueFrom;
 	
 	@ManyToOne
 	@JoinColumn(name="idIssueTo", nullable=false)
+	@JsonBackReference
 	private Issue issueTo;
 	
-	@ManyToOne
-	@JoinColumn(name="idRelationType", nullable=false)
+	@Column(nullable=false)
 	private RelationType relationType;
 	
 	public IssueRelation() {
@@ -65,5 +69,11 @@ public class IssueRelation {
 
 	public long getIdIssueRelation() {
 		return idIssueRelation;
+	}
+	
+	public enum RelationType {
+		DEPENDS,
+		RELATES,
+		RESOLVES
 	}
 }

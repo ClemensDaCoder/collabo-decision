@@ -34,8 +34,7 @@ public class Issue {
 	@Column(nullable = false)
 	private boolean blocked;
 
-	@ManyToOne
-	@JoinColumn(name = "idIssueStatus", nullable = false)
+	@Column(nullable=false)
 	private IssueStatus issueStatus;
 
 	@ManyToOne
@@ -48,10 +47,12 @@ public class Issue {
 
 	@OneToMany(mappedBy = "issueFrom", orphanRemoval = true)
 	@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
+	@JsonManagedReference
 	private Set<IssueRelation> issueRelationsFrom;
 
 	@OneToMany(mappedBy = "issueTo", orphanRemoval = true)
 	@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
+	@JsonManagedReference
 	private Set<IssueRelation> issueRelationsTo;
 
 	@OneToMany(mappedBy = "issue", orphanRemoval = true)
@@ -200,5 +201,13 @@ public class Issue {
 
 	public long getIdIssue() {
 		return idIssue;
+	}
+	
+	public enum IssueStatus {
+		NEW,
+		OBSOLETE,
+		REJECTED,
+		RESOLVED,
+		IN_PROGRESS
 	}
 }
