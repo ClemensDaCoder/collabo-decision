@@ -57,8 +57,8 @@ public class IssueServiceImpl implements IssueService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<ResponseWrapperIssue> getResponseWrapperIssues(String status, List<String> tags,
-			String partialTitle) {
+	public List<ResponseWrapperIssue> getResponseWrapperIssues(String status,
+			List<String> tags, String partialTitle) {
 		IssueStatus issueStatus = null;
 
 		if (status != null) {
@@ -79,44 +79,36 @@ public class IssueServiceImpl implements IssueService {
 		}
 
 		List<ResponseWrapperIssue> result = new ArrayList<>();
-		
-		
-		// Get the User -> needed for flag setting in the ResponseWrapperIssue
-		AppUser appUser = userService.getAppUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
-		
-		for(Issue issue : issueDao.getIssues(issueStatus, tagsOfIssue, partialTitle)) {
-			
+
+		for (Issue issue : issueDao.getIssues(issueStatus, tagsOfIssue,
+				partialTitle)) {
+
 			ResponseWrapperIssue rwi = new ResponseWrapperIssue();
 			rwi.setIssue(issue);
-			
-			// Issue can be edited by owner and creator
-			boolean isEditable = issue.getOwner().equals(appUser) || issue.getCreator().equals(appUser);
-			
-			rwi.setEditable(isEditable);
-			rwi.setOwner(issue.getOwner().equals(appUser));
-			
-			// TODO: check if needed in list (probably not)
-			rwi.setShowInProgress(false);
-			rwi.setShowObsolete(false);
-			rwi.setShowRepeat(false);
-			rwi.setShowResolved(false);
-			
+
+			setResponseWrapperIssueFlags(rwi);
+
 			result.add(rwi);
 		}
-		
-		
+
 		return result;
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public Issue getIssue(long id, boolean withRelations) {
+	public ResponseWrapperIssue getResponseWrapperIssue(long id,
+			boolean withRelations) {
 
-		if (withRelations) {
-			return issueDao.getIssueWithRelations(id);
-		}
+		Issue issue = withRelations ? issueDao.getIssueWithRelations(id)
+				: issueDao.getIssue(id);;
 
-		return issueDao.getIssue(id);
+		ResponseWrapperIssue rwi = new ResponseWrapperIssue();
+		rwi.setIssue(issue);
+		
+		setResponseWrapperIssueFlags(rwi);
+		
+		return rwi;
+
 	}
 
 	@Override
@@ -193,7 +185,7 @@ public class IssueServiceImpl implements IssueService {
 				.getAppUserByUsername(SecurityContextHolder.getContext()
 						.getAuthentication().getName());
 		issue.setCreator(creator);
-		
+
 		// Get all the tags that are already in the DB
 		List<Tag> tagsInDb = tagDao.getTagsByName(issueRequest.getTags());
 
@@ -268,6 +260,35 @@ public class IssueServiceImpl implements IssueService {
 		if (idExistingIssue == null) {
 			issueDao.saveOrUpdateIssue(issue);
 		}
+	}
+
+	/**
+	 * Help method for setting the ResponswWrapperFlags according to the AppUser
+	 * Roles
+	 * 
+	 * @param rwi
+	 *            The ResponseWrapperIssue instance - Issue must be set before
+	 *            this invocation
+	 */
+	private void setResponseWrapperIssueFlags(ResponseWrapperIssue rwi) {
+
+		AppUser appUser = userService
+				.getAppUserByUsername(SecurityContextHolder.getContext()
+						.getAuthentication().getName());
+
+		// Editable only if Owner or Creator
+		boolean isEditable = rwi.getIssue().getOwner().equals(appUser)
+				|| rwi.getIssue().getCreator().equals(appUser);
+
+		rwi.setEditable(isEditable);
+		
+		rwi.setOwner(rwi.getIssue().getOwner().equals(appUser));
+
+		// TODO: check if needed in list (probably not)
+		rwi.setShowInProgress(false);
+		rwi.setShowObsolete(false);
+		rwi.setShowRepeat(false);
+		rwi.setShowResolved(false);
 	}
 
 }

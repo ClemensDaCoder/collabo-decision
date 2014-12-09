@@ -2,61 +2,81 @@
 	<div class="modal-header">
 		<h3>New Issue</h3>
 	</div>
-	
+	<div class="container-fluid" ng-show="showStatusButtons">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="btn-group pull-right">
+					<button ng-disabled="isEditDisabled" class="btn btn-primary">Create Design Decision</button>
+					<button ng-disabled="isEditDisabled" class="btn btn-danger">Reject Issue</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	<div class="container-fluid">
 		<div class="row">
-		<div class="col-md-5">
-			<form class="form-horizontal">
-				<div class="form-group">
-					<label for="inputTitle" class="control-label">Title</label>
-					<input type="text" class="form-control" id="inputTitle" placeholder="Title" ng-model="title">
-				</div>
-				<div class="form-group">
-					<label for="inputDescription" class="control-label">Description</label>
-					<textarea rows="10" cols="10" id="inputDescription" class="form-control" placeholder="Description" ng-model="description"></textarea>
-				</div>
-				<div class="form-group">
-					<label for="inputDescription" class="control-label">Owner</label>
-					<input type="text" id="inputOwner" ng-model="selectedOwner" class="form-control" placeholder="Owner" 
-							typeahead-loading="loadingUsers" typeahead="user as (user.forename + ' ' + user.surname) for user in getUser($viewValue)">
-					</input>
-					<i ng-show="loadingUsers" class="glyphicon glyphicon-refresh loading"></i>
-					
-				</div>
-				<div class="form-group">
-					<label for="inputTag" class="control-label">Tags</label>
-					<tageditor tags="currentTags"></tageditor>
-				</div>
-				<div class="form-group">
-					<label for="inputDependsOn" class="control-label">Depends on</label>
-					<issueeditor issues="dependsIssues"></issueeditor>
-				</div>
-				<div class="form-group">
-					<label for="inputResolvesBy" class="control-label">Resolved by</label>
-					<issueeditor issues="resolvesIssues"></issueeditor>
-				</div>
-				<div class="form-group">
-					<label for="inputRelatedTo" class="control-label">Related to</label>
-					<issueeditor issues="relatesIssues"></issueeditor>
-				</div>
-			</form>
-		</div>
+			<div class="col-md-5">
+				<form class="form-horizontal">
+					<div class="form-group">
+						<label for="inputTitle" class="control-label">Title</label>
+						<input ng-disabled="isEditDisabled" type="text" class="form-control" id="inputTitle" placeholder="Title" ng-model="title">
+					</div>
+					<div class="form-group">
+						<label for="inputDescription" class="control-label">Description</label>
+						<textarea ng-disabled="isEditDisabled" rows="10" cols="10" id="inputDescription" class="form-control" placeholder="Description" ng-model="description"></textarea>
+					</div>
+					<div class="form-group">
+						<label for="inputDescription" class="control-label">Owner</label>
+						<input ng-disabled="isEditDisabled" type="text" id="inputOwner" ng-model="selectedOwner" class="form-control" placeholder="Owner" 
+								typeahead-loading="loadingUsers" typeahead="user as (user.forename + ' ' + user.surname) for user in getUser($viewValue)">
+						</input>
+						<i ng-show="loadingUsers" class="glyphicon glyphicon-refresh loading"></i>
+						
+					</div>
+				</form>
+			</div>
 			<div class="col-md-7">
-				<h4>Issues with matching tags</h4>
-				<table class="table matchingTags">
-					<tr ng-repeat="issueMatchingTagsResponse in issuesMatchingTagsResponse">
-						<td style="width: 70%; min-width: 200px;"><a href="#">{{issueMatchingTagsResponse.issue.title}}</a><br/><div class="tagwrapper" ng-repeat="issueTag in issueMatchingTagsResponse.issue.issueTags">{{issueTag.tag.name}}</div></td>
-						<td><button class="btn btn-warning" ng-click="addDepends(issueMatchingTagsResponse.issue)">Add depends</button></td>
-						<td><button class="btn btn-success" ng-click="addResolves(issueMatchingTagsResponse.issue)">Add resolves</button></td>
-						<td><button class="btn btn-primary" ng-click="addRelates(issueMatchingTagsResponse.issue)">Add relates</button></td>
-					</tr>
-				</table>
+				<form class="form-horizontal">
+					<div class="form-group">
+						<label for="inputTag" class="control-label">Tags</label>
+						<tageditor ng-disabled="isEditDisabled" tags="currentTags"></tageditor>
+					</div>
+					<div class="form-group">
+						<label for="inputDependsOn" class="control-label">Depends on</label>
+						<issueeditor ng-disabled="isEditDisabled" issues="dependsIssues"></issueeditor>
+					</div>
+					<div class="form-group">
+						<label for="inputResolvesBy" class="control-label">Resolved by</label>
+						<issueeditor ng-disabled="isEditDisabled" issues="resolvesIssues"></issueeditor>
+					</div>
+					<div class="form-group">
+						<label for="inputRelatedTo" class="control-label">Related to</label>
+						<issueeditor ng-disabled="isEditDisabled" issues="relatesIssues"></issueeditor>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="row">
+			<hr/>
+			<div class="col-md-12">
+				<form class="form-horizontal">
+					<div class="form-group">
+						<label for="issuesMatchingTags" class="control-label">Issues with matching tags</label>
+						<table class="table matchingTags">
+							<tr ng-repeat="issueMatchingTagsResponse in issuesMatchingTagsResponse">
+								<td style="width: 70%; min-width: 200px;"><a href="#">{{issueMatchingTagsResponse.issue.title}}</a><br/><div class="tagwrapper" ng-repeat="issueTag in issueMatchingTagsResponse.issue.issueTags">{{issueTag.tag.name}}</div></td>
+								<td><button ng-disabled="isEditDisabled" class="btn btn-warning" ng-click="addDepends(issueMatchingTagsResponse.issue)">Add depends</button></td>
+								<td><button ng-disabled="isEditDisabled" class="btn btn-success" ng-click="addResolves(issueMatchingTagsResponse.issue)">Add resolves</button></td>
+								<td><button ng-disabled="isEditDisabled" class="btn btn-primary" ng-click="addRelates(issueMatchingTagsResponse.issue)">Add relates</button></td>
+							</tr>
+						</table>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>
 	
 	<div class="modal-footer">
-		<button class="btn btn-success" ng-click="save()">Save</button>
+		<button ng-disabled="isEditDisabled" class="btn btn-success" ng-click="save()">Save</button>
 		<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
 	</div>
 </div>

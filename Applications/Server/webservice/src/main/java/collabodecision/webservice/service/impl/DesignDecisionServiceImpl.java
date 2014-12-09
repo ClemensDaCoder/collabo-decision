@@ -208,7 +208,7 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 		// Setting the properties of the DesignDecision
 		decision.setTitle(decisionRequest.getTitle());
 		decision.setAssumption(decisionRequest.getAssumption());
-		decision.setIssue(issueService.getIssue(decisionRequest.getIdIssue(), true));
+		decision.setIssue(issueService.getResponseWrapperIssue(decisionRequest.getIdIssue(), true).getIssue());
 		decision.setShareHolders(decisionRequest.getShareholders());
 		
 //		//TODO: make column rationale nullable and remove

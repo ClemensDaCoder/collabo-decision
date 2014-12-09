@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import collabodecision.webservice.data.RequestWrapperData;
 import collabodecision.webservice.data.RequestWrapperIssue;
 import collabodecision.webservice.data.ResponseWrapperIssue;
-import collabodecision.webservice.persistence.domain.Issue;
 import collabodecision.webservice.service.IssueService;
 
 @RestController
@@ -33,10 +32,10 @@ public class IssueController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public Issue getIssue(
+	public ResponseWrapperIssue getIssue(
 			@PathVariable long id,
 			@RequestParam(value = "withRelations", defaultValue = "false") boolean withRelations) {
-		return issueService.getIssue(id, withRelations);
+		return issueService.getResponseWrapperIssue(id, withRelations);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)

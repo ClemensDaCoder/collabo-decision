@@ -16,8 +16,17 @@ angular.module('collaboApp').controller('IssuesController', ['$http', '$scope', 
 		});
 	}
 	
-	$scope.showIssue = function(issue) {
-		alert(issue.title);
+	$scope.showIssue = function(idIssue) {
+		var modalInstance = $modal.open({
+			templateUrl : 'app/components/issues/views/newIssueView.html',
+			controller : 'IssueDetailViewController',
+			backdrop : false,
+			resolve : {
+				id : function() {
+					return idIssue;
+				}
+			}
+		});
 	}
 	
 	$scope.newIssue = function() {

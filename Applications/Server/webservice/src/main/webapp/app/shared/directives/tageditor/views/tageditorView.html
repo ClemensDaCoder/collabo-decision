@@ -1,13 +1,13 @@
 <div ng-controller="TageditorController">
 	
-	<input type="text" id="inputTag" ng-model="tageditorText" ng-trim="false"
+	<input ng-disabled="isDisabled" type="text" id="inputTag" ng-model="tageditorText" ng-trim="false"
 		class="form-control" placeholder="Tags"
 		typeahead="tag.name for tag in getTag($viewValue)" typeahead-on-select="onTagSelect($item, $model, $label)"> 
 	</input>
 	<div class="selectedTags">
 		<div class="tagwrapper" ng-repeat="tag in tags">
 			{{tag}}
-			<div class="glyphicon glyphicon-remove" ng-click="removeTag(tag)"></div>
+			<div ng-show="!isDisabled" class="glyphicon glyphicon-remove" ng-click="removeTag(tag)"></div>
 		</div>
 	</div>
 </div>

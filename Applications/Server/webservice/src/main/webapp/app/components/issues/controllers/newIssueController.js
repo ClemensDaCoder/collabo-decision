@@ -1,5 +1,7 @@
 angular.module('collaboApp').controller('NewIssueController', ['$scope', '$modalInstance', '$http', function($scope, $modalInstance, $http) {
 	
+	$scope.showStatusButtons = false;
+	
 	$scope.cancel = function() {
 		$modalInstance.dismiss('cancel');
 	}

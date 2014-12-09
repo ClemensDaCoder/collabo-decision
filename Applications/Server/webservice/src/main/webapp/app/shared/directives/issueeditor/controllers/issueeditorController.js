@@ -3,7 +3,7 @@ angular.module('collaboApp')
 
 	$scope.issueeditorText = '';
 	
-	$scope.getIssues = function(partialTitle) {
+	$scope.getIssueResponses = function(partialTitle) {
 		return $http.get('/rest/issues', {
 			params : {
 				'partialtitle' : partialTitle
@@ -23,8 +23,8 @@ angular.module('collaboApp')
 		// Check if the last character was a space
 		// If so, add the Text to the selected Tags
 		// Only add if not already in Array
-		if($scope.issues.indexOf($item) < 0) {
-			$scope.issues.push($item);
+		if($scope.issues.indexOf($item.issue) < 0) {
+			$scope.issues.push($item.issue);
 		}
 		$scope.issueeditorText = '';
 	};

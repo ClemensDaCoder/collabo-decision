@@ -3,7 +3,9 @@ angular.module('collaboApp').directive('tageditor', function() {
 		restrict: 'E',
 		templateUrl : 'app/shared/directives/tageditor/views/tageditorView.html',
 		scope : { 
-			tags : "="
+			tags : "=",
+			isDisabled : "=ngDisabled"
+			
 		}
 	}
 }).directive('issueeditor', function() {
@@ -11,7 +13,9 @@ angular.module('collaboApp').directive('tageditor', function() {
 		restrict: 'E',
 		templateUrl : 'app/shared/directives/issueeditor/views/issueeditorView.html',
 		scope : {
-			issues : "="
+			issues : "=",
+			isDisabled : "=ngDisabled"
+			
 		}
 	}
 }).directive('shareholdereditor', function() {
