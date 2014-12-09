@@ -13,15 +13,13 @@ import collabodecision.webservice.data.RequestWrapperIssue;
 import collabodecision.webservice.data.ResponseWrapperIssue;
 import collabodecision.webservice.persistence.CommentDao;
 import collabodecision.webservice.persistence.IssueDao;
-import collabodecision.webservice.persistence.IssueStatusDao;
-import collabodecision.webservice.persistence.RelationTypeDao;
 import collabodecision.webservice.persistence.TagDao;
 import collabodecision.webservice.persistence.domain.AppUser;
 import collabodecision.webservice.persistence.domain.Comment;
 import collabodecision.webservice.persistence.domain.File;
 import collabodecision.webservice.persistence.domain.Issue;
+import collabodecision.webservice.persistence.domain.Issue.IssueStatus;
 import collabodecision.webservice.persistence.domain.IssueRelation;
-import collabodecision.webservice.persistence.domain.IssueStatus;
 import collabodecision.webservice.persistence.domain.IssueTag;
 import collabodecision.webservice.persistence.domain.Tag;
 import collabodecision.webservice.service.AppUserService;
@@ -35,16 +33,10 @@ public class IssueServiceImpl implements IssueService {
 	private TagDao tagDao;
 
 	@Autowired
-	private IssueStatusDao issueStatusDao;
-
-	@Autowired
 	private IssueDao issueDao;
 
 	@Autowired
 	private CommentDao commentDao;
-
-	@Autowired
-	private RelationTypeDao relationTypeDao;
 
 	@Autowired
 	private AppUserService userService;
@@ -59,11 +51,7 @@ public class IssueServiceImpl implements IssueService {
 	@Transactional(readOnly = true)
 	public List<ResponseWrapperIssue> getResponseWrapperIssues(String status,
 			List<String> tags, String partialTitle) {
-		IssueStatus issueStatus = null;
-
-		if (status != null) {
-			issueStatus = issueStatusDao.getIssueStatusByName(status);
-		}
+		IssueStatus issueStatus = status != null ? IssueStatus.valueOf(status) : null;
 
 		List<Tag> tagsOfIssue = null;
 
@@ -108,6 +96,48 @@ public class IssueServiceImpl implements IssueService {
 		rwi.setIssue(issue);
 		
 		setResponseWrapperIssueFlags(rwi);
+		
+		/*
+		 * #########
+		 * 
+		 * TODO: 
+		 * 
+		 * Evaluate if the following is correct! (probably not correct in the moment!)
+		 * 		Building the Lists!
+		 * 
+		 * #########
+		 */
+		if(withRelations) {
+			
+			for(IssueRelation irFrom : issue.getIssueRelationsFrom()) {
+				
+				switch(irFrom.getRelationType()) {
+				case DEPENDS:
+					rwi.getDependsIssuesFrom().add(irFrom.getIssueTo());
+					break;
+				case RELATES:
+					rwi.getRelatesIssues().add(irFrom.getIssueTo());
+					break;
+				case RESOLVES:
+					rwi.getResolvesIssuesFrom().add(irFrom.getIssueTo());
+					break;
+				}
+			}
+			
+			for(IssueRelation irTo : issue.getIssueRelationsTo()) {
+				switch(irTo.getRelationType()) {
+				case DEPENDS:
+					rwi.getDependsIssuesTo().add(irTo.getIssueFrom());
+					break;
+				case RELATES:
+					rwi.getRelatesIssues().add(irTo.getIssueFrom());
+					break;
+				case RESOLVES:
+					rwi.getResolvesIssuesTo().add(irTo.getIssueFrom());
+					break;
+				}
+			}
+		}
 		
 		return rwi;
 
@@ -166,11 +196,6 @@ public class IssueServiceImpl implements IssueService {
 			issue.getIssueRelationsFrom().clear();
 			issue.getIssueRelationsTo().clear();
 			issue.getFiles().clear();
-			issue.getDependingIssues().clear();
-			issue.getDependsIssues().clear();
-			issue.getResolvedByIssues().clear();
-			issue.getResolvesIssues().clear();
-			issue.getRelatedIssues().clear();
 
 			// Must be done - Otherwise Hibernate would result in Violation
 			// Constraint!
@@ -182,8 +207,7 @@ public class IssueServiceImpl implements IssueService {
 		issue.setDescription(issueRequest.getDescription());
 
 		// Set Issue status
-		issue.setIssueStatus(issueStatusDao.getIssueById(issueRequest
-				.getIdIssueStatus()));
+		issue.setIssueStatus(IssueStatus.valueOf(issueRequest.getIssueStatus()));
 		issue.setOwner(userService.getAppUser(issueRequest.getIdOwner()));
 
 		// Set the creator to the currently authenticated user
@@ -224,9 +248,7 @@ public class IssueServiceImpl implements IssueService {
 
 			for (Issue dependingIssue : dependingIssues) {
 				issue.getIssueRelationsFrom().add(
-						new IssueRelation(issue, dependingIssue,
-								relationTypeDao
-										.getRelationTypeByType("DEPENDS")));
+						new IssueRelation(issue, dependingIssue, IssueRelation.RelationType.DEPENDS));
 			}
 
 			// If the issue depends on another issue -> it is considered
@@ -241,8 +263,7 @@ public class IssueServiceImpl implements IssueService {
 					.getIdsResolves());
 			for (Issue resolvesIssue : resolvesIssues) {
 				issue.getIssueRelationsFrom().add(
-						new IssueRelation(issue, resolvesIssue, relationTypeDao
-								.getRelationTypeByType("RESOLVES")));
+						new IssueRelation(issue, resolvesIssue, IssueRelation.RelationType.RESOLVES));
 			}
 		}
 
@@ -254,27 +275,16 @@ public class IssueServiceImpl implements IssueService {
 					.getIdsRelates());
 			for (Issue relatedIssue : relatedIssues) {
 				issue.getIssueRelationsFrom().add(
-						new IssueRelation(issue, relatedIssue, relationTypeDao
-								.getRelationTypeByType("RELATES")));
+						new IssueRelation(issue, relatedIssue, IssueRelation.RelationType.RELATES));
 				issue.getIssueRelationsTo().add(
-						new IssueRelation(relatedIssue, issue, relationTypeDao
-								.getRelationTypeByType("RELATES")));
+						new IssueRelation(relatedIssue, issue, IssueRelation.RelationType.RELATES));
 			}
 		}
 		
-		setRelatedIssues(issue, issueRequest);
 
 		// Only needed when new (not update)
 		if (idExistingIssue == null) {
 			issueDao.saveOrUpdateIssue(issue);
-		}
-	}
-	
-	private void setRelatedIssues(Issue issue, RequestWrapperIssue issueRequest) {
-		for (Long relatedIssueIds :issueRequest.getIdsRelates())  {
-			Issue relatedIssue = issueDao.getIssue(relatedIssueIds);
-			issue.getRelatedIssues().add(relatedIssue);
-			relatedIssue.getRelatedIssues().add(issue);
 		}
 	}
 

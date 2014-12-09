@@ -23,7 +23,7 @@ angular.module('collaboApp').controller('NewIssueController', ['$scope', '$modal
 					'idsDepends' : idsDepends,
 					'idsResolves' : idsResolves,
 					'idsRelates' : idsRelates,
-					'idIssueStatus' : 1
+					'issueStatus' : 'NEW'
 				}
 		}
 

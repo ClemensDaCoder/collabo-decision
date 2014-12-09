@@ -24,7 +24,7 @@
 		</tr>
 		<tr ng-repeat="issueResponse in issuesResponse">
 			<td><a href="#" ng-click="showIssue(issueResponse.issue.idIssue)">{{issueResponse.issue.title}}</a><br/><div class="tagwrapper" ng-repeat="issueTag in issueResponse.issue.issueTags">{{issueTag.tag.name}}</div></td>
-			<td>{{issueResponse.issue.issueStatus.status}}</td>
+			<td>{{issueResponse.issue.issueStatus}}</td>
 			<td>{{issueResponse.issue.creator.forename}} {{issueResponse.issue.creator.surname}}</td>
 			<td>{{issueResponse.issue.owner.forename}} {{issueResponse.issue.owner.surname}}</td>
 			<td><button ng-disabled="!issueResponse.owner" class="btn btn-primary" ng-click="createDesignDecision(issueResponse.issue.idIssue)">Create Design Decision</button></td>
