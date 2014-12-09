@@ -72,6 +72,7 @@ public class AlternativesServiceImpl implements AlternativeService
 	}
 	
 	@Override
+	@Transactional(readOnly = false)
 	public void deleteAlternative(long id) {
 		alternativeDao.deleteAlternative(id);
 		
@@ -90,6 +91,7 @@ public class AlternativesServiceImpl implements AlternativeService
 	}
 
 	@Override
+	@Transactional(readOnly = false)
 	public void rankAlternative(long id, long ranker, String rank) {
 		// TODO Auto-generated method stub
 		
@@ -176,6 +178,7 @@ public class AlternativesServiceImpl implements AlternativeService
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public ResponseWrapperAlternative getResponseWrapperAlternative(long id,
 			boolean withRelations) {
 		// TODO Auto-generated method stub
@@ -187,10 +190,12 @@ public class AlternativesServiceImpl implements AlternativeService
 						.getAuthentication().getName());
 
 		if (withRelations) {
-			alternative = alternativeDao.getAlternative(id);
-		} else {
 			alternative = alternativeDao.getAlternativeWithRelations(id);
+		
+		} else {
+			alternative = alternativeDao.getAlternative(id);
 		}
+			
 		
 		ResponseWrapperAlternative response = new ResponseWrapperAlternative();
 		response.setAlternative(alternative);
@@ -203,6 +208,7 @@ public class AlternativesServiceImpl implements AlternativeService
 	}
 
 	@Override
+	@Transactional(readOnly = false)
 	public void updateRequestWrapperAlternative(long existingid,
 			RequestWrapperAlternative alternative) {
 		addorUpdateAlternative(alternative, existingid);
