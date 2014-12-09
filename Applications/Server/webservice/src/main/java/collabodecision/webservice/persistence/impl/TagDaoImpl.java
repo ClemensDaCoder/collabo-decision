@@ -1,5 +1,6 @@
 package collabodecision.webservice.persistence.impl;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -26,9 +27,12 @@ public class TagDaoImpl extends BaseDao implements TagDao {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Tag> getTagsByName(Collection<String> names) {
-		Criteria crit = getCurrentSession().createCriteria(Tag.class);
-		crit.add(Restrictions.in("name", names));
-		return crit.list();
+		if (!names.isEmpty()) {
+			Criteria crit = getCurrentSession().createCriteria(Tag.class);
+			crit.add(Restrictions.in("name", names));
+			return crit.list();
+		}
+		return new ArrayList<Tag>();
 	}
 
 	@Override
