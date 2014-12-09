@@ -3,21 +3,22 @@ angular.module('collaboApp').controller('DesignDecisionDetailViewController', ['
 	$scope.idDesignDecision = id;
 	
 	$scope.initialize = function(){
+		$scope.currentShareholders = [];
+		
 		// get the design decision from server
 		var uri = "/rest/designdecisions/";
 		
 		if($scope.idDesignDecision != null) {
-			uri += $scope.idDesignDecision + "?withRelations=false";		
+			uri += $scope.idDesignDecision + "?withRelations=true";
 			$http.get(uri).success(function(data) {
 				$scope.designDecisionWrapper = angular.fromJson(data);
 				$scope.owner = $scope.designDecisionWrapper.designDecision.issue.owner.forename + " " + $scope.designDecisionWrapper.designDecision.issue.owner.surname;
-				$scope.fillFields();
+				
+				for (var index = 0; index < $scope.designDecisionWrapper.designDecision.shareHolders.length; index++) {
+					$scope.currentShareholders.push($scope.designDecisionWrapper.designDecision.shareHolders[index].user);
+				}
 			});
 		}
-	};
-	
-	$scope.fillFields = function(){
-		$scope.shareholders = "Here will be the shareholders.";
 	};
 	
 	$scope.startRanking = function(){
@@ -49,10 +50,14 @@ angular.module('collaboApp').controller('DesignDecisionDetailViewController', ['
 		}, function() {
 			$scope.initialize();
 		});
-	}
+	};
 	
 	$scope.showAlternative = function(idAlternative){
 		
+	};
+	
+	$scope.cancel = function() {
+		$modalInstance.dismiss('cancel');
 	};
 	
 	//initialize fields

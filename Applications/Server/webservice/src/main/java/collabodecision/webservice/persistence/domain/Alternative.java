@@ -14,6 +14,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table
 public class Alternative {
@@ -27,6 +29,7 @@ public class Alternative {
 
 	@ManyToOne
 	@JoinColumn(name="idDesignDecision", nullable=false)
+	@JsonBackReference
 	private DesignDecision designDecision;
 	
 	@ManyToOne
