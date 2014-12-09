@@ -1,7 +1,9 @@
 package collabodecision.webservice.service.impl;
 
 import java.sql.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,6 @@ import collabodecision.webservice.data.ResponseWrapperDesignDecision;
 import collabodecision.webservice.persistence.CommentDao;
 import collabodecision.webservice.persistence.DesignDecisionDao;
 import collabodecision.webservice.persistence.DesignDecisionStatusDao;
-import collabodecision.webservice.persistence.IssueDao;
 import collabodecision.webservice.persistence.IssueStatusDao;
 import collabodecision.webservice.persistence.domain.AppUser;
 import collabodecision.webservice.persistence.domain.Comment;
@@ -24,6 +25,7 @@ import collabodecision.webservice.persistence.domain.DesignDecisionStatus.Design
 import collabodecision.webservice.persistence.domain.File;
 import collabodecision.webservice.persistence.domain.IssueStatus;
 import collabodecision.webservice.persistence.domain.IssueStatus.IssueStatusValue;
+import collabodecision.webservice.persistence.domain.ShareHolder;
 import collabodecision.webservice.service.AppUserService;
 import collabodecision.webservice.service.DesignDecisionService;
 import collabodecision.webservice.service.IssueService;
@@ -40,9 +42,6 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 	
 	@Autowired
 	private IssueStatusDao issueStatusDao;
-	
-	@Autowired
-	private IssueDao issueDao;
 	
 	@Autowired
 	private CommentHelper commentHelper;
@@ -180,10 +179,7 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 		addOrUpdateDesignDecision(DesignDecisionrequest, null);
 	}
 
-	public void addOrUpdateDesignDecision(
-			RequestWrapperDesignDecision decisionRequest,
-			Long idExistingDesignDecision) {
-
+	private void addOrUpdateDesignDecision(RequestWrapperDesignDecision decisionRequest, Long idExistingDesignDecision) {
 		// get DesignDecision from DB if update; otherwise new Design Decion
 
 		DesignDecision decision = null;
@@ -191,7 +187,7 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 		if (idExistingDesignDecision == null) {
 			decision = new DesignDecision();
 			decision.setCreationDate(new Date(System.currentTimeMillis()));
-			decision.setIssue(issueDao.getIssue(decisionRequest.getIdIssue()));
+			decision.setIssue(issueService.getResponseWrapperIssue(decisionRequest.getIdIssue(), false).getIssue());
 			decision.getIssue().setIssueStatus(issueStatusDao.getIssueStatusByValue(IssueStatusValue.IN_PROGRESS));
 		} else {
 			designDecisionDao.getDesignDecision(idExistingDesignDecision);
@@ -202,14 +198,25 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 			decision.getFiles().clear();
 			// Must be done - Otherwise Hibernate would result in Violation
 			// Constraint!
+			decision.getShareHolders().clear();
+			
 			sessionFactory.getCurrentSession().flush();
 		}
 
 		// Setting the properties of the DesignDecision
 		decision.setTitle(decisionRequest.getTitle());
 		decision.setAssumption(decisionRequest.getAssumption());
-		decision.setIssue(issueService.getResponseWrapperIssue(decisionRequest.getIdIssue(), true).getIssue());
-		decision.setShareHolders(decisionRequest.getShareholders());
+
+		decision.setIssue(issueService.getResponseWrapperIssue(decisionRequest.getIdIssue(), false).getIssue());
+		
+		//set shareholders
+		Set<ShareHolder> shareholders = new HashSet<ShareHolder>();
+		for (Long appUserId : decisionRequest.getAppUserIds()) {
+			AppUser appUser = userService.getAppUser(appUserId);
+			shareholders.add(new ShareHolder(appUser, decision));		
+		}
+		decision.setShareHolders(shareholders);
+
 		
 //		//TODO: make column rationale nullable and remove
 //		decision.setRationale("");

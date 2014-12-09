@@ -11,7 +11,7 @@ public class RequestWrapperDesignDecision {
 	private String assumption;
 	private long idIssue;
 	private List<String> files;
-	private Set<ShareHolder> shareholders;
+	private Set<Long> appUserIds;
 	private long idDesignDecisionStatus;
 
 	public String getTitle() {
@@ -38,12 +38,12 @@ public class RequestWrapperDesignDecision {
 		this.files = files;
 	}
 
-	public Set<ShareHolder> getShareholders() {
-		return shareholders;
+	public Set<Long> getAppUserIds() {
+		return appUserIds;
 	}
 
-	public void setShareholders(Set<ShareHolder> shareholders) {
-		this.shareholders = shareholders;
+	public void setAppUserIds(Set<Long> shareholders) {
+		this.appUserIds = shareholders;
 	}
 
 	public long getIdIssue() {

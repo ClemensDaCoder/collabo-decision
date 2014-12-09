@@ -23,6 +23,15 @@ public class ShareHolder {
 	@ManyToOne
 	@JoinColumn(name="idDesignDecision", nullable=false)
 	private DesignDecision designDecision;
+	
+	public ShareHolder() {
+		
+	}
+	
+	public ShareHolder(AppUser appUser, DesignDecision designDecision) {
+		this.user = appUser;
+		this.designDecision = designDecision;
+	}
 
 	public AppUser getUser() {
 		return user;
