@@ -179,7 +179,7 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 			decision.setIssue(issueService.getResponseWrapperIssue(decisionRequest.getIdIssue(), false).getIssue());
 			decision.getIssue().setIssueStatus(IssueStatus.IN_PROGRESS);
 		} else {
-			designDecisionDao.getDesignDecision(idExistingDesignDecision);
+			decision = designDecisionDao.getDesignDecision(idExistingDesignDecision);
 		}
 		// On Update - Delete all OneToMany Relations in advance (are added
 		// again later)
