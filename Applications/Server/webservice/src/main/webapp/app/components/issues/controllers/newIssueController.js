@@ -63,11 +63,11 @@ angular.module('collaboApp').controller('NewIssueController', ['$scope', '$modal
 			}
 			
 			$http.get('/rest/issues?' + tagString).success(function(data) {
-				$scope.issuesMatchingTags = (!data || data.length === 0)  ?  null : angular.fromJson(data);
+				  $scope.issuesMatchingTagsResponse = (!data || data.length === 0)  ?  null : angular.fromJson(data);
 			});
 		} else {
-			$scope.issuesMatchingTags = null;
-		}
+			  $scope.issuesMatchingTagsResponse = null;
+			  }
 	})
 	
 	$scope.dependsIssues = [];
