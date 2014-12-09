@@ -17,7 +17,7 @@ angular.module('collaboApp').controller('NewDesignDecisionController', ['$scope'
 					'idIssue' : idIssue,
 					'appUserIds' : $scope.appUserIds,
 					'assumption' : $scope.assumption,
-					'idDesignDecisionStatus' : 1
+					'designDecisionStatus' : 'COLLECTING_ALTERNATIVES'
 				}
 		}
 		
