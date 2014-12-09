@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import collabodecision.webservice.data.RequestWrapperIssue;
+import collabodecision.webservice.data.ResponseWrapperIssue;
 import collabodecision.webservice.persistence.CommentDao;
 import collabodecision.webservice.persistence.IssueDao;
 import collabodecision.webservice.persistence.IssueStatusDao;
@@ -23,7 +24,6 @@ import collabodecision.webservice.persistence.domain.IssueRelation;
 import collabodecision.webservice.persistence.domain.IssueStatus;
 import collabodecision.webservice.persistence.domain.IssueTag;
 import collabodecision.webservice.persistence.domain.Tag;
-import collabodecision.webservice.persistence.domain.IssueStatus.IssueStatusValue;
 import collabodecision.webservice.service.AppUserService;
 import collabodecision.webservice.service.IssueService;
 import collabodecision.webservice.service.utils.CommentHelper;
@@ -57,7 +57,8 @@ public class IssueServiceImpl implements IssueService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<Issue> getIssues(String status, List<String> tags, String partialTitle) {
+	public List<ResponseWrapperIssue> getResponseWrapperIssues(String status, List<String> tags,
+			String partialTitle) {
 		IssueStatus issueStatus = null;
 
 		if (status != null) {
@@ -76,8 +77,35 @@ public class IssueServiceImpl implements IssueService {
 				return null;
 			}
 		}
+
+		List<ResponseWrapperIssue> result = new ArrayList<>();
 		
-		return issueDao.getIssues(issueStatus, tagsOfIssue, partialTitle);
+		
+		// Get the User -> needed for flag setting in the ResponseWrapperIssue
+		AppUser appUser = userService.getAppUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+		
+		for(Issue issue : issueDao.getIssues(issueStatus, tagsOfIssue, partialTitle)) {
+			
+			ResponseWrapperIssue rwi = new ResponseWrapperIssue();
+			rwi.setIssue(issue);
+			
+			// Issue can be edited by owner and creator
+			boolean isEditable = issue.getOwner().equals(appUser) || issue.getCreator().equals(appUser);
+			
+			rwi.setEditable(isEditable);
+			rwi.setOwner(issue.getOwner().equals(appUser));
+			
+			// TODO: check if needed in list (probably not)
+			rwi.setShowInProgress(false);
+			rwi.setShowObsolete(false);
+			rwi.setShowRepeat(false);
+			rwi.setShowResolved(false);
+			
+			result.add(rwi);
+		}
+		
+		
+		return result;
 	}
 
 	@Override
@@ -155,8 +183,9 @@ public class IssueServiceImpl implements IssueService {
 		issue.setTitle(issueRequest.getTitle());
 		issue.setDescription(issueRequest.getDescription());
 
-		// TODO: Check issue Status: According to Process! Go with the flow!
-		issue.setIssueStatus(issueStatusDao.getIssueById(issueRequest.getIdIssueStatus()));
+		// Set Issue status
+		issue.setIssueStatus(issueStatusDao.getIssueById(issueRequest
+				.getIdIssueStatus()));
 		issue.setOwner(userService.getAppUser(issueRequest.getIdOwner()));
 
 		// Set the creator to the currently authenticated user
@@ -164,25 +193,21 @@ public class IssueServiceImpl implements IssueService {
 				.getAppUserByUsername(SecurityContextHolder.getContext()
 						.getAuthentication().getName());
 		issue.setCreator(creator);
-
+		
 		// Get all the tags that are already in the DB
 		List<Tag> tagsInDb = tagDao.getTagsByName(issueRequest.getTags());
-		List<Tag> tags = new ArrayList<>();
 
 		for (String tagName : issueRequest.getTags()) {
 			Tag newTag = new Tag(tagName);
 			// Adding non existing Tags to the DB
-			if (tagsInDb == null || !tagsInDb.contains(newTag)) {
-				tags.add(newTag);
+			if (!tagsInDb.contains(newTag)) {
 				tagDao.saveOrUpdateTag(newTag);
+				tagsInDb.add(newTag);
 			}
 		}
 
-		// These are all the Tags of the Issue (from DB and new Ones)
-		tags.addAll(tagsInDb);
-
 		// Adding the IssueTags to the Issue
-		for (Tag tag : tags) {
+		for (Tag tag : tagsInDb) {
 			issue.getIssueTags().add(new IssueTag(tag, issue));
 		}
 
@@ -194,7 +219,8 @@ public class IssueServiceImpl implements IssueService {
 		}
 
 		// This issue depends on other issues
-		if (issueRequest.getIdsDepends() != null && !issueRequest.getIdsDepends().isEmpty()) {
+		if (issueRequest.getIdsDepends() != null
+				&& !issueRequest.getIdsDepends().isEmpty()) {
 			List<Issue> dependingIssues = issueDao.getIssuesByIds(issueRequest
 					.getIdsDepends());
 
@@ -211,7 +237,8 @@ public class IssueServiceImpl implements IssueService {
 			issue.setBlocked(dependingIssues.size() > 0);
 		}
 		// This issue resolves other issues
-		if (issueRequest.getIdsResolves() != null && !issueRequest.getIdsResolves().isEmpty()) {
+		if (issueRequest.getIdsResolves() != null
+				&& !issueRequest.getIdsResolves().isEmpty()) {
 			List<Issue> resolvesIssues = issueDao.getIssuesByIds(issueRequest
 					.getIdsResolves());
 			for (Issue resolvesIssue : resolvesIssues) {
@@ -223,7 +250,8 @@ public class IssueServiceImpl implements IssueService {
 
 		// This issue is related to other issues
 		// other issues are related to this issue
-		if (issueRequest.getIdsRelates() != null && !issueRequest.getIdsRelates().isEmpty()) {
+		if (issueRequest.getIdsRelates() != null
+				&& !issueRequest.getIdsRelates().isEmpty()) {
 			List<Issue> relatedIssues = issueDao.getIssuesByIds(issueRequest
 					.getIdsRelates());
 			for (Issue relatedIssue : relatedIssues) {

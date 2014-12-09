@@ -12,7 +12,7 @@ angular.module('collaboApp').controller('IssuesController', ['$http', '$scope', 
 		}
 		
 		$http.get(uri).success(function(data) {
-			$scope.issues = angular.fromJson(data);
+			$scope.issuesResponse = angular.fromJson(data);
 		});
 	}
 	

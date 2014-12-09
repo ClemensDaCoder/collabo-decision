@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import collabodecision.webservice.data.RequestWrapperData;
 import collabodecision.webservice.data.RequestWrapperIssue;
+import collabodecision.webservice.data.ResponseWrapperIssue;
 import collabodecision.webservice.persistence.domain.Issue;
 import collabodecision.webservice.service.IssueService;
 
@@ -24,11 +25,11 @@ public class IssueController {
 	private IssueService issueService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public @ResponseBody List<Issue> getIssues(
+	public @ResponseBody List<ResponseWrapperIssue> getIssues(
 			@RequestParam(value = "status", required = false) String status,
 			@RequestParam(value = "tag", required = false) List<String> tags,
 			@RequestParam(value = "partialtitle", required=false) String partialTitle) {
-		return issueService.getIssues(status, tags, partialTitle);
+		return issueService.getResponseWrapperIssues(status, tags, partialTitle);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)

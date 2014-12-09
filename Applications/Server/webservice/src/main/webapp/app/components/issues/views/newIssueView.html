@@ -44,11 +44,11 @@
 			<div class="col-md-7">
 				<h4>Issues with matching tags</h4>
 				<table class="table matchingTags">
-					<tr ng-repeat="issueMatchingTags in issuesMatchingTags">
-						<td style="width: 70%; min-width: 200px;"><a href="#">{{issueMatchingTags.title}}</a><br/><div class="tagwrapper" ng-repeat="issueTag in issueMatchingTags.issueTags">{{issueTag.tag.name}}</div></td>
-						<td><button class="btn btn-warning" ng-click="addDepends(issueMatchingTags)">Add depends</button></td>
-						<td><button class="btn btn-success" ng-click="addResolves(issueMatchingTags)">Add resolves</button></td>
-						<td><button class="btn btn-primary" ng-click="addRelates(issueMatchingTags)">Add relates</button></td>
+					<tr ng-repeat="issueMatchingTagsResponse in issuesMatchingTagsResponse">
+						<td style="width: 70%; min-width: 200px;"><a href="#">{{issueMatchingTagsResponse.issue.title}}</a><br/><div class="tagwrapper" ng-repeat="issueTag in issueMatchingTagsResponse.issue.issueTags">{{issueTag.tag.name}}</div></td>
+						<td><button class="btn btn-warning" ng-click="addDepends(issueMatchingTagsResponse.issue)">Add depends</button></td>
+						<td><button class="btn btn-success" ng-click="addResolves(issueMatchingTagsResponse.issue)">Add resolves</button></td>
+						<td><button class="btn btn-primary" ng-click="addRelates(issueMatchingTagsResponse.issue)">Add relates</button></td>
 					</tr>
 				</table>
 			</div>
