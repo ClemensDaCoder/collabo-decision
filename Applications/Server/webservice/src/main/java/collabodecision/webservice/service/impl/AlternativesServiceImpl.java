@@ -108,8 +108,7 @@ public class AlternativesServiceImpl implements AlternativeService
 		
 	}
 	
-	public void addorUpdateAlternative(RequestWrapperAlternative alternativeRequest, Long idexistingAlternative)
-	{
+	private void addorUpdateAlternative (RequestWrapperAlternative alternativeRequest, Long idexistingAlternative) {
 		Alternative alternative = null;
 		if(idexistingAlternative == null)
 		{
