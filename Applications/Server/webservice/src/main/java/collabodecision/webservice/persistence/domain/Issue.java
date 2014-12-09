@@ -70,6 +70,22 @@ public class Issue {
 	@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
 	@JsonManagedReference
 	private Set<IssueTag> issueTags;
+	
+    @JsonManagedReference
+    private Set<Issue> resolvesIssues;
+    
+    @JsonManagedReference 
+    private Set<Issue> resolvedByIssues;
+    
+    @JsonManagedReference
+    private Set<Issue> relatedIssues;
+    
+    @JsonManagedReference
+    private Set<Issue> dependsIssues;
+    
+    @JsonManagedReference
+    private Set<Issue> dependingIssues;
+
 
 	public Issue() {
 		issueRelationsFrom = new HashSet<>();
@@ -200,5 +216,45 @@ public class Issue {
 
 	public long getIdIssue() {
 		return idIssue;
+	}
+
+	public Set<Issue> getResolvesIssues() {
+		return resolvesIssues;
+	}
+
+	public void setResolvesIssues(Set<Issue> resolvesIssues) {
+		this.resolvesIssues = resolvesIssues;
+	}
+
+	public Set<Issue> getResolvedByIssues() {
+		return resolvedByIssues;
+	}
+
+	public void setResolvedByIssues(Set<Issue> resolvedByIssues) {
+		this.resolvedByIssues = resolvedByIssues;
+	}
+
+	public Set<Issue> getRelatedIssues() {
+		return relatedIssues;
+	}
+
+	public void setRelatedIssues(Set<Issue> relatedIssues) {
+		this.relatedIssues = relatedIssues;
+	}
+
+	public Set<Issue> getDependsIssues() {
+		return dependsIssues;
+	}
+
+	public void setDependsIssues(Set<Issue> dependsIssues) {
+		this.dependsIssues = dependsIssues;
+	}
+
+	public Set<Issue> getDependingIssues() {
+		return dependingIssues;
+	}
+
+	public void setDependingIssues(Set<Issue> dependingIssues) {
+		this.dependingIssues = dependingIssues;
 	}
 }

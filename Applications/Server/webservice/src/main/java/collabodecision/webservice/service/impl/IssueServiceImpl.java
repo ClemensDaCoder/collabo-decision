@@ -93,6 +93,8 @@ public class IssueServiceImpl implements IssueService {
 
 		return result;
 	}
+	
+	
 
 	@Override
 	@Transactional(readOnly = true)
@@ -155,8 +157,7 @@ public class IssueServiceImpl implements IssueService {
 			Long idExistingIssue) {
 
 		// Fetching the Issue from DB if Update ; otherwise create new
-		Issue issue = idExistingIssue != null ? issueDao
-				.getIssue(idExistingIssue) : new Issue();
+		Issue issue = idExistingIssue != null ? issueDao.getIssue(idExistingIssue) : new Issue();
 
 		// On Update - Delete all OneToMany Relations in advance (are added
 		// again later)
@@ -165,6 +166,11 @@ public class IssueServiceImpl implements IssueService {
 			issue.getIssueRelationsFrom().clear();
 			issue.getIssueRelationsTo().clear();
 			issue.getFiles().clear();
+			issue.getDependingIssues().clear();
+			issue.getDependsIssues().clear();
+			issue.getResolvedByIssues().clear();
+			issue.getResolvesIssues().clear();
+			issue.getRelatedIssues().clear();
 
 			// Must be done - Otherwise Hibernate would result in Violation
 			// Constraint!
@@ -255,10 +261,20 @@ public class IssueServiceImpl implements IssueService {
 								.getRelationTypeByType("RELATES")));
 			}
 		}
+		
+		setRelatedIssues(issue, issueRequest);
 
 		// Only needed when new (not update)
 		if (idExistingIssue == null) {
 			issueDao.saveOrUpdateIssue(issue);
+		}
+	}
+	
+	private void setRelatedIssues(Issue issue, RequestWrapperIssue issueRequest) {
+		for (Long relatedIssueIds :issueRequest.getIdsRelates())  {
+			Issue relatedIssue = issueDao.getIssue(relatedIssueIds);
+			issue.getRelatedIssues().add(relatedIssue);
+			relatedIssue.getRelatedIssues().add(issue);
 		}
 	}
 
