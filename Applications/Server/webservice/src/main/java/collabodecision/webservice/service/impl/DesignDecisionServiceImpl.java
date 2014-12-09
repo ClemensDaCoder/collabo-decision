@@ -15,16 +15,12 @@ import collabodecision.webservice.data.RequestWrapperDesignDecision;
 import collabodecision.webservice.data.ResponseWrapperDesignDecision;
 import collabodecision.webservice.persistence.CommentDao;
 import collabodecision.webservice.persistence.DesignDecisionDao;
-import collabodecision.webservice.persistence.DesignDecisionStatusDao;
-import collabodecision.webservice.persistence.IssueStatusDao;
 import collabodecision.webservice.persistence.domain.AppUser;
 import collabodecision.webservice.persistence.domain.Comment;
 import collabodecision.webservice.persistence.domain.DesignDecision;
-import collabodecision.webservice.persistence.domain.DesignDecisionStatus;
-import collabodecision.webservice.persistence.domain.DesignDecisionStatus.DesignDecisionStatusValue;
+import collabodecision.webservice.persistence.domain.DesignDecision.DesignDecisionStatus;
 import collabodecision.webservice.persistence.domain.File;
-import collabodecision.webservice.persistence.domain.IssueStatus;
-import collabodecision.webservice.persistence.domain.IssueStatus.IssueStatusValue;
+import collabodecision.webservice.persistence.domain.Issue.IssueStatus;
 import collabodecision.webservice.persistence.domain.ShareHolder;
 import collabodecision.webservice.service.AppUserService;
 import collabodecision.webservice.service.DesignDecisionService;
@@ -41,9 +37,6 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 	private DesignDecisionDao designDecisionDao;
 	
 	@Autowired
-	private IssueStatusDao issueStatusDao;
-	
-	@Autowired
 	private CommentHelper commentHelper;
 
 	@Autowired
@@ -54,10 +47,6 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 
 	@Autowired
 	private SessionFactory sessionFactory;
-
-	@Autowired
-	private DesignDecisionStatusDao designDecisionStatusDao; // new
-																// DesignDecisionStatusDaoImpl(null);
 
 	@Override
 	public List<DesignDecision> getDesignDecisions(String status,
@@ -110,10 +99,10 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 		if (creator.equals(decision.getIssue().getOwner())) {
 			response.setOwner(true);
 			//TODO if status == collecting alternatives show "start ranking"
-			if (DesignDecisionStatusValue.COLLECTING_ALTERNATIVES.equals(decision.getDesignDecisionStatus().getStatus())) {
+			if (DesignDecisionStatus.COLLECTING_ALTERNATIVES.equals(decision.getDesignDecisionStatus())) {
 				response.setShowStartRanking(true);
 			} 	
-			else if (DesignDecisionStatusValue.SELECTING_ALTERNATIVES.equals(decision.getDesignDecisionStatus().getStatus())) {
+			else if (DesignDecisionStatus.SELECTING_ALTERNATIVES.equals(decision.getDesignDecisionStatus())) {
 				//after all shareholders have finished ranking
 				response.setShowSelectAlternative(true);
 			}
@@ -124,16 +113,16 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 		if (decision.getShareHolders().contains(creator)) {
 			response.setEditable(true);
 			response.setIsShareholder(true);
-			if (DesignDecisionStatusValue.RANK_ALTERNATIVES.equals(decision.getDesignDecisionStatus().getStatus())) {
+			if (DesignDecisionStatus.RANK_ALTERNATIVES.equals(decision.getDesignDecisionStatus())) {
 				response.setShowFinishRanking(true);
 			}
 		}
 		
-		if (DesignDecisionStatusValue.DECIDED.equals(decision.getDesignDecisionStatus().getStatus())) {
+		if (DesignDecisionStatus.DECIDED.equals(decision.getDesignDecisionStatus())) {
 			response.setShowDecided(true);
- 		} else if(DesignDecisionStatusValue.INAPPROPRIATE_SOLUTION.equals(decision.getDesignDecisionStatus().getStatus())) {
+ 		} else if(DesignDecisionStatus.INAPPROPRIATE_SOLUTION.equals(decision.getDesignDecisionStatus())) {
  			response.setShowInappropriateSolution(true);
- 		} else if (DesignDecisionStatusValue.OBSOLETE.equals(decision.getDesignDecisionStatus().getStatus())) {
+ 		} else if (DesignDecisionStatus.OBSOLETE.equals(decision.getDesignDecisionStatus())) {
  			response.setShowObsolete(true);
  		}
 		return response;
@@ -188,7 +177,7 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 			decision = new DesignDecision();
 			decision.setCreationDate(new Date(System.currentTimeMillis()));
 			decision.setIssue(issueService.getResponseWrapperIssue(decisionRequest.getIdIssue(), false).getIssue());
-			decision.getIssue().setIssueStatus(issueStatusDao.getIssueStatusByValue(IssueStatusValue.IN_PROGRESS));
+			decision.getIssue().setIssueStatus(IssueStatus.IN_PROGRESS);
 		} else {
 			designDecisionDao.getDesignDecision(idExistingDesignDecision);
 		}
@@ -220,9 +209,7 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 		
 //		//TODO: make column rationale nullable and remove
 //		decision.setRationale("");
-		
-		decision.setDesignDecisionStatus(designDecisionStatusDao
-				.getDesignDecisionStatusById(decisionRequest.getIdDesignDecisionStatus()));
+		decision.setDesignDecisionStatus(DesignDecisionStatus.valueOf(decisionRequest.getDesignDecisionStatus()));
 		
 		if (decisionRequest.getFiles() != null) {
 			for (String file : decisionRequest.getFiles()) {

@@ -41,8 +41,7 @@ public class DesignDecision {
 	@JoinColumn(name = "idIssue", nullable = false)
 	private Issue issue;
 
-	@ManyToOne
-	@JoinColumn(name = "idDesignDecisionStatus", nullable = false)
+	@Column(nullable=false)
 	private DesignDecisionStatus designDecisionStatus;
 
 	@OneToMany(mappedBy = "designDecision")
@@ -149,5 +148,15 @@ public class DesignDecision {
 
 	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
+	}
+	
+	public enum DesignDecisionStatus {
+		COLLECTING_ALTERNATIVES,
+		RANK_ALTERNATIVES,
+		SELECTING_ALTERNATIVES,
+		DECIDED,
+		OBSOLETE,
+		INAPPROPRIATE_SOLUTION,
+		BLOCKED
 	}
 }

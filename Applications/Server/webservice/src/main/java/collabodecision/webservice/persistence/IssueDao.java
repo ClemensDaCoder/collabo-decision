@@ -6,7 +6,7 @@ import java.util.Set;
 
 import collabodecision.webservice.persistence.domain.Comment;
 import collabodecision.webservice.persistence.domain.Issue;
-import collabodecision.webservice.persistence.domain.IssueStatus;
+import collabodecision.webservice.persistence.domain.Issue.IssueStatus;
 import collabodecision.webservice.persistence.domain.Tag;
 
 public interface IssueDao {

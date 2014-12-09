@@ -3,8 +3,6 @@ package collabodecision.webservice.data;
 import java.util.List;
 import java.util.Set;
 
-import collabodecision.webservice.persistence.domain.ShareHolder;
-
 public class RequestWrapperDesignDecision {
 
 	private String title;
@@ -12,7 +10,7 @@ public class RequestWrapperDesignDecision {
 	private long idIssue;
 	private List<String> files;
 	private Set<Long> appUserIds;
-	private long idDesignDecisionStatus;
+	private String designDecisionStatus;
 
 	public String getTitle() {
 		return title;
@@ -54,12 +52,12 @@ public class RequestWrapperDesignDecision {
 		this.idIssue = idIssue;
 	}
 
-	public long getIdDesignDecisionStatus() {
-		return idDesignDecisionStatus;
+	public String getDesignDecisionStatus() {
+		return designDecisionStatus;
 	}
 
-	public void setIdDesignDecisionStatus(long idDesignDecisionStatus) {
-		this.idDesignDecisionStatus = idDesignDecisionStatus;
+	public void setDesignDecisionStatus(String designDecisionStatus) {
+		this.designDecisionStatus = designDecisionStatus;
 	}
 
 }

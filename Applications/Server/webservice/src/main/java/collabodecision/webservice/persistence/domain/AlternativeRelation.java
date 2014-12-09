@@ -1,5 +1,6 @@
 package collabodecision.webservice.persistence.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -10,7 +11,7 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {
-		"idAlternativeFrom", "idAlternativeTo", "idRelationType" }))
+		"idAlternativeFrom", "idAlternativeTo", "relationType" }))
 public class AlternativeRelation {
 
 	@GeneratedValue
@@ -25,8 +26,59 @@ public class AlternativeRelation {
 	@JoinColumn(name = "idAlternativeTo", nullable = false)
 	private Alternative alternativeTo;
 
-	@ManyToOne
-	@JoinColumn(name = "idRelationType", nullable = false)
+	@Column(nullable=false)
 	private RelationType relationType;
+	
+	
+	public Alternative getAlternativeFrom() {
+		return alternativeFrom;
+	}
+
+
+
+
+	public void setAlternativeFrom(Alternative alternativeFrom) {
+		this.alternativeFrom = alternativeFrom;
+	}
+
+
+
+
+	public Alternative getAlternativeTo() {
+		return alternativeTo;
+	}
+
+
+
+
+	public void setAlternativeTo(Alternative alternativeTo) {
+		this.alternativeTo = alternativeTo;
+	}
+
+
+
+
+	public RelationType getRelationType() {
+		return relationType;
+	}
+
+
+
+
+	public void setRelationType(RelationType relationType) {
+		this.relationType = relationType;
+	}
+
+
+
+
+	public long getIdAlternativeRelation() {
+		return idAlternativeRelation;
+	}
+
+
+	public enum RelationType {
+		
+	}
 
 }

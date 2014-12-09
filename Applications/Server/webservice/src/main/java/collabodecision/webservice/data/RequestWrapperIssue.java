@@ -13,7 +13,7 @@ public class RequestWrapperIssue {
 	
 	private boolean blocked;
 	
-	private long idIssueStatus;
+	private String issueStatus;
 	
 	private long idOwner;
 	
@@ -53,12 +53,12 @@ public class RequestWrapperIssue {
 		this.blocked = blocked;
 	}
 
-	public long getIdIssueStatus() {
-		return idIssueStatus;
+	public String getIssueStatus() {
+		return issueStatus;
 	}
 
-	public void setIdIssueStatus(long idIssueStatus) {
-		this.idIssueStatus = idIssueStatus;
+	public void setIssueStatus(String issueStatus) {
+		this.issueStatus = issueStatus;
 	}
 
 	public long getIdOwner() {
