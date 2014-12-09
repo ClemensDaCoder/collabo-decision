@@ -179,7 +179,7 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 			decision.setIssue(issueService.getResponseWrapperIssue(decisionRequest.getIdIssue(), false).getIssue());
 			decision.getIssue().setIssueStatus(IssueStatus.IN_PROGRESS);
 		} else {
-			designDecisionDao.getDesignDecision(idExistingDesignDecision);
+			decision = designDecisionDao.getDesignDecision(idExistingDesignDecision);
 		}
 		// On Update - Delete all OneToMany Relations in advance (are added
 		// again later)
@@ -204,11 +204,11 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 			AppUser appUser = userService.getAppUser(appUserId);
 			shareholders.add(new ShareHolder(appUser, decision));		
 		}
+		
 		decision.setShareHolders(shareholders);
 
-		
-//		//TODO: make column rationale nullable and remove
-//		decision.setRationale("");
+		decision.setRationale(decisionRequest.getRationale());
+
 		decision.setDesignDecisionStatus(DesignDecisionStatus.valueOf(decisionRequest.getDesignDecisionStatus()));
 		
 		if (decisionRequest.getFiles() != null) {

@@ -3,6 +3,7 @@ package collabodecision.webservice.persistence.impl;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +49,7 @@ public class DesignDecisionDaoImpl extends BaseDao implements DesignDecisionDao 
 	public DesignDecision getDesignDecisionWithRelations(long id) {
 		DesignDecision designDecision = getDesignDecision(id);
 		//Hibernate.initialize(designDecision.getIssue());
-		//Hibernate.initialize(designDecision.getAlternatives());
+		Hibernate.initialize(designDecision.getAlternatives());
 		//Hibernate.initialize(designDecision.getComments());
 		return designDecision;
 	}

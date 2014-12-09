@@ -25,7 +25,11 @@ angular.module('collaboApp').controller('IssueDetailViewController', ['$http', '
 				$scope.isEditDisabled = !($scope.issueResponse.editable);
 			});
 		}
-	}
+	};
+	
+	$scope.cancel = function() {
+		$modalInstance.dismiss('cancel');
+	};
 	
 	$scope.initialize();
 }]);

@@ -22,7 +22,7 @@
 		</tr>
 		<tr ng-repeat="designDecision in designDecisions">
 			<td><a href ng-click="showDesignDecision(designDecision.idDesignDecision)">{{designDecision.title}}</a></td>
-			<td>{{designDecision.designDecisionStatus.status}}</td>
+			<td>{{designDecision.designDecisionStatus}}</td>
 			<td>{{designDecision.issue.owner.forename}} {{designDecision.issue.owner.surname}}</td><td>{{designDecision.creationDate}}</td><td>no rating</td>
 		</tr>
 	</table>

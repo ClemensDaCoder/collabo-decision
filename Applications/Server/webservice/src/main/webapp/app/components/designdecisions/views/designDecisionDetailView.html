@@ -25,7 +25,7 @@
 					</div>
 					<div class="form-group">
 						<label for="inputShareholders" class="control-label">Shareholders</label>
-						<input type="text" class="form-control" id="inputShareholders" placeholder="Shareholders" ng-model="shareholders">
+						<appusereditor appUsers="currentShareholders"></appusereditor>
 					</div>
 					<div class="form-group">
 						<label for="inputAssumption" class="control-label">Assumption</label>
@@ -44,7 +44,7 @@
 							</tr>
 							<tr ng-repeat="alternative in designDecisionWrapper.designDecision.alternatives">
 								<td><a href ng-click="showAlternative(alternative.idAlternative)">{{alternative.idAlternative}}</a></td>
-								<td>{{alternative.creator.forename}} {{alternative.creator.surname</td>
+								<td>{{alternative.creator.forename}} {{alternative.creator.surname}}</td>
 							</tr>
 						</table>
 						<button class="btn btn-primary" ng-click="addAlternative()">Add Alternative</button>
@@ -70,6 +70,7 @@
 			</div>
 		</div>
 		<div class="modal-footer">
+			<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
 		</div>
 	</div>
 </div>

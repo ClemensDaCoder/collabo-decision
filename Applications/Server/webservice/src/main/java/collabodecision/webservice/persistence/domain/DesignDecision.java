@@ -15,6 +15,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table
 public class DesignDecision {
@@ -48,6 +50,7 @@ public class DesignDecision {
 
 	@OneToMany(mappedBy = "designDecision")
 	@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
+	@JsonManagedReference
 	private Set<Alternative> alternatives;
 
 	@OneToMany(mappedBy = "designDecision")
@@ -60,6 +63,7 @@ public class DesignDecision {
 
 	@OneToMany(mappedBy = "designDecision")
 	@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
+	@JsonManagedReference
 	private Set<ShareHolder> shareHolders;
 
 	public Set<ShareHolder> getShareHolders() {

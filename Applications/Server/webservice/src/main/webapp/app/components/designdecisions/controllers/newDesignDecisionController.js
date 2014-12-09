@@ -2,17 +2,22 @@ angular.module('collaboApp').controller('NewDesignDecisionController', ['$scope'
 	
 	$scope.cancel = function() {
 		$modalInstance.dismiss('cancel');
-	}
+	};
 	
 	$scope.save = function() {
+		
+		$scope.appUserIds = [];
+		for (var index = 0; index < $scope.shareholders.length; index++) {
+			$scope.appUserIds.push($scope.shareholders[index].idUser);
+		}
 		
 		var config = {
 				data : {
 					'title' : $scope.title,
 					'idIssue' : idIssue,
-					'shareholders' : $scope.currentShareholders,
+					'appUserIds' : $scope.appUserIds,
 					'assumption' : $scope.assumption,
-					'idDesignDecisionStatus' : 1
+					'designDecisionStatus' : 'COLLECTING_ALTERNATIVES'
 				}
 		}
 		
@@ -23,6 +28,5 @@ angular.module('collaboApp').controller('NewDesignDecisionController', ['$scope'
 		});
 	};
 	
-	$scope.currentShareholders = [];
-	
+	$scope.shareholders = [];
 }]);

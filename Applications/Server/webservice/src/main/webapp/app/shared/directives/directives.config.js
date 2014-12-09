@@ -18,12 +18,12 @@ angular.module('collaboApp').directive('tageditor', function() {
 			
 		}
 	}
-}).directive('shareholdereditor', function() {
+}).directive('appusereditor', function() {
 	return {
 		restrict: 'E',
-		templateUrl : 'app/shared/directives/shareholdereditor/views/shareholdereditorView.html',
+		templateUrl : 'app/shared/directives/appusereditor/views/appusereditorView.html',
 		scope : { 
-			shareholders : "="
+			appusers : "="
 		}
 	}
 });
