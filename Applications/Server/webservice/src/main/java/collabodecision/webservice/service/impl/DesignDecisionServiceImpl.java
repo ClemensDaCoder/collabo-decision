@@ -204,11 +204,11 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 			AppUser appUser = userService.getAppUser(appUserId);
 			shareholders.add(new ShareHolder(appUser, decision));		
 		}
+		
 		decision.setShareHolders(shareholders);
 
-		
-//		//TODO: make column rationale nullable and remove
-//		decision.setRationale("");
+		decision.setRationale(decisionRequest.getRationale());
+
 		decision.setDesignDecisionStatus(DesignDecisionStatus.valueOf(decisionRequest.getDesignDecisionStatus()));
 		
 		if (decisionRequest.getFiles() != null) {

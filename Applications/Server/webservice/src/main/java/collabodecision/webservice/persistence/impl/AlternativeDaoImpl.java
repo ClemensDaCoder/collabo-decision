@@ -33,15 +33,12 @@ public class AlternativeDaoImpl extends BaseDao implements AlternativeDao {
 
 	@Override
 	public Alternative getAlternativeWithRelations(long id) {
-		// TODO Auto-generated method stub
 		Alternative alternative = getAlternative(id);
 		Hibernate.initialize(alternative.getComments());
 		Hibernate.initialize(alternative.getAlternativeFromRelations());
 		Hibernate.initialize(alternative.getAlternativeToRelations());
 		Hibernate.initialize(alternative.getAlternativeRankings());
 		Hibernate.initialize(alternative.getDesignDecision());
-		// TODO tags ? 
-		
 	
 		return alternative;
 	}

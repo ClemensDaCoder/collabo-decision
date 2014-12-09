@@ -11,6 +11,7 @@ public class RequestWrapperDesignDecision {
 	private List<String> files;
 	private Set<Long> appUserIds;
 	private String designDecisionStatus;
+	private String rationale;
 
 	public String getTitle() {
 		return title;
@@ -58,6 +59,14 @@ public class RequestWrapperDesignDecision {
 
 	public void setDesignDecisionStatus(String designDecisionStatus) {
 		this.designDecisionStatus = designDecisionStatus;
+	}
+
+	public String getRationale() {
+		return rationale;
+	}
+
+	public void setRationale(String rationale) {
+		this.rationale = rationale;
 	}
 
 }
