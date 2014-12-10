@@ -25,11 +25,18 @@ angular.module('collaboApp').controller('DesignDecisionDetailViewController', ['
 	$scope.startRanking = function(){
 		//update design decision and set status to "RANK_ALTERNATIVES"
 		
+		var config = {
+				data : {
+					'designDecisionStatus' : 'RANK_ALTERNATIVES',
+					'onlyStatusChange' : true
+				}
+		}
 		
-		
-		
-		//refresh view
-		
+		$http.put("/rest/designdecisions/" + $scope.idDesignDecision, config).success(function() {
+			$scope.cancel();
+		}).error(function() {
+			alert("fehler");
+		});
 	};
 	
 	$scope.setInappropriateSolution = function(){

@@ -3,6 +3,9 @@ package collabodecision.webservice.data;
 import java.util.List;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class RequestWrapperDesignDecision {
 
 	private String title;
@@ -12,7 +15,9 @@ public class RequestWrapperDesignDecision {
 	private Set<Long> appUserIds;
 	private String designDecisionStatus;
 	private String rationale;
-
+	private boolean onlyStatusChange;
+	
+	
 	public String getTitle() {
 		return title;
 	}
@@ -68,5 +73,15 @@ public class RequestWrapperDesignDecision {
 	public void setRationale(String rationale) {
 		this.rationale = rationale;
 	}
+
+	public boolean isOnlyStatusChange() {
+		return onlyStatusChange;
+	}
+
+	public void setOnlyStatusChange(boolean onlyStatusChange) {
+		this.onlyStatusChange = onlyStatusChange;
+	}
+	
+	
 
 }
