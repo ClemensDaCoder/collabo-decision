@@ -6,9 +6,9 @@ import collabodecision.webservice.data.RequestWrapperIssue;
 import collabodecision.webservice.data.ResponseWrapperIssue;
 
 public interface IssueService extends CommentService, FileService {
-	List<ResponseWrapperIssue> getResponseWrapperIssues(String status, List<String> tags, String partialName);
+	List<ResponseWrapperIssue> getIssues(String status, List<String> tags, String partialName);
 	
-	ResponseWrapperIssue getResponseWrapperIssue(long id, boolean withRelations);
+	ResponseWrapperIssue getIssue(long id, boolean withRelations);
 	
 	void deleteIssue(long id);
 	

@@ -49,7 +49,7 @@ public class IssueServiceImpl implements IssueService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<ResponseWrapperIssue> getResponseWrapperIssues(String status,
+	public List<ResponseWrapperIssue> getIssues(String status,
 			List<String> tags, String partialTitle) {
 		IssueStatus issueStatus = status != null ? IssueStatus.valueOf(status) : null;
 
@@ -86,7 +86,7 @@ public class IssueServiceImpl implements IssueService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public ResponseWrapperIssue getResponseWrapperIssue(long id,
+	public ResponseWrapperIssue getIssue(long id,
 			boolean withRelations) {
 
 		Issue issue = withRelations ? issueDao.getIssueWithRelations(id)

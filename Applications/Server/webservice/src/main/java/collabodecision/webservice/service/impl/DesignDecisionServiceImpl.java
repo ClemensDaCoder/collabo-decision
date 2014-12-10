@@ -1,6 +1,7 @@
 package collabodecision.webservice.service.impl;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -49,84 +50,48 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 	private SessionFactory sessionFactory;
 
 	@Override
-	public List<DesignDecision> getDesignDecisions(String status,
-			List<String> tags, String partialName) {
-		// TODO Auto-generated method stub
-		DesignDecisionStatus designdecisionstatus = null;
-		IssueStatus issueStatus = null;
+	
+	public List<ResponseWrapperDesignDecision> getDesignDecisions(String status) {
+		DesignDecisionStatus decisionstatus = status != null ? DesignDecisionStatus.valueOf(status) : null;
 
-		//TODO: function
-		return null;
-		
+		List<ResponseWrapperDesignDecision> responses = new ArrayList<>();
+		for (DesignDecision decision : designDecisionDao.getDesignDecisions(decisionstatus)) {
+			responses.add(wrapDesignDecision(decision));
+		}
+		return responses;
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<DesignDecision> getDesignDecisions() {
-		
-		return designDecisionDao.getDesignDecisions();
+	public List<ResponseWrapperDesignDecision> getDesignDecisions() {
+		List<ResponseWrapperDesignDecision> responses = new ArrayList<>();
+		for (DesignDecision decision : designDecisionDao.getDesignDecisions()) {
+			responses.add(wrapDesignDecision(decision));
+		}
+		return responses;
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public DesignDecision getDesignDecision(long id, boolean withRelations) {
+	public ResponseWrapperDesignDecision getDesignDecision(long id, boolean withRelations) {
 		if (withRelations) {
-			return designDecisionDao.getDesignDecisionWithRelations(id);
+			return wrapDesignDecision(designDecisionDao.getDesignDecisionWithRelations(id));
 		}
-
-		return designDecisionDao.getDesignDecision(id);
+		return wrapDesignDecision(designDecisionDao.getDesignDecision(id));
 	}
 
-	@Override
-	public ResponseWrapperDesignDecision getResponseWrapperDesignDesicion(
-			long id, boolean withRelations) {
-		DesignDecision decision;
-
-		AppUser creator = userService
-				.getAppUserByUsername(SecurityContextHolder.getContext()
-						.getAuthentication().getName());
-
-		if (withRelations) {
-			decision = designDecisionDao.getDesignDecisionWithRelations(id);
-		} else {
-			decision = designDecisionDao.getDesignDecision(id);
-		}
-
-		ResponseWrapperDesignDecision response = new ResponseWrapperDesignDecision();
-		response.setDesignDecision(decision);
-
-		//if user == owner
-		if (creator.equals(decision.getIssue().getOwner())) {
-			response.setOwner(true);
-			//TODO if status == collecting alternatives show "start ranking"
-			if (DesignDecisionStatus.COLLECTING_ALTERNATIVES.equals(decision.getDesignDecisionStatus())) {
-				response.setShowStartRanking(true);
-			} 	
-			else if (DesignDecisionStatus.SELECTING_ALTERNATIVES.equals(decision.getDesignDecisionStatus())) {
-				//after all shareholders have finished ranking
-				response.setShowSelectAlternative(true);
-			}
-
-		}
-		
-		//if user == shareholder
-		if (decision.getShareHolders().contains(creator)) {
-			response.setEditable(true);
-			response.setIsShareholder(true);
-			if (DesignDecisionStatus.RANK_ALTERNATIVES.equals(decision.getDesignDecisionStatus())) {
-				response.setShowFinishRanking(true);
-			}
-		}
-		
-		if (DesignDecisionStatus.DECIDED.equals(decision.getDesignDecisionStatus())) {
-			response.setShowDecided(true);
- 		} else if(DesignDecisionStatus.INAPPROPRIATE_SOLUTION.equals(decision.getDesignDecisionStatus())) {
- 			response.setShowInappropriateSolution(true);
- 		} else if (DesignDecisionStatus.OBSOLETE.equals(decision.getDesignDecisionStatus())) {
- 			response.setShowObsolete(true);
- 		}
-		return response;
-	}
+//	@Override
+//	public ResponseWrapperDesignDecision getDesignDescision(
+//			long id, boolean withRelations) {
+//		DesignDecision decision;
+//
+//		if (withRelations) {
+//			decision = designDecisionDao.getDesignDecisionWithRelations(id);
+//		} else {
+//			decision = designDecisionDao.getDesignDecision(id);
+//		}
+//		return wrapDesignDecision(decision);
+//	}
 
 	@Override
 	@Transactional(readOnly = false)
@@ -176,7 +141,7 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 		if (idExistingDesignDecision == null) {
 			decision = new DesignDecision();
 			decision.setCreationDate(new Date(System.currentTimeMillis()));
-			decision.setIssue(issueService.getResponseWrapperIssue(decisionRequest.getIdIssue(), false).getIssue());
+			decision.setIssue(issueService.getIssue(decisionRequest.getIdIssue(), false).getIssue());
 			decision.getIssue().setIssueStatus(IssueStatus.IN_PROGRESS);
 		} else {
 			decision = designDecisionDao.getDesignDecision(idExistingDesignDecision);
@@ -196,7 +161,7 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 		decision.setTitle(decisionRequest.getTitle());
 		decision.setAssumption(decisionRequest.getAssumption());
 
-		decision.setIssue(issueService.getResponseWrapperIssue(decisionRequest.getIdIssue(), false).getIssue());
+		decision.setIssue(issueService.getIssue(decisionRequest.getIdIssue(), false).getIssue());
 		
 		//set shareholders
 		Set<ShareHolder> shareholders = new HashSet<ShareHolder>();
@@ -225,4 +190,49 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 
 	}
 
+	
+	private ResponseWrapperDesignDecision wrapDesignDecision(DesignDecision decision) {
+		
+		AppUser creator = userService
+				.getAppUserByUsername(SecurityContextHolder.getContext()
+						.getAuthentication().getName());
+
+		ResponseWrapperDesignDecision response = new ResponseWrapperDesignDecision();
+		response.setDesignDecision(decision);
+
+		//if user == owner
+		if (creator.equals(decision.getIssue().getOwner())) {
+			response.setOwner(true);
+			//TODO if status == collecting alternatives show "start ranking"
+			if (DesignDecisionStatus.COLLECTING_ALTERNATIVES.equals(decision.getDesignDecisionStatus())) {
+				response.setShowStartRanking(true);
+			} 	
+			else if (DesignDecisionStatus.SELECTING_ALTERNATIVES.equals(decision.getDesignDecisionStatus())) {
+				//after all shareholders have finished ranking
+				response.setShowSelectAlternative(true);
+			}
+
+		}
+		
+		//if user == shareholder
+		if (decision.getShareHolders().contains(creator)) {
+			response.setEditable(true);
+			response.setIsShareholder(true);
+			if (DesignDecisionStatus.RANK_ALTERNATIVES.equals(decision.getDesignDecisionStatus())) {
+				response.setShowFinishRanking(true);
+			}
+		}
+		
+		if (DesignDecisionStatus.DECIDED.equals(decision.getDesignDecisionStatus())) {
+			response.setShowDecided(true);
+ 		} else if(DesignDecisionStatus.INAPPROPRIATE_SOLUTION.equals(decision.getDesignDecisionStatus())) {
+ 			response.setShowInappropriateSolution(true);
+ 		} else if (DesignDecisionStatus.OBSOLETE.equals(decision.getDesignDecisionStatus())) {
+ 			response.setShowObsolete(true);
+ 		}
+		return response;
+
+		
+		
+	}
 }

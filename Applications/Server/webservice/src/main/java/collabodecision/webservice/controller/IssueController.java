@@ -27,14 +27,14 @@ public class IssueController {
 			@RequestParam(value = "status", required = false) String status,
 			@RequestParam(value = "tag", required = false) List<String> tags,
 			@RequestParam(value = "partialtitle", required=false) String partialTitle) {
-		return issueService.getResponseWrapperIssues(status, tags, partialTitle);
+		return issueService.getIssues(status, tags, partialTitle);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseWrapperIssue getIssue(
 			@PathVariable long id,
 			@RequestParam(value = "withRelations", defaultValue = "false") boolean withRelations) {
-		return issueService.getResponseWrapperIssue(id, withRelations);
+		return issueService.getIssue(id, withRelations);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)

@@ -28,8 +28,8 @@ public class DesignDecisionController {
 	private DesignDecisionService designDecisionService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public List<DesignDecision> getDesignDecisions() {
-		return designDecisionService.getDesignDecisions();
+	public List<ResponseWrapperDesignDecision> getDesignDecisions(@RequestParam(value = "status", required = false) String status) {
+		return designDecisionService.getDesignDecisions(status);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -37,7 +37,7 @@ public class DesignDecisionController {
 			@PathVariable long id,
 			@RequestParam(value = "withRelations", defaultValue = "false") boolean withRelations) {
 
-		return designDecisionService.getResponseWrapperDesignDesicion(id, withRelations);
+		return designDecisionService.getDesignDecision(id, withRelations);
 	}
 
 	
