@@ -205,7 +205,8 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 			response.setOwner(true);
 			response.setEditable(true);
 			//TODO if status == collecting alternatives show "start ranking"
-			if (DesignDecisionStatus.COLLECTING_ALTERNATIVES.equals(decision.getDesignDecisionStatus())) {
+			if (DesignDecisionStatus.COLLECTING_ALTERNATIVES.equals(decision.getDesignDecisionStatus()) &&
+					!decision.getAlternatives().isEmpty()) {
 				response.setShowStartRanking(true);
 			} 	
 			else if (DesignDecisionStatus.SELECTING_ALTERNATIVES.equals(decision.getDesignDecisionStatus())) {
