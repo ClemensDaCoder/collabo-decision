@@ -86,7 +86,7 @@
 								<td style="width: auto;">{{alternative.description}}</td>
 								<td style="width: 200px" ng-show="canRank">
 									<div class="btn-group">
-										<button class="btn btn-default" ng-repeat="alternative in designDecisionWrapper.designDecision.alternatives" ng-click="rankChosen(alternative, $index)">{{$index + 1}}</button>
+										<button class="btn btn-default" ng-repeat="alternativeRank in alternativeRanks" ng-click="rankChosen(alternative.idAlternative, $index)">{{$index + 1}}</button>
 									</div>
 								</td>
 							</tr>

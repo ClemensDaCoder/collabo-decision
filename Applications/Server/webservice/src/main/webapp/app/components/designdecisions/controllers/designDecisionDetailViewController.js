@@ -22,6 +22,24 @@ angular.module('collaboApp').controller('DesignDecisionDetailViewController', ['
 				$scope.canRank = $scope.designDecisionWrapper.designDecision.designDecisionStatus === 'RANK_ALTERNATIVES' && 
 									$scope.designDecisionWrapper.shareholder;
 				
+				$scope.alternativeRanks = [];
+				
+				if($scope.canRank) {
+					
+					for(var i in $scope.designDecisionWrapper.designDecision.alternatives) {
+						
+						var idAlternative = $scope.designDecisionWrapper.designDecision.alternatives[i].idAlternative;
+						
+						$scope.alternativeRanks.push({
+							'idAlternative' : idAlternative,
+							'rank' : null
+						});
+					}
+					
+				}
+				
+				
+				
 			});
 		}
 	};
@@ -104,16 +122,17 @@ angular.module('collaboApp').controller('DesignDecisionDetailViewController', ['
 			})
 		};
 	
-	$scope.alternativeRank = [];
-
-	$scope.rankChosen = function(alternative, rank) {
+	$scope.rankChosen = function(idAlternative, rank) {
 		
-		$scope.alternativeRank.push({
-			'idAlternative' : alternative.idAlternative,
-			'rank' : rank
-		});
+		for(var i in $scope.alternativeRanks) {
+			if($scope.alternativeRanks[i].idAlternative == idAlternative) {
+				$scope.alternativeRanks[i].rank = rank;
+				break;
+			}
+		}
 		
 		
+		alert(JSON.stringify($scope.alternativeRanks));
 		
 	};
 
