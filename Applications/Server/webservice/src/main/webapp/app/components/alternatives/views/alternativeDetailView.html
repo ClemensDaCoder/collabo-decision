@@ -8,16 +8,18 @@
 			<div class="col-md-5">
 				<form class="form-horizontal">
 					<div class="form-group">
-						<label for="labelAlternativeId" class="control-label">Id</label>
-						<label class="form-control" id="labelAlternativeId">{{alternativeWrapper.alternative.idAlternative}}</label>
+						<label for="inputAlternativeId" class="control-label">Id</label>
+						<input ng-disabled="true" type="text" class="form-control" id="inputDesignDecisionTitle" placeholder="Title" ng-model="alternativeWrapper.alternative.idAlternative">
 					</div>
 					<div class="form-group">
-						<label for="labelAlternativeCreator" class="control-label">Creator</label>
-						<label class="form-control" id="labelAlternativeCreator">{{alternativeWrapper.alternative.creator.forename}} {{alternativeWrapper.alternative.creator.surname}}</label>
+						<label for="inputAlternativeCreator" class="control-label">Creator</label>
+						<input ng-disabled="true" type="text" class="form-control" id="inputAlternativeCreator" placeholder="Title" ng-model="creator">
+						<!-- <label class="form-control" id="labelAlternativeCreator">{{alternativeWrapper.alternative.creator.forename}} {{alternativeWrapper.alternative.creator.surname}}</label> -->
 					</div>
 					<div class="form-group">
-						<label for="labelAlternativeDescription" class="control-label">Description</label>
-						<label class="form-control" id="labelAlternativeDescription">{{alternativeWrapper.alternative.description}}</label>
+						<label for="inputAlternativeDescription" class="control-label">Description</label>
+						<input ng-disabled="isEditDisabled" type="text" class="form-control" id="inputAlternativeDescription" placeholder="Description" ng-model="alternativeWrapper.alternative.description">
+						<!-- <label class="form-control" id="labelAlternativeDescription">{{alternativeWrapper.alternative.description}}</label> -->
 					</div>
 					
 					<div class="form-group">

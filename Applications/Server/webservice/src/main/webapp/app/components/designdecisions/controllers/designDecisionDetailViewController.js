@@ -17,7 +17,6 @@ angular.module('collaboApp').controller('DesignDecisionDetailViewController', ['
 				for (var index = 0; index < $scope.designDecisionWrapper.designDecision.shareHolders.length; index++) {
 					$scope.currentShareholders.push($scope.designDecisionWrapper.designDecision.shareHolders[index].user);
 				}
-				alert($scope.designDecisionWrapper.editable);
 				$scope.isEditDisabled = !($scope.designDecisionWrapper.editable);
 			});
 		}

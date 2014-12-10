@@ -13,6 +13,8 @@ angular.module('collaboApp').controller('AlternativeDetailController', ['$scope'
 			uri += idAlternative + "?withRelations=true";
 			$http.get(uri).success(function(data) {
 				$scope.alternativeWrapper = angular.fromJson(data);
+				$scope.creator = $scope.alternativeWrapper.alternative.creator.forename + $scope.alternativeWrapper.alternative.creator.surname;
+				$scope.isEditDisabled = !($scope.alternativeWrapper.editable);
 			});
 		}
 	};
