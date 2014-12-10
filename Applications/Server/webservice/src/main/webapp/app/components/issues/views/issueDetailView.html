@@ -6,8 +6,8 @@
 					<h3 ng-if="!isEdit">New Issue</h3>
 					<h3 ng-if="isEdit">Edit - {{issueResponse.issue.title}}</h3>
 				</div>
-				<div class="col-md-4 my-col" ng-if="isEdit">
-					<div class="btn-group pull-right">
+				<div class="col-md-4 my-col">
+					<div class="btn-group pull-right" ng-if="isEdit">
 						<button ng-disabled="!issueResponse.owner" class="btn btn-primary" ng-click="createDesignDecision()">Create Design Decision</button>
 						<button ng-disabled="!issueResponse.owner" class="btn btn-danger">Reject Issue</button>
 					</div>

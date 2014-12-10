@@ -5,7 +5,7 @@
 	
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-md-5">
+			<div class="col-md-12">
 				<form class="form-horizontal">
 					<div class="form-group">
 						<label for="inputAlternativeId" class="control-label">Id</label>
@@ -18,7 +18,7 @@
 					</div>
 					<div class="form-group">
 						<label for="inputAlternativeDescription" class="control-label">Description</label>
-						<input ng-disabled="isEditDisabled" type="text" class="form-control" id="inputAlternativeDescription" placeholder="Description" ng-model="alternativeWrapper.alternative.description">
+						<textarea ng-disabled="isEditDisabled" class="form-control" id="inputAlternativeDescription" placeholder="Description" ng-model="alternativeWrapper.alternative.description"></textarea>
 						<!-- <label class="form-control" id="labelAlternativeDescription">{{alternativeWrapper.alternative.description}}</label> -->
 					</div>
 					

@@ -25,6 +25,9 @@ angular.module('collaboApp').controller('DesignDecisionDetailViewController', ['
 	$scope.startRanking = function(){
 		//update design decision and set status to "RANK_ALTERNATIVES"
 		
+		
+		
+		
 		//refresh view
 		
 	};
