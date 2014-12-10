@@ -312,9 +312,15 @@ public class IssueServiceImpl implements IssueService {
 
 		// TODO: check if needed in list (probably not)
 		rwi.setShowInProgress(false);
-		rwi.setShowObsolete(false);
 		rwi.setShowRepeat(false);
-		rwi.setShowResolved(false);
+		
+		if (IssueStatus.OBSOLETE.equals(rwi.getIssue().getIssueStatus())) {
+			rwi.setShowObsolete(false);
+		}
+		
+		if (IssueStatus.RESOLVED.equals(rwi.getIssue().getIssueStatus())) {
+			rwi.setShowResolved(false);
+		}
 	}
 
 }
