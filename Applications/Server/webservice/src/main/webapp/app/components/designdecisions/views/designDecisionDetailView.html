@@ -9,31 +9,35 @@
 				<form class="form-horizontal">
 					<div class="form-group">
 						<label for="inputDesignDecisionTitle" class="control-label">Title</label>
-						<input type="text" class="form-control" id="inputDesignDecisionTitle" placeholder="Title" ng-model="designDecisionWrapper.designDecision.title">
+						<input ng-disabled="isEditDisabled" type="text" class="form-control" id="inputDesignDecisionTitle" placeholder="Title" ng-model="designDecisionWrapper.designDecision.title">
 					</div>
 					<div class="form-group">
 						<label for="inputIssueTitle" class="control-label">Issue</label>
-						<input type="text" class="form-control" id="inputIssueTitle" placeholder="Issue" ng-model="designDecisionWrapper.designDecision.issue.title">
+						<input ng-disabled="true" type="text" class="form-control" id="inputIssueTitle" placeholder="Issue" ng-model="designDecisionWrapper.designDecision.issue.title">
 					</div>
 					<div class="form-group">
-						<label for="labelDesignDecisionStatus" class="control-label">Status</label>
-						<label class="form-control" id="labelDesignDecisionStatus">{{designDecisionWrapper.designDecision.designDecisionStatus.status}}</label>
+						<label for="inputDesignDecisionStatus" class="control-label">Status</label>
+						<input ng-disabled="true" type="text" class="form-control" id="inputDesignDecisionStatus" placeholder="Status" ng-model="designDecisionWrapper.designDecision.designDecisionStatus">
 					</div>
 					<div class="form-group">
 						<label for="inputOwner" class="control-label">Owner</label>
-						<input type="text" class="form-control" id="inputOwner" placeholder="Owner" ng-model="owner">
+						<!-- <input ng-disabled="true" type="text" class="form-control" id="inputOwner" placeholder="Owner" ng-model="owner"> -->
+						<input ng-disabled="isEditDisabled" type="text" id="inputOwner" ng-model="designDecisionWrapper.designDecision.issue.owner" class="form-control" placeholder="Owner" 
+								typeahead-loading="loadingUsers" typeahead="user as (user.forename + ' ' + user.surname) for user in getUser($viewValue)">
+						</input>
+						<i ng-show="loadingUsers" class="glyphicon glyphicon-refresh loading"></i>
 					</div>
 					<div class="form-group">
 						<label for="inputShareholders" class="control-label">Shareholders</label>
-						<appusereditor appUsers="currentShareholders"></appusereditor>
+						<appusereditor ng-disabled="isEditDisabled" appUsers="currentShareholders"></appusereditor>
 					</div>
 					<div class="form-group">
 						<label for="inputAssumption" class="control-label">Assumption</label>
-						<textarea rows="5" cols="10" id="inputAssumption" class="form-control" placeholder="Assumption" ng-model="designDecisionWrapper.designDecision.assumption"></textarea>
+						<textarea ng-disabled="isEditDisabled" rows="5" cols="10" id="inputAssumption" class="form-control" placeholder="Assumption" ng-model="designDecisionWrapper.designDecision.assumption"></textarea>
 					</div>
 					<div class="form-group">
 						<label for="inputRationale" class="control-label">Rationale</label>
-						<textarea rows="5" cols="10" id="inputRationale" class="form-control" placeholder="Rationale" ng-model="designDecisionWrapper.designDecision.rationale"></textarea>
+						<textarea ng-disabled="isEditDisabled" rows="5" cols="10" id="inputRationale" class="form-control" placeholder="Rationale" ng-model="designDecisionWrapper.designDecision.rationale"></textarea>
 					</div>
 					<div class="form-group">
 						<label for="listAlternatives" class="control-label">Alternatives</label>

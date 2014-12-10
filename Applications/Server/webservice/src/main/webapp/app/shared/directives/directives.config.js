@@ -23,7 +23,8 @@ angular.module('collaboApp').directive('tageditor', function() {
 		restrict: 'E',
 		templateUrl : 'app/shared/directives/appusereditor/views/appusereditorView.html',
 		scope : { 
-			appusers : "="
+			appusers : "=",
+			isDisabled : "=ngDisabled"
 		}
 	}
 });

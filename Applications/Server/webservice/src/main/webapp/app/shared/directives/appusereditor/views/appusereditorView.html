@@ -1,12 +1,10 @@
 <div ng-controller="AppusereditorController">
 	
-	<input type="text" id="inputAppUser" ng-model="appusereditorText" class="form-control" placeholder="User" 
+	<input ng-disabled="isDisabled" type="text" id="inputAppUser" ng-model="appusereditorText" class="form-control" placeholder="User" 
 			typeahead="user as (user.forename + ' ' + user.surname) for user in getUser($viewValue)" typeahead-on-select="onAppUserSelect($item, $model, $label)">
 	</input>
-	<!-- <div class="selectedTags"> -->
-		<div class="tagwrapper" ng-repeat="appUser in appusers">
-			{{appUser.forename}} {{appUser.surname}}
-			<div class="glyphicon glyphicon-remove" ng-click="removeAppUser(appUser)"></div>
-		</div>
-	<!-- </div> -->
+	<div class="tagwrapper" ng-repeat="appUser in appusers">
+		{{appUser.forename}} {{appUser.surname}}
+		<div ng-show="!isDisabled" class="glyphicon glyphicon-remove" ng-click="removeAppUser(appUser)"></div>
+	</div>
 </div>

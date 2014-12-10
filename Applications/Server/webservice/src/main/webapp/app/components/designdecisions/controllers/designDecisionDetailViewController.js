@@ -12,11 +12,13 @@ angular.module('collaboApp').controller('DesignDecisionDetailViewController', ['
 			uri += $scope.idDesignDecision + "?withRelations=true";
 			$http.get(uri).success(function(data) {
 				$scope.designDecisionWrapper = angular.fromJson(data);
-				$scope.owner = $scope.designDecisionWrapper.designDecision.issue.owner.forename + " " + $scope.designDecisionWrapper.designDecision.issue.owner.surname;
+				//$scope.owner = $scope.designDecisionWrapper.designDecision.issue.owner.forename + " " + $scope.designDecisionWrapper.designDecision.issue.owner.surname;
 				
 				for (var index = 0; index < $scope.designDecisionWrapper.designDecision.shareHolders.length; index++) {
 					$scope.currentShareholders.push($scope.designDecisionWrapper.designDecision.shareHolders[index].user);
 				}
+				alert($scope.designDecisionWrapper.editable);
+				$scope.isEditDisabled = !($scope.designDecisionWrapper.editable);
 			});
 		}
 	};
@@ -72,6 +74,22 @@ angular.module('collaboApp').controller('DesignDecisionDetailViewController', ['
 	$scope.cancel = function() {
 		$modalInstance.dismiss('cancel');
 	};
+	
+	$scope.getUser = function(partialName) {
+			
+			return $http.get('/rest/appusers', {
+				params : {
+					'partialname' : partialName
+				}
+			}).then(function(response) {
+				
+				var partials = response.data.map(function(e) {
+					return e;
+				});
+				
+				return partials;
+			})
+		};
 	
 	//initialize fields
 	$scope.initialize();
