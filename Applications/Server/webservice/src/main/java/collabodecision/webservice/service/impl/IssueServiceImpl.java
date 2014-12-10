@@ -315,7 +315,8 @@ public class IssueServiceImpl implements IssueService {
 		rwi.setShowRepeat(false);
 		
 		if (IssueStatus.NEW.equals(rwi.getIssue().getIssueStatus()) &&
-				!issueBlocked(rwi)) {
+//				!issueBlocked(rwi)) {
+				!rwi.getIssue().isBlocked()) {
 			rwi.setShowBtnCreateDesignDecision(true);
 		}
 		
@@ -328,18 +329,18 @@ public class IssueServiceImpl implements IssueService {
 		}
 	}
 	
-	private boolean issueBlocked(ResponseWrapperIssue rwi) {
-		if (rwi.getDependsIssuesTo().isEmpty()) {
-			return false;
-		} else {
-			for (Issue issue : rwi.getDependsIssuesTo()) {
-				if (IssueStatus.NEW.equals(issue.getIssueStatus()) ||
-						IssueStatus.IN_PROGRESS.equals(issue.getIssueStatus())) {
-					return true;
-				}
-			}
-			return false;
-		}
-	}
+//	private boolean issueBlocked(ResponseWrapperIssue rwi) {
+//		if (rwi.getDependsIssuesTo().isEmpty()) {
+//			return false;
+//		} else {
+//			for (Issue issue : rwi.getDependsIssuesTo()) {
+//				if (IssueStatus.NEW.equals(issue.getIssueStatus()) ||
+//						IssueStatus.IN_PROGRESS.equals(issue.getIssueStatus())) {
+//					return true;
+//				}
+//			}
+//			return false;
+//		}
+//	}
 
 }
