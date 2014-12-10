@@ -314,12 +314,31 @@ public class IssueServiceImpl implements IssueService {
 		rwi.setShowInProgress(false);
 		rwi.setShowRepeat(false);
 		
+		if (IssueStatus.NEW.equals(rwi.getIssue().getIssueStatus()) &&
+				!issueBlocked(rwi)) {
+			rwi.setShowBtnCreateDesignDecision(true);
+		}
+		
 		if (IssueStatus.OBSOLETE.equals(rwi.getIssue().getIssueStatus())) {
-			rwi.setShowObsolete(false);
+			rwi.setShowObsolete(true);
 		}
 		
 		if (IssueStatus.RESOLVED.equals(rwi.getIssue().getIssueStatus())) {
-			rwi.setShowResolved(false);
+			rwi.setShowResolved(true);
+		}
+	}
+	
+	private boolean issueBlocked(ResponseWrapperIssue rwi) {
+		if (rwi.getDependsIssuesTo().isEmpty()) {
+			return false;
+		} else {
+			for (Issue issue : rwi.getDependsIssuesTo()) {
+				if (IssueStatus.NEW.equals(issue.getIssueStatus()) ||
+						IssueStatus.IN_PROGRESS.equals(issue.getIssueStatus())) {
+					return true;
+				}
+			}
+			return false;
 		}
 	}
 
