@@ -7,11 +7,9 @@ import collabodecision.webservice.data.ResponseWrapperDesignDecision;
 import collabodecision.webservice.persistence.domain.DesignDecision;
 
 public interface DesignDecisionService extends CommentService, FileService {
-	List<DesignDecision> getDesignDecisions();
+	List<ResponseWrapperDesignDecision> getDesignDecisions();
 	
-	List<DesignDecision> getDesignDecisions(String status, List<String> tags, String partialName);
-	
-	DesignDecision getDesignDecision(long id, boolean withRelations);
+	List<ResponseWrapperDesignDecision> getDesignDecisions(String status);
 	
 	void addDesignDecision(DesignDecision designDecision);
 	
@@ -19,7 +17,7 @@ public interface DesignDecisionService extends CommentService, FileService {
 	
 	void deleteDesignDecision(long id);
 	
-	ResponseWrapperDesignDecision getResponseWrapperDesignDesicion(long id, boolean withRelations);
+	ResponseWrapperDesignDecision getDesignDecision(long id, boolean withRelations);
 	
 	void addRequestWrapperDesignDecision(RequestWrapperDesignDecision responseWrapperDesignDecision);
 }
