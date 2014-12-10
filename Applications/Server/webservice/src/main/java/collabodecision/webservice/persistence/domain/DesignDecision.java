@@ -40,7 +40,6 @@ public class DesignDecision {
 
 	@ManyToOne
 	@JoinColumn(name = "idIssue", nullable = false)
-	@JsonBackReference
 	private Issue issue;
 
 	@Column(nullable=false)
