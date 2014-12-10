@@ -1,17 +1,21 @@
 <div class="newIssue-wrapper">
 	<div class="modal-header">
-		<h3 ng-if="!isEdit">New Issue</h3>
-		<h3 ng-if="isEdit">Edit - {{issueResponse.issue.title}}</h3>
-	</div>
-	<div class="container-fluid" ng-if="isEdit">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="btn-group pull-right">
-					<button ng-disabled="!issueResponse.owner" class="btn btn-primary" ng-click="createDesignDecision()">Create Design Decision</button>
-					<button ng-disabled="!issueResponse.owner" class="btn btn-danger">Reject Issue</button>
+		<div class="container-fluid">
+			<div class="row my-row">
+				<div class="col-md-8 my-col">
+					<h3 ng-if="!isEdit">New Issue</h3>
+					<h3 ng-if="isEdit">Edit - {{issueResponse.issue.title}}</h3>
+				</div>
+				<div class="col-md-4 my-col" ng-if="isEdit">
+					<div class="btn-group pull-right">
+						<button ng-disabled="!issueResponse.owner" class="btn btn-primary" ng-click="createDesignDecision()">Create Design Decision</button>
+						<button ng-disabled="!issueResponse.owner" class="btn btn-danger">Reject Issue</button>
+					</div>
 				</div>
 			</div>
 		</div>
+		
+		
 	</div>
 	<div class="container-fluid">
 		<div class="row">

@@ -125,3 +125,14 @@ body {
 .tagwrapper > div.glyphicon-remove {
 	cursor: pointer;
 }
+
+.my-row {
+    display: table;
+    width: 100%;
+}
+
+.my-row .my-col {
+    float: none;
+    display: table-cell;
+    vertical-align: middle;
+}

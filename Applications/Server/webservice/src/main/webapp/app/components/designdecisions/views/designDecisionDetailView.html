@@ -1,11 +1,23 @@
 <div class="designDecisionDetail-wrapper">
 	<div class="modal-header">
-		<h3>Design Decision - Detail View</h3>
+		<div class="container-fluid">
+			<div class="row my-row">
+				<div class="col-md-8 my-col">
+					<h3>Design Decision - Detail View</h3>
+				</div>
+				<div class="col-md-4 my-col">
+					<div class="pull-right">
+						<button class="btn btn-primary" ng-show="designDecisionWrapper.showInappropriateSolution" ng-click="setInappropriateSolution()">Inappropriate Solution</button>
+						<button class="btn btn-primary" ng-show="designDecisionWrapper.showStartRanking" ng-click="startRanking()">Start Ranking</button>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 	
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-md-5">
+			<div class="col-md-6">
 				<form class="form-horizontal">
 					<div class="form-group">
 						<label for="inputDesignDecisionTitle" class="control-label">Title</label>
@@ -32,45 +44,50 @@
 						<appusereditor ng-disabled="isEditDisabled" appUsers="currentShareholders"></appusereditor>
 					</div>
 					<div class="form-group">
-						<label for="inputAssumption" class="control-label">Assumption</label>
-						<textarea ng-disabled="isEditDisabled" rows="5" cols="10" id="inputAssumption" class="form-control" placeholder="Assumption" ng-model="designDecisionWrapper.designDecision.assumption"></textarea>
+						Here will be the file upload.
+					</div>
+				</form>
+			</div>
+			<div class="col-md-6">
+				<div class="form-horizontal">
+					<div class="form-group">
+							<label for="inputAssumption" class="control-label">Assumption</label>
+							<textarea ng-disabled="isEditDisabled" rows="5" cols="10" id="inputAssumption" class="form-control" placeholder="Assumption" ng-model="designDecisionWrapper.designDecision.assumption"></textarea>
 					</div>
 					<div class="form-group">
 						<label for="inputRationale" class="control-label">Rationale</label>
 						<textarea ng-disabled="isEditDisabled" rows="5" cols="10" id="inputRationale" class="form-control" placeholder="Rationale" ng-model="designDecisionWrapper.designDecision.rationale"></textarea>
 					</div>
+				</div>
+			</div>
+			
+			<!-- showFinishRanking -->
+			<!-- editable -->
+			<!-- showSelectAlternative -->
+			<!-- showDecided -->
+			<!-- isOwner -->
+			<!-- isShareholder -->
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-horizontal">
 					<div class="form-group">
 						<label for="listAlternatives" class="control-label">Alternatives</label>
 						<table class="table">
 							<tr>
 								<th>id</th>
 								<th>Creator</th>
+								<th>Description</th>
 							</tr>
 							<tr ng-repeat="alternative in designDecisionWrapper.designDecision.alternatives">
-								<td><a href ng-click="showAlternative(alternative.idAlternative)">{{alternative.idAlternative}}</a></td>
-								<td>{{alternative.creator.forename}} {{alternative.creator.surname}}</td>
+								<td style="width: 100px;"><a href ng-click="showAlternative(alternative.idAlternative)">{{alternative.idAlternative}}</a></td>
+								<td style="width: 200px;">{{alternative.creator.forename}} {{alternative.creator.surname}}</td>
+								<td style="width: auto;">{{alternative.description}}</td>
 							</tr>
 						</table>
 						<button class="btn btn-primary" ng-click="addAlternative()">Add Alternative</button>
 					</div>
-					<div class="form-group">
-						Here will be the file upload.
-					</div>
-				</form>
-			</div>
-			<div class="col-md-3">
-				<div class="form-group">
-					<button class=""btn btn-primary" ng-show="designDecisionWrapper.showInappropriateSolution" ng-click="setInappropriateSolution()">Inappropriate Solution</button>
 				</div>
-				<div class="form-group">
-					<button class="btn btn-primary" ng-show="designDecisionWrapper.showStartRanking" ng-click="startRanking()">Start Ranking</button>
-				</div>
-				<!-- showFinishRanking -->
-				<!-- editable -->
-				<!-- showSelectAlternative -->
-				<!-- showDecided -->
-				<!-- isOwner -->
-				<!-- isShareholder -->
 			</div>
 		</div>
 		<div class="modal-footer">
