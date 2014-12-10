@@ -26,7 +26,6 @@ public class ResponseWrapperDesignDecision {
 	private boolean isShareholder;
 	
 	
-	
 	public DesignDecision getDesignDecision() {
 		return designDecision;
 	}

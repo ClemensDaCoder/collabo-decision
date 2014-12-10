@@ -116,7 +116,7 @@ public class AlternativesServiceImpl implements AlternativeService
 		}
 		else
 		{
-			alternativeDao.getAlternative(idexistingAlternative);
+			alternative = alternativeDao.getAlternative(idexistingAlternative);
 		}
 		
 		
