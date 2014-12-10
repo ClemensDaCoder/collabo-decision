@@ -18,7 +18,7 @@ angular.module('collaboApp').controller('IssuesController', ['$http', '$scope', 
 	
 	$scope.showIssue = function(idIssue) {
 		var modalInstance = $modal.open({
-			templateUrl : 'app/components/issues/views/newIssueView.html',
+			templateUrl : 'app/components/issues/views/issueDetailView.html',
 			controller : 'IssueDetailViewController',
 			backdrop : false,
 			resolve : {
@@ -27,13 +27,24 @@ angular.module('collaboApp').controller('IssuesController', ['$http', '$scope', 
 				}
 			}
 		});
+		
+		modalInstance.result.then(function() {
+			$scope.getIssues(null)
+		}, function() {
+			$scope.getIssues(null);
+		});
 	}
 	
 	$scope.newIssue = function() {
 		var modalInstance = $modal.open({
-			templateUrl : 'app/components/issues/views/newIssueView.html',
-			controller : 'NewIssueController',
-			backdrop : false
+			templateUrl : 'app/components/issues/views/issueDetailView.html',
+			controller : 'IssueDetailViewController',
+			backdrop : false,
+			resolve : {
+				id : function() {
+					return null;
+				}
+			}
 		});
 		
 		modalInstance.result.then(function() {

@@ -57,6 +57,7 @@ public class Issue {
 
 	@OneToMany(mappedBy = "issue", orphanRemoval = true)
 	@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
+	@JsonManagedReference
 	private Set<DesignDecision> designDecisions;
 
 	@OneToMany(mappedBy = "issue", orphanRemoval = true)

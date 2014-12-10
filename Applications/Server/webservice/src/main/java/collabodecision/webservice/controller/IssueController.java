@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import collabodecision.webservice.data.RequestWrapperData;
 import collabodecision.webservice.data.RequestWrapperIssue;
 import collabodecision.webservice.data.ResponseWrapperIssue;
 import collabodecision.webservice.service.IssueService;
@@ -40,8 +39,8 @@ public class IssueController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public void addIssue(
-			@RequestBody RequestWrapperData<RequestWrapperIssue> request) {
-		issueService.addIssue(request.getData());
+			@RequestBody RequestWrapperIssue request) {
+		issueService.addIssue(request);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
