@@ -203,6 +203,7 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 		//if user == owner
 		if (creator.equals(decision.getIssue().getOwner())) {
 			response.setOwner(true);
+			response.setEditable(true);
 			//TODO if status == collecting alternatives show "start ranking"
 			if (DesignDecisionStatus.COLLECTING_ALTERNATIVES.equals(decision.getDesignDecisionStatus())) {
 				response.setShowStartRanking(true);
