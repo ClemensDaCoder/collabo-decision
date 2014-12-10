@@ -12,36 +12,36 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(uniqueConstraints=@UniqueConstraint(columnNames={"idDesignDecision", "idUser"}))
-public class ShareHolder {
+public class Share {
 
 	@GeneratedValue
 	@Id
-	private long idShareHolder;
+	private long idShare;
 	
 	@ManyToOne
 	@JoinColumn(name="idUser", nullable=false)
-	private AppUser user;
+	private AppUser appUser;
 	
 	@ManyToOne
 	@JoinColumn(name="idDesignDecision", nullable=false)
 	@JsonBackReference
 	private DesignDecision designDecision;
 	
-	public ShareHolder() {
+	public Share() {
 		
 	}
 	
-	public ShareHolder(AppUser appUser, DesignDecision designDecision) {
-		this.user = appUser;
+	public Share(AppUser appUser, DesignDecision designDecision) {
+		this.appUser = appUser;
 		this.designDecision = designDecision;
 	}
 
-	public AppUser getUser() {
-		return user;
+	public AppUser getAppUser() {
+		return appUser;
 	}
 
-	public void setUser(AppUser user) {
-		this.user = user;
+	public void setAppUser(AppUser user) {
+		this.appUser = user;
 	}
 
 	public DesignDecision getDesignDecision() {
@@ -52,7 +52,7 @@ public class ShareHolder {
 		this.designDecision = designDecision;
 	}
 
-	public long getIdShareHolder() {
-		return idShareHolder;
+	public long getIdShare() {
+		return idShare;
 	}
 }

@@ -14,10 +14,14 @@ angular.module('collaboApp').controller('DesignDecisionDetailViewController', ['
 				$scope.designDecisionWrapper = angular.fromJson(data);
 				//$scope.owner = $scope.designDecisionWrapper.designDecision.issue.owner.forename + " " + $scope.designDecisionWrapper.designDecision.issue.owner.surname;
 				
-				for (var index = 0; index < $scope.designDecisionWrapper.designDecision.shareHolders.length; index++) {
-					$scope.currentShareholders.push($scope.designDecisionWrapper.designDecision.shareHolders[index].user);
+				for (var index = 0; index < $scope.designDecisionWrapper.designDecision.shares.length; index++) {
+					$scope.currentShareholders.push($scope.designDecisionWrapper.designDecision.shares[index].appUser);
 				}
 				$scope.isEditDisabled = !($scope.designDecisionWrapper.editable);
+				
+				$scope.canRank = $scope.designDecisionWrapper.designDecision.designDecisionStatus === 'RANK_ALTERNATIVES' && 
+									$scope.designDecisionWrapper.shareholder;
+				
 			});
 		}
 	};
@@ -100,6 +104,19 @@ angular.module('collaboApp').controller('DesignDecisionDetailViewController', ['
 			})
 		};
 	
+	$scope.alternativeRank = [];
+
+	$scope.rankChosen = function(alternative, rank) {
+		
+		$scope.alternativeRank.push({
+			'idAlternative' : alternative.idAlternative,
+			'rank' : rank
+		});
+		
+		
+		
+	};
+
 	//initialize fields
 	$scope.initialize();
 }]);

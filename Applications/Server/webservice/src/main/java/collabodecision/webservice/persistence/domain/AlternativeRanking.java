@@ -27,7 +27,7 @@ public class AlternativeRanking {
 
 	@ManyToOne
 	@JoinColumn(name = "idRanker", nullable = false)
-	private ShareHolder ranker;
+	private Share ranker;
 
 	public int getRank() {
 		return rank;
@@ -45,11 +45,11 @@ public class AlternativeRanking {
 		this.alternative = alternative;
 	}
 
-	public ShareHolder getRanker() {
+	public Share getRanker() {
 		return ranker;
 	}
 
-	public void setRanker(ShareHolder ranker) {
+	public void setRanker(Share ranker) {
 		this.ranker = ranker;
 	}
 

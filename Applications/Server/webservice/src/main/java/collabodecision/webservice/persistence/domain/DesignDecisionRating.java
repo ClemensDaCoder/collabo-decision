@@ -31,7 +31,7 @@ public class DesignDecisionRating {
 	
 	@ManyToOne
 	@JoinColumn(name="idRater", nullable=false)
-	private ShareHolder rater;
+	private Share rater;
 	
 	@OneToMany(mappedBy="designDecisionRating")
 	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
@@ -53,11 +53,11 @@ public class DesignDecisionRating {
 		this.designDecision = designDecision;
 	}
 
-	public ShareHolder getRater() {
+	public Share getRater() {
 		return rater;
 	}
 
-	public void setRater(ShareHolder rater) {
+	public void setRater(Share rater) {
 		this.rater = rater;
 	}
 

@@ -64,14 +64,14 @@ public class DesignDecision {
 	@OneToMany(mappedBy = "designDecision")
 	@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
 	@JsonManagedReference
-	private Set<ShareHolder> shareHolders;
+	private Set<Share> shares;
 
-	public Set<ShareHolder> getShareHolders() {
-		return shareHolders;
+	public Set<Share> getShares() {
+		return shares;
 	}
 
-	public void setShareHolders(Set<ShareHolder> shareHolders) {
-		this.shareHolders = shareHolders;
+	public void setShares(Set<Share> shares) {
+		this.shares = shares;
 	}
 
 	public String getTitle() {

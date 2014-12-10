@@ -78,11 +78,17 @@
 								<th>id</th>
 								<th>Creator</th>
 								<th>Description</th>
+								<th ng-show="canRank">Rank</th>
 							</tr>
 							<tr ng-repeat="alternative in designDecisionWrapper.designDecision.alternatives">
 								<td style="width: 100px;"><a href ng-click="showAlternative(alternative.idAlternative)">{{alternative.idAlternative}}</a></td>
 								<td style="width: 200px;">{{alternative.creator.forename}} {{alternative.creator.surname}}</td>
 								<td style="width: auto;">{{alternative.description}}</td>
+								<td style="width: 200px" ng-show="canRank">
+									<div class="btn-group">
+										<button class="btn btn-default" ng-repeat="alternative in designDecisionWrapper.designDecision.alternatives" ng-click="rankChosen(alternative, $index)">{{$index + 1}}</button>
+									</div>
+								</td>
 							</tr>
 						</table>
 						<button class="btn btn-primary" ng-click="addAlternative()">Add Alternative</button>

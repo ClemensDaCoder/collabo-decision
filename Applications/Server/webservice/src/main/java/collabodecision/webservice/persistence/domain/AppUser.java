@@ -32,8 +32,8 @@ public class AppUser {
 	@OneToMany(mappedBy="owner")
 	private Set<Issue> owningIssues;
 	
-	@OneToMany(mappedBy="user")
-	private Set<ShareHolder> shares;
+	@OneToMany(mappedBy="appUser")
+	private Set<Share> shares;
 
 	public String getMail() {
 		return mail;
@@ -75,11 +75,11 @@ public class AppUser {
 		this.owningIssues = owningIssues;
 	}
 
-	public Set<ShareHolder> getShares() {
+	public Set<Share> getShares() {
 		return shares;
 	}
 
-	public void setShares(Set<ShareHolder> shares) {
+	public void setShares(Set<Share> shares) {
 		this.shares = shares;
 	}
 

@@ -22,7 +22,7 @@ import collabodecision.webservice.persistence.domain.DesignDecision;
 import collabodecision.webservice.persistence.domain.DesignDecision.DesignDecisionStatus;
 import collabodecision.webservice.persistence.domain.File;
 import collabodecision.webservice.persistence.domain.Issue.IssueStatus;
-import collabodecision.webservice.persistence.domain.ShareHolder;
+import collabodecision.webservice.persistence.domain.Share;
 import collabodecision.webservice.service.AppUserService;
 import collabodecision.webservice.service.DesignDecisionService;
 import collabodecision.webservice.service.IssueService;
@@ -166,7 +166,7 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 			decision.getFiles().clear();
 			// Must be done - Otherwise Hibernate would result in Violation
 			// Constraint!
-			decision.getShareHolders().clear();
+			decision.getShares().clear();
 
 			sessionFactory.getCurrentSession().flush();
 		}
@@ -179,13 +179,13 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 				false).getIssue());
 
 		// set shareholders
-		Set<ShareHolder> shareholders = new HashSet<ShareHolder>();
+		Set<Share> shareholders = new HashSet<Share>();
 		for (Long appUserId : decisionRequest.getAppUserIds()) {
 			AppUser appUser = userService.getAppUser(appUserId);
-			shareholders.add(new ShareHolder(appUser, decision));
+			shareholders.add(new Share(appUser, decision));
 		}
 
-		decision.setShareHolders(shareholders);
+		decision.setShares(shareholders);
 
 		decision.setRationale(decisionRequest.getRationale());
 
@@ -209,7 +209,8 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 	private ResponseWrapperDesignDecision wrapDesignDecision(
 			DesignDecision decision) {
 
-		AppUser creator = userService
+		// The user that made the request!
+		AppUser appUser = userService
 				.getAppUserByUsername(SecurityContextHolder.getContext()
 						.getAuthentication().getName());
 
@@ -217,7 +218,7 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 		response.setDesignDecision(decision);
 
 		// if user == owner
-		if (creator.equals(decision.getIssue().getOwner())) {
+		if (appUser.equals(decision.getIssue().getOwner())) {
 			response.setOwner(true);
 			response.setEditable(true);
 			// TODO if status == collecting alternatives show "start ranking"
@@ -234,14 +235,29 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 		}
 
 		// if user == shareholder
-		if (decision.getShareHolders().contains(creator)) {
-			response.setEditable(true);
-			response.setIsShareholder(true);
-			if (DesignDecisionStatus.RANK_ALTERNATIVES.equals(decision
-					.getDesignDecisionStatus())) {
-				response.setShowFinishRanking(true);
+		
+		for(Share shareHolder : decision.getShares()) {
+			
+			if(shareHolder.getAppUser().equals(appUser)) {
+				response.setEditable(true);
+				response.setIsShareholder(true);
+				if (DesignDecisionStatus.RANK_ALTERNATIVES.equals(decision
+						.getDesignDecisionStatus())) {
+					response.setShowFinishRanking(true);
+				}
 			}
+			
 		}
+		
+		// Cannot check ShareHolder against AppUser -> returns null
+//		if (decision.getShareHolders().contains(appUser)) {
+//			response.setEditable(true);
+//			response.setIsShareholder(true);
+//			if (DesignDecisionStatus.RANK_ALTERNATIVES.equals(decision
+//					.getDesignDecisionStatus())) {
+//				response.setShowFinishRanking(true);
+//			}
+//		}
 
 		if (DesignDecisionStatus.DECIDED.equals(decision
 				.getDesignDecisionStatus())) {
