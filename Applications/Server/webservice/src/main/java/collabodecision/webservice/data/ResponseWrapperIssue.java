@@ -16,6 +16,7 @@ public class ResponseWrapperIssue {
 	private boolean showResolved;
 	private boolean isOwner;
 	private boolean showBtnCreateDesignDecision;
+	private boolean showBtnRejectIssue;
 
 	private List<Issue> dependsIssuesTo;
 	
@@ -139,5 +140,15 @@ public class ResponseWrapperIssue {
 
 	public void setShowBtnCreateDesignDecision(boolean showBtnCreateDesignDecision) {
 		this.showBtnCreateDesignDecision = showBtnCreateDesignDecision;
+	}
+
+
+	public boolean isShowBtnRejectIssue() {
+		return showBtnRejectIssue;
+	}
+
+
+	public void setShowBtnRejectIssue(boolean showBtnRejectIssue) {
+		this.showBtnRejectIssue = showBtnRejectIssue;
 	}
 }

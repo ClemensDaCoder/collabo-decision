@@ -301,7 +301,7 @@ public class IssueServiceImpl implements IssueService {
 		AppUser appUser = userService
 				.getAppUserByUsername(SecurityContextHolder.getContext()
 						.getAuthentication().getName());
-
+		
 		// Editable only if Owner or Creator
 		boolean isEditable = rwi.getIssue().getOwner().equals(appUser)
 				|| rwi.getIssue().getCreator().equals(appUser);
@@ -313,11 +313,20 @@ public class IssueServiceImpl implements IssueService {
 		// TODO: check if needed in list (probably not)
 		rwi.setShowInProgress(false);
 		rwi.setShowRepeat(false);
-		
-		if (IssueStatus.NEW.equals(rwi.getIssue().getIssueStatus()) &&
-//				!issueBlocked(rwi)) {
-				!rwi.getIssue().isBlocked()) {
-			rwi.setShowBtnCreateDesignDecision(true);
+
+		//when to show buttons for issue owner
+		if (rwi.isOwner()) {
+			rwi.setShowBtnRejectIssue(true);
+			if (IssueStatus.NEW.equals(rwi.getIssue().getIssueStatus()) &&
+				!rwi.getIssue().isBlocked() && 
+				rwi.getIssue().getDesignDecisions().isEmpty()) {
+				rwi.setShowBtnCreateDesignDecision(true);
+				rwi.setShowBtnRejectIssue(true);
+			} else if (IssueStatus.RESOLVED.equals(rwi.getIssue().getIssueStatus()) ) {
+				//if issue status is resolved but should be able to be openend again
+				rwi.setShowBtnCreateDesignDecision(true);
+				rwi.setShowBtnRejectIssue(false);
+			} 
 		}
 		
 		if (IssueStatus.OBSOLETE.equals(rwi.getIssue().getIssueStatus())) {
@@ -327,20 +336,7 @@ public class IssueServiceImpl implements IssueService {
 		if (IssueStatus.RESOLVED.equals(rwi.getIssue().getIssueStatus())) {
 			rwi.setShowResolved(true);
 		}
-	}
-	
-//	private boolean issueBlocked(ResponseWrapperIssue rwi) {
-//		if (rwi.getDependsIssuesTo().isEmpty()) {
-//			return false;
-//		} else {
-//			for (Issue issue : rwi.getDependsIssuesTo()) {
-//				if (IssueStatus.NEW.equals(issue.getIssueStatus()) ||
-//						IssueStatus.IN_PROGRESS.equals(issue.getIssueStatus())) {
-//					return true;
-//				}
-//			}
-//			return false;
-//		}
-//	}
+		
 
+	}
 }
