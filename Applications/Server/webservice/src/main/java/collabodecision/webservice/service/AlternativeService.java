@@ -13,14 +13,11 @@ public interface AlternativeService extends CommentService, FileService{
 	
 	ResponseWrapperAlternative getResponseWrapperAlternative(long id, boolean withRelations);
 	
-	void addAlternative(Alternative alternative);
-	
-	void updateAlternative(long id, Alternative alternative);
-	void updateRequestWrapperAlternative(long existingid, RequestWrapperAlternative alternative);
+	void updateAlternative(long existingid, RequestWrapperAlternative alternative);
 
-	void rankAlternative(long id, long ranker, String rank);
+	void rankAlternative(long id, int rank);
 	
-	void addRequestWrapperAlternative(RequestWrapperAlternative alternativeRequest);
+	void addAlternative(RequestWrapperAlternative alternativeRequest);
 
 }
 

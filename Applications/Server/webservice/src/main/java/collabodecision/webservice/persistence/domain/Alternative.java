@@ -15,6 +15,7 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table
@@ -54,6 +55,7 @@ public class Alternative {
 	
 	@OneToMany(mappedBy="alternative")
 	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
+	@JsonManagedReference
 	private Set<AlternativeRanking> alternativeRankings;
 
 	public String getDescription() {

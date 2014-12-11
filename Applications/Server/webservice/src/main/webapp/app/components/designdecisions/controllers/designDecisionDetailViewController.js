@@ -34,12 +34,8 @@ angular.module('collaboApp').controller('DesignDecisionDetailViewController', ['
 							'idAlternative' : idAlternative,
 							'rank' : null
 						});
-					}
-					
+					}	
 				}
-				
-				
-				
 			});
 		}
 	};
@@ -125,16 +121,35 @@ angular.module('collaboApp').controller('DesignDecisionDetailViewController', ['
 	$scope.rankChosen = function(idAlternative, rank) {
 		
 		for(var i in $scope.alternativeRanks) {
+			if($scope.alternativeRanks[i].rank == rank) {
+				$scope.alternativeRanks[i].rank = null;
+			}
+		}
+		
+		for(var i in $scope.alternativeRanks) {
 			if($scope.alternativeRanks[i].idAlternative == idAlternative) {
 				$scope.alternativeRanks[i].rank = rank;
 				break;
 			}
 		}
 		
-		
-		alert(JSON.stringify($scope.alternativeRanks));
-		
 	};
+	
+	$scope.finishRanking = function() {
+		
+		for(var i in $scope.alternativeRanks) {
+			
+			
+			$http.post("/rest/alternatives/" + $scope.alternativeRanks[i].idAlternative + "/rankings?rank=" + $scope.alternativeRanks[i].rank).success(function() {
+				alert("saved");
+			})
+			
+			
+		}
+		
+		
+		
+	}
 
 	//initialize fields
 	$scope.initialize();

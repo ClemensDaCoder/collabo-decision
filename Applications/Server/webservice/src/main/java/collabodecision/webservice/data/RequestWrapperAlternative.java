@@ -4,8 +4,6 @@ import java.util.List;
 
 public class RequestWrapperAlternative {
 
-	
-
 	private String description;
 
 	private long idDesignDecision;

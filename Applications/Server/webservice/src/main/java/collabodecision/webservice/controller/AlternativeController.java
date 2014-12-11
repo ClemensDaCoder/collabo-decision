@@ -23,13 +23,13 @@ public class AlternativeController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public void addAlternative(@RequestBody RequestWrapperData<RequestWrapperAlternative> request) {
-		alternativeService.addRequestWrapperAlternative(request.getData());
+		alternativeService.addAlternative(request.getData());
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public void updateAlternative(@PathVariable long id,
 			@RequestBody RequestWrapperData<RequestWrapperAlternative> request) {
-		alternativeService.updateRequestWrapperAlternative(id, request.getData());
+		alternativeService.updateAlternative(id, request.getData());
 	}
 	
 	@RequestMapping(value = "/{idAlternative}/comments", method = RequestMethod.POST)
@@ -39,12 +39,12 @@ public class AlternativeController {
 		alternativeService.addComment(idAlternative, message, stringDate);
 	}
 	
+	
+	// TODO: Probably not a good idea! -> All alternatives should be Ranked in one Transaction
 	@RequestMapping(value = "/{idAlternative}/rankings", method = RequestMethod.POST)
 	public void rankAlternative(@PathVariable long idAlternative,
-			@RequestParam(value = "idRanker") long idRanker,
-			// #TODO: ranking
-			@RequestParam(value = "rank") String stringRank) {
-		alternativeService.rankAlternative(idAlternative, idRanker, stringRank);
+			@RequestParam(value = "rank") int rank) {
+		alternativeService.rankAlternative(idAlternative, rank);
 	}
 	
 

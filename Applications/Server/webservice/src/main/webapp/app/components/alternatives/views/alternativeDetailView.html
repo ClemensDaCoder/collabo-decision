@@ -23,6 +23,14 @@
 					</div>
 					
 					<div class="form-group">
+						<label for="rankings" class="control-label">Rankings</label>
+						<div id="rankings">
+							<div ng-repeat="ranking in alternativeWrapper.alternative.alternativeRankings">{{ranking.share.appUser.forename}} {{ranking.share.appUser.surname}} ranked this Alternative with {{ranking.rank + 1}}</div>
+						</div>
+						<!-- <label class="form-control" id="labelAlternativeDescription">{{alternativeWrapper.alternative.description}}</label> -->
+					</div>
+					
+					<div class="form-group">
 						Here will be the file upload.
 					</div>
 				</form>

@@ -9,9 +9,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = { "idAlternative",
-		"idRanker" }))
+		"idShare", "rank" }))
 public class AlternativeRanking {
 
 	@GeneratedValue
@@ -23,11 +25,12 @@ public class AlternativeRanking {
 
 	@ManyToOne
 	@JoinColumn(name = "idAlternative", nullable = false)
+	@JsonBackReference
 	private Alternative alternative;
 
 	@ManyToOne
-	@JoinColumn(name = "idRanker", nullable = false)
-	private Share ranker;
+	@JoinColumn(name = "idShare", nullable = false)
+	private Share share;
 
 	public int getRank() {
 		return rank;
@@ -45,12 +48,12 @@ public class AlternativeRanking {
 		this.alternative = alternative;
 	}
 
-	public Share getRanker() {
-		return ranker;
+	public Share getShare() {
+		return share;
 	}
 
-	public void setRanker(Share ranker) {
-		this.ranker = ranker;
+	public void setShare(Share share) {
+		this.share = share;
 	}
 
 	public long getIdAlternativeRanking() {
