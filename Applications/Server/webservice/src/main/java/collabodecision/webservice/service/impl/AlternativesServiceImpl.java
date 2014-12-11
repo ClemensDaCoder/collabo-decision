@@ -184,7 +184,7 @@ public class AlternativesServiceImpl implements AlternativeService
 		Alternative alternative;
 		
 
-		AppUser creator = userService
+		AppUser appUser = userService
 				.getAppUserByUsername(SecurityContextHolder.getContext()
 						.getAuthentication().getName());
 
@@ -199,8 +199,9 @@ public class AlternativesServiceImpl implements AlternativeService
 		ResponseWrapperAlternative response = new ResponseWrapperAlternative();
 		response.setAlternative(alternative);
 		
-		//TODO: set Rights
-		response.setEditable(true);
+		if (alternative.getCreator().equals(appUser)) {
+			response.setEditable(true);
+		}
 		
 
 		return response;
