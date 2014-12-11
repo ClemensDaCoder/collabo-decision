@@ -118,12 +118,23 @@ angular.module('collaboApp').controller('IssueDetailViewController', ['$scope', 
 					$scope.currentTags.push(issueTag.tag.name);
 				}
 				
+				// fill the fields for the relations				
+				for (i = 0; i < $scope.issueResponse.dependsIssuesFrom.length; i++) {
+					$scope.addDepends($scope.issueResponse.dependsIssuesFrom[i]);
+				}
+				
+				for (i = 0; i < $scope.issueResponse.resolvesIssuesFrom.length; i++) { 
+					$scope.addResolves($scope.issueResponse.resolvesIssuesFrom[i]);
+				}
+				
+				for (i = 0; i < $scope.issueResponse.relatesIssues.length; i++) { 
+					$scope.addRelates($scope.issueResponse.relatesIssuesFrom[i]);
+				}
 				
 				$scope.isEditDisabled = !($scope.issueResponse.editable);
 			});
 		}
 	};
-	
 	
 	//TODO: move to issue detail view
 	$scope.createDesignDecision = function(){
