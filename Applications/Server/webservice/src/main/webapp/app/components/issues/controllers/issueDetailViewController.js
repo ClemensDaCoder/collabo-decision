@@ -128,7 +128,7 @@ angular.module('collaboApp').controller('IssueDetailViewController', ['$scope', 
 				}
 				
 				for (i = 0; i < $scope.issueResponse.relatesIssues.length; i++) { 
-					$scope.addRelates($scope.issueResponse.relatesIssuesFrom[i]);
+					$scope.addRelates($scope.issueResponse.relatesIssues[i]);
 				}
 				
 				$scope.isEditDisabled = !($scope.issueResponse.editable);
