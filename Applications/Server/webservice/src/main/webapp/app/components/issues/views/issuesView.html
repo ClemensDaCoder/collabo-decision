@@ -27,7 +27,7 @@
 			<td>{{issueResponse.issue.issueStatus}}</td>
 			<td>{{issueResponse.issue.creator.forename}} {{issueResponse.issue.creator.surname}}</td>
 			<td>{{issueResponse.issue.owner.forename}} {{issueResponse.issue.owner.surname}}</td>
-			<td><button ng-disabled="!issueResponse.owner" class="btn btn-primary" ng-click="createDesignDecision(issueResponse.issue.idIssue)">Create Design Decision</button></td>
+			<td><button ng-show="issueResponse.showBtnCreateDesignDecision" ng-disabled="!issueResponse.owner" class="btn btn-primary" ng-click="createDesignDecision(issueResponse.issue.idIssue)">Create Design Decision</button></td>
 		</tr>
 	</table>
 </div>

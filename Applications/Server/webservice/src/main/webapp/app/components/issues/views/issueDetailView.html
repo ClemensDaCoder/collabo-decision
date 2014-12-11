@@ -8,8 +8,8 @@
 				</div>
 				<div class="col-md-4 my-col">
 					<div class="btn-group pull-right" ng-if="isEdit">
-						<button ng-disabled="!issueResponse.owner" class="btn btn-primary" ng-click="createDesignDecision()">Create Design Decision</button>
-						<button ng-disabled="!issueResponse.owner" class="btn btn-danger">Reject Issue</button>
+						<button ng-show="issueResponse.showBtnCreateDesignDecision" ng-disabled="!issueResponse.owner" class="btn btn-primary" ng-click="createDesignDecision()">Create Design Decision</button>
+						<button ng-show="issueResponse.showBtnRejectIssue" ng-disabled="!issueResponse.owner" class="btn btn-danger">Reject Issue</button>
 					</div>
 				</div>
 			</div>
@@ -68,11 +68,12 @@
 						<label for="issuesMatchingTags" class="control-label">Issues with matching tags</label>
 						<table class="table matchingTags">
 							<tr ng-repeat="issueMatchingTagsResponse in issuesMatchingTagsResponse">
-								<td style="width: 70%; min-width: 200px;"><a href="#">{{issueMatchingTagsResponse.issue.title}}</a><br/><div class="tagwrapper" ng-repeat="issueTag in issueMatchingTagsResponse.issue.issueTags">{{issueTag.tag.name}}</div></td>
-								<td><button ng-disabled="isEditDisabled" class="btn btn-warning" ng-click="addDepends(issueMatchingTagsResponse.issue)">Add depends</button></td>
-								<td><button ng-disabled="isEditDisabled" class="btn btn-success" ng-click="addResolves(issueMatchingTagsResponse.issue)">Add resolves</button></td>
-								<td><button ng-disabled="isEditDisabled" class="btn btn-primary" ng-click="addRelates(issueMatchingTagsResponse.issue)">Add relates</button></td>
+								<td ng-if="issueMatchingTagsResponse.issue.idIssue != issueResponse.issue.idIssue" style="width: 70%; min-width: 200px;"><a href="#">{{issueMatchingTagsResponse.issue.title}}</a><br/><div class="tagwrapper" ng-repeat="issueTag in issueMatchingTagsResponse.issue.issueTags">{{issueTag.tag.name}}</div></td>
+								<td ng-if="issueMatchingTagsResponse.issue.idIssue != issueResponse.issue.idIssue"><button ng-disabled="isEditDisabled" class="btn btn-warning" ng-click="addDepends(issueMatchingTagsResponse.issue)">Add depends</button></td>
+								<td ng-if="issueMatchingTagsResponse.issue.idIssue != issueResponse.issue.idIssue"><button ng-disabled="isEditDisabled" class="btn btn-success" ng-click="addResolves(issueMatchingTagsResponse.issue)">Add resolves</button></td>
+								<td ng-if="issueMatchingTagsResponse.issue.idIssue != issueResponse.issue.idIssue"><button ng-disabled="isEditDisabled" class="btn btn-primary" ng-click="addRelates(issueMatchingTagsResponse.issue)">Add relates</button></td>
 							</tr>
+							<!-- ng-if="issueMatchingTagsResponse != issueResponse.issue" -->
 						</table>
 					</div>
 				</form>
