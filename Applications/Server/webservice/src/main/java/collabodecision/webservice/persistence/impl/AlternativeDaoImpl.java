@@ -45,7 +45,9 @@ public class AlternativeDaoImpl extends BaseDao implements AlternativeDao {
 
 	@Override
 	public void deleteAlternative(long id) {
-		// TODO Auto-generated method stub
+		Criteria crit = getCurrentSession().createCriteria(Alternative.class);
+		crit.add(Restrictions.eq("idAlternative", id));
+		getCurrentSession().delete((Alternative) crit.uniqueResult());
 		
 	}
 
