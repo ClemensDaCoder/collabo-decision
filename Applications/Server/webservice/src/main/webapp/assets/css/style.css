@@ -1,5 +1,5 @@
 body {
-	background: white;
+	background: #eee;
 	min-width: 670px;
 }
 
@@ -135,4 +135,13 @@ body {
     float: none;
     display: table-cell;
     vertical-align: middle;
+}
+
+.tile {
+	margin: 5px;
+	background: white;
+	width: 100%;
+	padding: 10px;
+	border-radius: 5px;
+	border-color: #ccc;
 }

@@ -13,8 +13,12 @@ angular.module('collaboApp').config([ '$routeProvider', '$httpProvider', functio
 		templateUrl : 'app/components/designdecisions/views/designDecisionsView.html',
 		controller : 'DesignDecisionsController'
 	})
+	.when('/dashboard', {
+		templateUrl : 'app/components/dashboard/views/dashboardView.html',
+		controller : 'DashboardController'
+	})
 	.otherwise({
-		redirectTo : "/issues"
+		redirectTo : "/dashboard"
 	});
 	
 	$httpPovider.defaults.headers.common.Accept = '*/*';
