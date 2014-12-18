@@ -57,7 +57,7 @@ angular.module('collaboApp').controller('IssuesController', ['$http', '$scope', 
 	//TODO: move to issue detail view
 	$scope.createDesignDecision = function(idIssue){
 		var modalInstance = $modal.open({
-			templateUrl : 'app/components/designdecisions/views/newDesignDecision.html',
+			templateUrl : 'app/components/designdecisions/views/newDesignDecisionView.html',
 			controller : 'NewDesignDecisionController',
 			resolve: {
 				idIssue : function() {

@@ -66,7 +66,7 @@ angular.module('collaboApp').controller('DesignDecisionDetailViewController', ['
 	
 	$scope.addAlternative = function(){
 		var modalInstance = $modal.open({
-			templateUrl : 'app/components/alternatives/views/newAlternative.html',
+			templateUrl : 'app/components/alternatives/views/newAlternativeView.html',
 			controller : 'NewAlternativeController',
 			resolve: {
 				idDD : function() {
