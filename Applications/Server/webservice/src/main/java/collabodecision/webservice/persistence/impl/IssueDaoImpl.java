@@ -103,6 +103,7 @@ public class IssueDaoImpl extends BaseDao implements IssueDao {
 	public List<Issue> getIssuesByIds(Collection<Long> issueIds) {
 		Criteria crit = getCurrentSession().createCriteria(Issue.class);
 		crit.add(Restrictions.in("idIssue", issueIds));
+		crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		return crit.list();
 	}
 }
