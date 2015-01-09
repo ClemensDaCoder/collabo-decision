@@ -22,7 +22,7 @@ public class CommentServiceImpl implements CommentService {
 	@Override
 	@Transactional(readOnly = false)
 	public void addComment(long id, String message, String date) {
-		Comment comment = commentHelper.getComment(message, date);
+		Comment comment = commentHelper.createComment(message, date);
 		comment.setParentComment(commentDao.getComment(id));
 		commentDao.saveOrUpdateComment(comment);
 	}

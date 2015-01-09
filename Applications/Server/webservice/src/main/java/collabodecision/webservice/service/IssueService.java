@@ -6,7 +6,7 @@ import collabodecision.webservice.data.RequestWrapperIssue;
 import collabodecision.webservice.data.ResponseWrapperIssue;
 
 public interface IssueService extends CommentService, FileService {
-	List<ResponseWrapperIssue> getIssues(String status, List<String> tags, String partialName);
+	List<ResponseWrapperIssue> getIssues(String status, List<String> tags, String partialName, boolean owned);
 	
 	ResponseWrapperIssue getIssue(long id, boolean withRelations);
 	
@@ -15,4 +15,5 @@ public interface IssueService extends CommentService, FileService {
 	void addIssue(RequestWrapperIssue issueRequest);
 	
 	void updateIssue(long id, RequestWrapperIssue issueRequest);
+
 }

@@ -23,7 +23,7 @@ public class CommentHelperImpl implements CommentHelper {
 	
 	
 	@Override
-	public Comment getComment(String message, String stringDate) {
+	public Comment createComment(String message, String stringDate) {
 		
 		Comment comment = new Comment();
 		comment.setText(message);

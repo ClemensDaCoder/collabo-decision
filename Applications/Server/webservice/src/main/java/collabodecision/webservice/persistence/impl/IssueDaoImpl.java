@@ -10,10 +10,13 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import collabodecision.webservice.persistence.AppUserDao;
 import collabodecision.webservice.persistence.IssueDao;
+import collabodecision.webservice.persistence.domain.AppUser;
 import collabodecision.webservice.persistence.domain.Comment;
 import collabodecision.webservice.persistence.domain.Issue;
 import collabodecision.webservice.persistence.domain.Issue.IssueStatus;
@@ -21,6 +24,9 @@ import collabodecision.webservice.persistence.domain.Tag;
 
 @Repository
 public class IssueDaoImpl extends BaseDao implements IssueDao {
+	
+	@Autowired
+	private AppUserDao userDao;
 
 	@Autowired
 	public IssueDaoImpl(SessionFactory sessionFactory) {
@@ -42,7 +48,7 @@ public class IssueDaoImpl extends BaseDao implements IssueDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional(readOnly = true)
-	public List<Issue> getIssues(IssueStatus status, List<Tag> tags, String partialTitle) {
+	public List<Issue> getIssues(IssueStatus status, List<Tag> tags, String partialTitle, boolean owned) {
 		
 		Criteria crit = getCurrentSession()
 				.createCriteria(Issue.class, "issue");
@@ -61,6 +67,13 @@ public class IssueDaoImpl extends BaseDao implements IssueDao {
 		
 		if(partialTitle != null) {
 			crit.add(Restrictions.like("title", "%" + partialTitle + "%"));
+		}
+		
+		if (owned) {
+			String username = SecurityContextHolder.getContext()
+					.getAuthentication().getName();
+			AppUser user = userDao.getAppUserByUsername(username);
+			crit.add(Restrictions.eq("idOwner", user.getIdUser()));
 		}
 
 		List<Issue> issues = crit.list();

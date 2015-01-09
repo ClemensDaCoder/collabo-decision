@@ -54,7 +54,7 @@ public class AlternativesServiceImpl implements AlternativeService {
 	public void addComment(long id, String message, String date) {
 		// TODO Auto-generated method stub
 
-		Comment comment = commentHelper.getComment(message, date);
+		Comment comment = commentHelper.createComment(message, date);
 
 		comment.setAlternative(alternativeDao.getAlternative(id));
 		commentDao.saveOrUpdateComment(comment);
