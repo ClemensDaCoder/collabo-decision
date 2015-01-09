@@ -1,7 +1,11 @@
 <div class="container-fluid" style="margin-top: 10px;">
 	<div class="row">
 		<div class="col-md-6">
-			<div class="tile"><h4>Owning Issues</h4></div>
+			<div class="tile"><h4>Owning Issues <button class="btn btn-default" ng-click="getOwningIssues()"><span class="glyphicon glyphicon-refresh"></span></button></h4>
+				<div ng-repeat="issue in issues">
+					{{issues.issue.title}}
+				</div>
+			</div>
 		</div>
 		<div class="col-md-6">
 			<div class="tile"><h4>Rank your DDs</h4></div>
