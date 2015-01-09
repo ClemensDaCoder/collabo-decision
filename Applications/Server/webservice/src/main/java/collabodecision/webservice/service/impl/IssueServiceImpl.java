@@ -50,7 +50,7 @@ public class IssueServiceImpl implements IssueService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<ResponseWrapperIssue> getIssues(String status,
-			List<String> tags, String partialTitle) {
+			List<String> tags, String partialTitle, boolean owned) {
 		IssueStatus issueStatus = status != null ? IssueStatus.valueOf(status) : null;
 
 		List<Tag> tagsOfIssue = null;
@@ -69,7 +69,7 @@ public class IssueServiceImpl implements IssueService {
 		List<ResponseWrapperIssue> result = new ArrayList<>();
 
 		for (Issue issue : issueDao.getIssues(issueStatus, tagsOfIssue,
-				partialTitle)) {
+				partialTitle, owned)) {
 
 			ResponseWrapperIssue rwi = new ResponseWrapperIssue();
 			rwi.setIssue(issue);
@@ -142,7 +142,7 @@ public class IssueServiceImpl implements IssueService {
 		return rwi;
 
 	}
-
+	
 	@Override
 	@Transactional(readOnly = false)
 	public void deleteIssue(long id) {
@@ -164,8 +164,13 @@ public class IssueServiceImpl implements IssueService {
 	@Override
 	@Transactional(readOnly = false)
 	public void addComment(long id, String message, String date) {
-		Comment comment = commentHelper.getComment(message, date);
-		comment.setIssue(issueDao.getIssue(id));
+		Comment comment = commentHelper.createComment(message, date);
+		Issue issue = issueDao.getIssueWithRelations(id);
+		if (issue.getComments().isEmpty()) {
+			comment.setIssue(issue);
+		} else {
+			issue.getComments().add(comment);
+		}
 		commentDao.saveOrUpdateComment(comment);
 	}
 
@@ -339,4 +344,8 @@ public class IssueServiceImpl implements IssueService {
 		
 
 	}
+
+
+
+
 }

@@ -39,6 +39,7 @@ public class Alternative {
 	
 	@OneToMany(mappedBy="alternative")
 	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
+	@JsonManagedReference
 	private Set<Comment> comments;
 	
 	@OneToMany(mappedBy="alternative")

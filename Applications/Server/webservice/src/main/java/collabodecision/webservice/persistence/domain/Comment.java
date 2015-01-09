@@ -10,12 +10,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table
 public class Comment {
 
 	@GeneratedValue
 	@Id
+	@JsonManagedReference
 	private long idComment;
 	
 	@Column(nullable=false)
@@ -26,18 +30,22 @@ public class Comment {
 	
 	@ManyToOne
 	@JoinColumn(name="idParentComment")
+	@JsonBackReference
 	private Comment parentComment;
 	
 	@ManyToOne
 	@JoinColumn(name="idIssue")
+	@JsonBackReference
 	private Issue issue;
 	
 	@ManyToOne
 	@JoinColumn(name="idDesignDecision")
+	@JsonBackReference
 	private DesignDecision designDecision;
 	
 	@ManyToOne
 	@JoinColumn(name="idAlternative")
+	@JsonBackReference
 	private Alternative alternative;
 	
 	@ManyToOne

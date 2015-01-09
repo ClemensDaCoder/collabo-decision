@@ -55,6 +55,7 @@ public class DesignDecision {
 
 	@OneToMany(mappedBy = "designDecision")
 	@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
+	@JsonManagedReference
 	private Set<Comment> comments;
 
 	@OneToMany(mappedBy = "designDecision")
