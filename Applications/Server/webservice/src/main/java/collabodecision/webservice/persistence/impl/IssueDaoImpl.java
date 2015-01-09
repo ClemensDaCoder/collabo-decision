@@ -73,7 +73,7 @@ public class IssueDaoImpl extends BaseDao implements IssueDao {
 			String username = SecurityContextHolder.getContext()
 					.getAuthentication().getName();
 			AppUser user = userDao.getAppUserByUsername(username);
-			crit.add(Restrictions.eq("idOwner", user.getIdUser()));
+			crit.add(Restrictions.eq("owner", user));
 		}
 
 		List<Issue> issues = crit.list();
