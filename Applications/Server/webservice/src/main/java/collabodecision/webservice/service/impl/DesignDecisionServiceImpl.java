@@ -2,6 +2,7 @@ package collabodecision.webservice.service.impl;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -13,9 +14,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import collabodecision.webservice.data.RequestWrapperDesignDecision;
+import collabodecision.webservice.data.RequestWrapperRankAlternatives;
 import collabodecision.webservice.data.ResponseWrapperDesignDecision;
 import collabodecision.webservice.persistence.CommentDao;
 import collabodecision.webservice.persistence.DesignDecisionDao;
+import collabodecision.webservice.persistence.domain.Alternative;
+import collabodecision.webservice.persistence.domain.AlternativeRanking;
 import collabodecision.webservice.persistence.domain.AppUser;
 import collabodecision.webservice.persistence.domain.Comment;
 import collabodecision.webservice.persistence.domain.DesignDecision;
@@ -23,6 +27,7 @@ import collabodecision.webservice.persistence.domain.DesignDecision.DesignDecisi
 import collabodecision.webservice.persistence.domain.File;
 import collabodecision.webservice.persistence.domain.Issue.IssueStatus;
 import collabodecision.webservice.persistence.domain.Share;
+import collabodecision.webservice.service.AlternativeService;
 import collabodecision.webservice.service.AppUserService;
 import collabodecision.webservice.service.DesignDecisionService;
 import collabodecision.webservice.service.IssueService;
@@ -36,7 +41,11 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 
 	@Autowired
 	private DesignDecisionDao designDecisionDao;
+	
 
+	@Autowired 
+	AlternativeService alternativeService;
+	
 	@Autowired
 	private CommentHelper commentHelper;
 
@@ -272,5 +281,17 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 		}
 		return response;
 
+	}
+
+	@Override
+	public void rankDesignDecision(long idDesignDecision,
+			RequestWrapperRankAlternatives requestWrapperRankAlternatives) {
+		
+		HashMap<Long, Integer> map = requestWrapperRankAlternatives.getMap();
+		for(long id : map.keySet())
+		{
+			alternativeService.rankAlternative(id, map.get(id));
+		}
+		
 	}
 }

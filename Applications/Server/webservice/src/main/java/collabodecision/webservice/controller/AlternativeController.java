@@ -40,12 +40,13 @@ public class AlternativeController {
 	}
 	
 	
-	// TODO: Probably not a good idea! -> All alternatives should be Ranked in one Transaction
+	/*// TODO: Probably not a good idea! -> All alternatives should be Ranked in one Transaction
 	@RequestMapping(value = "/{idAlternative}/rankings", method = RequestMethod.POST)
 	public void rankAlternative(@PathVariable long idAlternative,
 			@RequestParam(value = "rank") int rank) {
 		alternativeService.rankAlternative(idAlternative, rank);
 	}
+	*/
 	
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)

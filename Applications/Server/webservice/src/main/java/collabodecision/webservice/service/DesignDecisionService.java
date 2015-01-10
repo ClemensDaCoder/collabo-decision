@@ -3,6 +3,7 @@ package collabodecision.webservice.service;
 import java.util.List;
 
 import collabodecision.webservice.data.RequestWrapperDesignDecision;
+import collabodecision.webservice.data.RequestWrapperRankAlternatives;
 import collabodecision.webservice.data.ResponseWrapperDesignDecision;
 
 public interface DesignDecisionService extends CommentService, FileService {
@@ -17,4 +18,7 @@ public interface DesignDecisionService extends CommentService, FileService {
 	ResponseWrapperDesignDecision getDesignDecision(long id, boolean withRelations);
 	
 	void addDesignDecision(RequestWrapperDesignDecision designDecisionRequest);
+	
+	void rankDesignDecision(long id, RequestWrapperRankAlternatives requestWrapperRankAlternatives);
+	
 }
