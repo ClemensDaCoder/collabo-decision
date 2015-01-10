@@ -29,7 +29,7 @@ angular.module('collaboApp').controller('IssuesController', ['$http', '$scope', 
 		});
 		
 		modalInstance.result.then(function() {
-			$scope.getIssues(null)
+			$scope.getIssues(null);
 		}, function() {
 			$scope.getIssues(null);
 		});
@@ -48,9 +48,9 @@ angular.module('collaboApp').controller('IssuesController', ['$http', '$scope', 
 		});
 		
 		modalInstance.result.then(function() {
-			$scope.getIssues('NEW')
-		}, function() {
 			$scope.getIssues('NEW');
+		}, function() {
+			$scope.getIssues(null);
 		});
 	}
 	
@@ -64,6 +64,11 @@ angular.module('collaboApp').controller('IssuesController', ['$http', '$scope', 
 					return idIssue;
 				}
 			}
+		});
+		modalInstance.result.then(function() {
+			$scope.getIssues(null);
+		}, function() {
+			$scope.getIssues(null);
 		});
 	};
 	
