@@ -31,6 +31,7 @@ public class CommentServiceImpl implements CommentService {
 
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Comment> getChildComments(long idComment) {
 		return commentDao.getChildComments(idComment);
 	}

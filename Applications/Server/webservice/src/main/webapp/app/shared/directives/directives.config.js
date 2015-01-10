@@ -27,4 +27,26 @@ angular.module('collaboApp').directive('tageditor', function() {
 			isDisabled : "=ngDisabled"
 		}
 	}
+}).directive('replycomment', function($compile) {
+	return {
+		restrict: 'E',
+		transclude: true,
+		templateUrl : 'app/shared/directives/replycomment/views/replycommentView.html',
+		scope : { 
+			parentcomment : "="
+		},
+		compile: function(tElement, tAttr, transclude) {
+            var contents = tElement.contents().remove();
+            var compiledContents;
+            return function(scope, iElement, iAttr) {
+                if(!compiledContents) {
+                    compiledContents = $compile(contents, transclude);
+                }
+                compiledContents(scope, function(clone, scope) {
+                         iElement.append(clone); 
+                });
+            };
+        }
+		
+	}
 });

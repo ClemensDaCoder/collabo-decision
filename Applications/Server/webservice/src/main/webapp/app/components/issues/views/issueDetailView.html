@@ -80,7 +80,26 @@
 			</div>
 		</div>
 	</div>
-	
+	<div class="container-fluid" ng-hide="!isEdit">
+		<h4>Comments</h4>
+		<div class=row">
+			<button class="btn btn-primary" type="button" ng-click="toggleInputComment()" ng-hide="!hideInputComment">Add comment</button>
+			<div class="form-group" ng-hide="hideInputComment">
+				<input type="text" class="form-control" id="inputComment" ng-model="newComment" placeholder="Comment...">
+				<button class="btn btn-success" type="button" ng-click="addIssueComment()">Save Comment</button>
+				<button class="btn btn-danger" type="button" ng-click="toggleInputComment()">Cancel</button>
+			</div>
+		</div>
+		<div class=row>
+			<ul class="list-group">
+				<li class="list-group-item" ng-repeat="comment in issueResponse.issue.comments">
+					[{{comment.idComment}}]: {{comment.creator.forename}} {{comment.creator.surname}} said <br> {{comment.text}}
+					<a href="#" ng-click="">Reply</a>
+					<replycomment parentcomment="comment.idComment"> </replycomment>
+				</li>
+			</ul>
+		</div>
+	</div>
 	<div class="modal-footer">
 		<button ng-disabled="isEditDisabled" class="btn btn-success" ng-click="save()">Save</button>
 		<button class="btn btn-warning" ng-click="cancel()">Cancel</button>

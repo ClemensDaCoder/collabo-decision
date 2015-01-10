@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import collabodecision.webservice.persistence.CommentDao;
 import collabodecision.webservice.persistence.domain.Comment;
+import collabodecision.webservice.persistence.domain.DesignDecision;
 
 @Repository
 public class CommentDaoImpl extends BaseDao implements CommentDao {
@@ -60,9 +61,12 @@ public class CommentDaoImpl extends BaseDao implements CommentDao {
 	
 	@Override
 	public List<Comment> getChildComments(long commentId) {
-		Criteria crit = getCurrentSession().createCriteria(Comment.class);
+		Criteria crit = getCurrentSession().createCriteria(Comment.class, "comment");
+		
 		crit.add(Restrictions.eq("parentComment", getComment(commentId)));
-		return crit.list();
+
+		List<Comment> childcomments = crit.list();
+		return childcomments;
 		
 	}
 

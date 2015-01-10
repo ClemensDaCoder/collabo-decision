@@ -154,6 +154,24 @@ angular.module('collaboApp').controller('IssueDetailViewController', ['$scope', 
 		$scope.initialize();
 	}
 	
+	$scope.addIssueComment = function(){
+		var uri = "/rest/issues/" + id + "/comments?message=" + $scope.newComment + "&date=2015-01-01 11:11:11";
+		
+		$http.post(uri, null).success(function() {
+			$scope.toggleInputComment();
+			$scope.initialize();
+		}).error(function() {
+			alert("fehler");
+		});
+	};
+	
+	$scope.hideInputComment = true;
+	
+	$scope.toggleInputComment = function(){
+		$scope.newComment="";
+		$scope.hideInputComment = !$scope.hideInputComment;
+	};
+	
 }]);
 
 function getIdsFromIssueArray(array) {
