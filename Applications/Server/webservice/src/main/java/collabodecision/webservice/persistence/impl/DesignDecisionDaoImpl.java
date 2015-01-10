@@ -85,6 +85,15 @@ public class DesignDecisionDaoImpl extends BaseDao implements DesignDecisionDao 
 			crit.add(Restrictions.eq("share.appUser", user));
 		
 		}
+		
+		if(toRank)
+		{
+			crit.add(Restrictions.eq("designDecisionStatus", DesignDecisionStatus.RANK_ALTERNATIVES));
+		}
+		if(toRate)
+		{
+			crit.add(Restrictions.eq("designDecisionStatus", DesignDecisionStatus.DECIDED));
+		}
 		List<DesignDecision> designDecisions = crit.list();
 		return designDecisions;
 	}
