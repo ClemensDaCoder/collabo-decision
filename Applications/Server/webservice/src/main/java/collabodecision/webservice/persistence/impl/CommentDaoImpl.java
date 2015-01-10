@@ -57,5 +57,14 @@ public class CommentDaoImpl extends BaseDao implements CommentDao {
 		Hibernate.initialize(comment.getParentComment());
 		return comment;
 	}
+	
+	@Override
+	public List<Comment> getChildComments(long commentId) {
+		Criteria crit = getCurrentSession().createCriteria(Comment.class);
+		crit.add(Restrictions.eq("parentComment", getComment(commentId)));
+		return crit.list();
+		
+	}
+
 
 }

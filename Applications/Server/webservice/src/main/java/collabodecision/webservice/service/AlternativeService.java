@@ -4,7 +4,7 @@ import collabodecision.webservice.persistence.domain.Alternative;
 import collabodecision.webservice.data.RequestWrapperAlternative;
 import collabodecision.webservice.data.ResponseWrapperAlternative;
 
-public interface AlternativeService extends CommentService, FileService{
+public interface AlternativeService extends CommentService, FileService {
 		
 	
 	void deleteAlternative(long id);

@@ -136,8 +136,11 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 	@Transactional(readOnly = false)
 	public void addComment(long id, String message, String date) {
 		Comment comment = commentHelper.createComment(message, date);
-		comment.setDesignDecision(designDecisionDao.getDesignDecision(id));
+		DesignDecision designDecision = designDecisionDao.getDesignDecisionWithRelations(id);
+		comment.setDesignDecision(designDecision);
+		designDecision.getComments().add(comment);
 		commentDao.saveOrUpdateComment(comment);
+		designDecisionDao.saveOrUpdateDesignDecision(designDecision);
 	}
 
 	@Override
@@ -151,6 +154,10 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 			RequestWrapperDesignDecision DesignDecisionrequest) {
 		// TODO Auto-generated method stub
 		addOrUpdateDesignDecision(DesignDecisionrequest, null);
+	}
+	@Override
+	public List<Comment> getChildComments(long idComment) {
+		return commentDao.getChildComments(idComment);
 	}
 
 	private void addOrUpdateDesignDecision(
@@ -283,6 +290,7 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 
 	}
 
+
 	@Override
 	public void rankDesignDecision(long idDesignDecision,
 			RequestWrapperRankAlternatives requestWrapperRankAlternatives) {
@@ -292,6 +300,5 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 		{
 			alternativeService.rankAlternative(id, map.get(id));
 		}
-		
 	}
 }
