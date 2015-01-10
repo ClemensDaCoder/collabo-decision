@@ -81,8 +81,9 @@ public class DesignDecisionDaoImpl extends BaseDao implements DesignDecisionDao 
 					.getAuthentication().getName();
 			AppUser user = userDao.getAppUserByUsername(username);
 			
-				
-			crit.add(Restrictions.eq("shareholder", user));
+			crit.createAlias("designDecision.shares", "share");
+			crit.add(Restrictions.eq("share.appUser", user));
+		
 		}
 		List<DesignDecision> designDecisions = crit.list();
 		return designDecisions;
