@@ -70,4 +70,11 @@ public class DesignDecisionController {
 			@RequestParam(value = "date") String stringDate) {
 		designDecisionService.addComment(idDesignDecision, message, stringDate);
 	}
+	
+	@RequestMapping(value = "/rank}", method = RequestMethod.POST)
+	
+	public void rankAlternatives() 
+	{
+		
+	}
 }
