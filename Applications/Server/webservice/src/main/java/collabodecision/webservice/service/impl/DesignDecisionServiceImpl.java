@@ -50,16 +50,17 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 	private SessionFactory sessionFactory;
 
 	@Override
-	public List<ResponseWrapperDesignDecision> getDesignDecisions(String status) {
+	public List<ResponseWrapperDesignDecision> getDesignDecisions(String status, boolean isShareholder, boolean toRank, boolean toRate) {
 		DesignDecisionStatus decisionstatus = status != null ? DesignDecisionStatus
 				.valueOf(status) : null;
 
 		List<ResponseWrapperDesignDecision> responses = new ArrayList<>();
 		for (DesignDecision decision : designDecisionDao
-				.getDesignDecisions(decisionstatus)) {
+				.getDesignDecisions(decisionstatus, isShareholder, toRank, toRate)) {
 			responses.add(wrapDesignDecision(decision));
 		}
 		return responses;
+		
 	}
 
 	@Override

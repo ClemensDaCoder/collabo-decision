@@ -13,7 +13,7 @@ public interface DesignDecisionDao {
 	
 	List<DesignDecision> getDesignDecisions();
 	
-	List<DesignDecision> getDesignDecisions(DesignDecisionStatus status);
+	List<DesignDecision> getDesignDecisions(DesignDecisionStatus status, boolean isShareholer, boolean toRank, boolean toRate);
 	
 	DesignDecision getDesignDecision(long id);
 	

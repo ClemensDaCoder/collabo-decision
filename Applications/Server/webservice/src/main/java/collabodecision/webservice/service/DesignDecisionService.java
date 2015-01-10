@@ -8,7 +8,7 @@ import collabodecision.webservice.data.ResponseWrapperDesignDecision;
 public interface DesignDecisionService extends CommentService, FileService {
 	List<ResponseWrapperDesignDecision> getDesignDecisions();
 	
-	List<ResponseWrapperDesignDecision> getDesignDecisions(String status);
+	List<ResponseWrapperDesignDecision> getDesignDecisions(String status,boolean isShareholder, boolean toRank, boolean toRate);
 	
 	void updateDesignDecision(long id, RequestWrapperDesignDecision designDecisionRequest);
 	

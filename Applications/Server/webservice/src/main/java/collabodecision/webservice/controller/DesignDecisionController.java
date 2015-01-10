@@ -28,8 +28,14 @@ public class DesignDecisionController {
 	private DesignDecisionService designDecisionService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public List<ResponseWrapperDesignDecision> getDesignDecisions(@RequestParam(value = "status", required = false) String status) {
-		return designDecisionService.getDesignDecisions(status);
+	public List<ResponseWrapperDesignDecision> getDesignDecisions(
+			
+			@RequestParam(value = "status", required = false) String status,
+			@RequestParam(value = "isShareholder", required=false) boolean isShareholder,
+			@RequestParam(value = "torate", required=false) boolean toRate,
+			@RequestParam(value = "torank", required=false) boolean toRank)
+			 {
+		return designDecisionService.getDesignDecisions(status, isShareholder, toRank, toRate);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
