@@ -109,6 +109,11 @@ public class AlternativesServiceImpl implements AlternativeService {
 		addorUpdateAlternative(alternativeRequest, null);
 
 	}
+	
+	@Override
+	public List<Comment> getChildComments(long idComment) {
+		return commentDao.getChildComments(idComment);
+	}
 
 	private void addorUpdateAlternative(
 			RequestWrapperAlternative alternativeRequest,
@@ -209,5 +214,6 @@ public class AlternativesServiceImpl implements AlternativeService {
 		addorUpdateAlternative(alternative, existingid);
 
 	}
+
 
 }

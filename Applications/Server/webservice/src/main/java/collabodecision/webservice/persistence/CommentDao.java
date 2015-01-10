@@ -16,4 +16,6 @@ public interface CommentDao {
 	
 	Comment getCommentWithRelations(long id);
 
+	List<Comment> getChildComments(long idComment);
+
 }

@@ -146,6 +146,10 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 		// TODO Auto-generated method stub
 		addOrUpdateDesignDecision(DesignDecisionrequest, null);
 	}
+	@Override
+	public List<Comment> getChildComments(long idComment) {
+		return commentDao.getChildComments(idComment);
+	}
 
 	private void addOrUpdateDesignDecision(
 			RequestWrapperDesignDecision decisionRequest,
@@ -276,4 +280,5 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 		return response;
 
 	}
+
 }

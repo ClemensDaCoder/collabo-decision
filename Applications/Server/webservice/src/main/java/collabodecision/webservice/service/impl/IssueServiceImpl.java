@@ -345,5 +345,12 @@ public class IssueServiceImpl implements IssueService {
 
 
 
+	@Override
+	public List<Comment> getChildComments(long idComment) {
+		return commentDao.getChildComments(idComment);
+	}
+
+
+
 
 }

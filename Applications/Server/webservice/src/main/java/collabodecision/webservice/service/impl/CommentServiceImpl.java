@@ -1,5 +1,7 @@
 package collabodecision.webservice.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +27,12 @@ public class CommentServiceImpl implements CommentService {
 		Comment comment = commentHelper.createComment(message, date);
 		comment.setParentComment(commentDao.getComment(id));
 		commentDao.saveOrUpdateComment(comment);
+	}
+
+
+	@Override
+	public List<Comment> getChildComments(long idComment) {
+		return commentDao.getChildComments(idComment);
 	}
 
 }
