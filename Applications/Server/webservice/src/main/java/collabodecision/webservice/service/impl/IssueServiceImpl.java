@@ -166,12 +166,10 @@ public class IssueServiceImpl implements IssueService {
 	public void addComment(long id, String message, String date) {
 		Comment comment = commentHelper.createComment(message, date);
 		Issue issue = issueDao.getIssueWithRelations(id);
-		if (issue.getComments().isEmpty()) {
-			comment.setIssue(issue);
-		} else {
-			issue.getComments().add(comment);
-		}
+		comment.setIssue(issue);
+		issue.getComments().add(comment);
 		commentDao.saveOrUpdateComment(comment);
+		issueDao.saveOrUpdateIssue(issue);
 	}
 
 	@Override

@@ -127,8 +127,11 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 	@Transactional(readOnly = false)
 	public void addComment(long id, String message, String date) {
 		Comment comment = commentHelper.createComment(message, date);
-		comment.setDesignDecision(designDecisionDao.getDesignDecision(id));
+		DesignDecision designDecision = designDecisionDao.getDesignDecisionWithRelations(id);
+		comment.setDesignDecision(designDecision);
+		designDecision.getComments().add(comment);
 		commentDao.saveOrUpdateComment(comment);
+		designDecisionDao.saveOrUpdateDesignDecision(designDecision);
 	}
 
 	@Override

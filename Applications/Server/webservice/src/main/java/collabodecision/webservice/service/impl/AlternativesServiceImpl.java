@@ -52,13 +52,12 @@ public class AlternativesServiceImpl implements AlternativeService {
 	@Override
 	@Transactional(readOnly = false)
 	public void addComment(long id, String message, String date) {
-		// TODO Auto-generated method stub
-
 		Comment comment = commentHelper.createComment(message, date);
-
-		comment.setAlternative(alternativeDao.getAlternative(id));
+		Alternative alternative = alternativeDao.getAlternativeWithRelations(id);
+		comment.setAlternative(alternative);
+		alternative.getComments().add(comment);
 		commentDao.saveOrUpdateComment(comment);
-
+		alternativeDao.saveOrUpdateAlternative(alternative);
 	}
 
 	@Override
