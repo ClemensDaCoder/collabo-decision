@@ -1,4 +1,4 @@
-angular.module('collaboApp').controller('DesignDecisionDetailViewController', ['$scope', '$modalInstance', '$http', '$modal', 'id', function($scope, $modalInstance, $http, $modal, id) {
+angular.module('collaboApp').controller('DesignDecisionDetailViewController', ['$scope', '$modalInstance', '$http', '$modal', 'id', 'DateService', function($scope, $modalInstance, $http, $modal, id, DateService) {
 	
 	$scope.idDesignDecision = id;
 	
@@ -153,7 +153,7 @@ angular.module('collaboApp').controller('DesignDecisionDetailViewController', ['
 	$scope.initialize();
 	
 	$scope.addDesignDecisionComment = function(){
-		var uri = "/rest/designdecisions/" + id + "/comments?message=" + $scope.newComment + "&date=2015-01-01 11:11:11";
+		var uri = "/rest/designdecisions/" + id + "/comments?message=" + $scope.newComment + "&date=" + DateService.date;
 		
 		$http.post(uri, null).success(function() {
 			$scope.toggleInputComment();

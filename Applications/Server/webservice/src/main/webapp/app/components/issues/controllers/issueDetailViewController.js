@@ -1,4 +1,4 @@
-angular.module('collaboApp').controller('IssueDetailViewController', ['$scope', '$modalInstance', '$http', '$modal', 'id', function($scope, $modalInstance, $http, $modal, id) {
+angular.module('collaboApp').controller('IssueDetailViewController', ['$scope', '$modalInstance', '$http', '$modal', 'id', 'DateService', function($scope, $modalInstance, $http, $modal, id, DateService) {
 	
 	// When id is set -> it means that the Issue is going to be edited
 	$scope.isEdit = id != null;
@@ -155,7 +155,7 @@ angular.module('collaboApp').controller('IssueDetailViewController', ['$scope', 
 	}
 	
 	$scope.addIssueComment = function(){
-		var uri = "/rest/issues/" + id + "/comments?message=" + $scope.newComment + "&date=2015-01-01 11:11:11";
+		var uri = "/rest/issues/" + id + "/comments?message=" + $scope.newComment + "&date=" + DateService.date;
 		
 		$http.post(uri, null).success(function() {
 			$scope.toggleInputComment();

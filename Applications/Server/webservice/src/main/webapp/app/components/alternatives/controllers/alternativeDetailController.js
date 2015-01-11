@@ -1,4 +1,4 @@
-angular.module('collaboApp').controller('AlternativeDetailController', ['$scope', '$modalInstance', '$http', 'idAlternative', function($scope, $modalInstance, $http, idAlternative) {
+angular.module('collaboApp').controller('AlternativeDetailController', ['$scope', '$modalInstance', '$http', 'idAlternative', 'DateService', function($scope, $modalInstance, $http, idAlternative, DateService) {
 	
 	$scope.cancel = function() {
 		$modalInstance.dismiss('cancel');
@@ -22,7 +22,7 @@ angular.module('collaboApp').controller('AlternativeDetailController', ['$scope'
 	$scope.initialize();
 	
 	$scope.addAlternativeComment = function(){
-		var uri = "/rest/issues/" + idAlternative + "/comments?message=" + $scope.newComment + "&date=2015-01-01 11:11:11";
+		var uri = "/rest/alternatives/" + idAlternative + "/comments?message=" + $scope.newComment + "&date=" + DateService.date;
 		
 		$http.post(uri, null).success(function() {
 			$scope.toggleInputComment();

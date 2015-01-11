@@ -1,5 +1,5 @@
 angular.module('collaboApp')
-.controller('ReplyInputController', ['$scope', '$http', function($scope, $http) {
+.controller('ReplyInputController', ['$scope', '$http', 'DateService', function($scope, $http, DateService) {
 	$scope.hideInputReply = true;
 	
 	$scope.toggleInputReply = function(){
@@ -8,7 +8,7 @@ angular.module('collaboApp')
 	};
 	
 	$scope.addReplyComment = function(){
-		var uri = "/rest/comments/" + $scope.parentcomment + "?message=" + $scope.newReply + "&date=2015-01-01 11:11:11";
+		var uri = "/rest/comments/" + $scope.parentcomment + "?message=" + $scope.newReply + "&date=" + DateService.date;
 		
 		$http.post(uri, null).success(function() {
 			$scope.toggleInputReply();
