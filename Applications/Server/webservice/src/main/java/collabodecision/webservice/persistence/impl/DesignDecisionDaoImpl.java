@@ -1,6 +1,7 @@
 package collabodecision.webservice.persistence.impl;
 
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import collabodecision.webservice.persistence.AppUserDao;
 import collabodecision.webservice.persistence.DesignDecisionDao;
 import collabodecision.webservice.persistence.domain.AppUser;
+import collabodecision.webservice.persistence.domain.Comment;
 import collabodecision.webservice.persistence.domain.DesignDecision;
 import collabodecision.webservice.persistence.domain.Share;
 import collabodecision.webservice.persistence.domain.DesignDecision.DesignDecisionStatus;
@@ -60,7 +62,7 @@ public class DesignDecisionDaoImpl extends BaseDao implements DesignDecisionDao 
 		DesignDecision designDecision = getDesignDecision(id);
 		//Hibernate.initialize(designDecision.getIssue());
 		Hibernate.initialize(designDecision.getAlternatives());
-		//Hibernate.initialize(designDecision.getComments());
+		Hibernate.initialize(designDecision.getComments());
 		return designDecision;
 	}
 
@@ -96,6 +98,14 @@ public class DesignDecisionDaoImpl extends BaseDao implements DesignDecisionDao 
 		}
 		List<DesignDecision> designDecisions = crit.list();
 		return designDecisions;
+	}
+
+	@Override
+	public void addComments(long id, Set<Comment> comments) {
+		// TODO Auto-generated method stub
+		DesignDecision decision = getDesignDecision(id);
+		decision.setComments(comments);
+		getCurrentSession().saveOrUpdate(decision);
 	}
 
 }

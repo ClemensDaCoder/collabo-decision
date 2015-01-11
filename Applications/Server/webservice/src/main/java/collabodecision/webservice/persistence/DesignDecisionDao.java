@@ -1,7 +1,9 @@
 package collabodecision.webservice.persistence;
 
 import java.util.List;
+import java.util.Set;
 
+import collabodecision.webservice.persistence.domain.Comment;
 import collabodecision.webservice.persistence.domain.DesignDecision;
 import collabodecision.webservice.persistence.domain.DesignDecision.DesignDecisionStatus;
 
@@ -19,4 +21,5 @@ public interface DesignDecisionDao {
 	
 	DesignDecision getDesignDecisionWithRelations(long id);
 	
+	void addComments(long id, Set<Comment> comments);
 }
