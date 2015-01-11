@@ -65,7 +65,7 @@ public class DesignDecisionController {
 		designDecisionService.deleteDesignDecision(id);
 	}
 
-	@RequestMapping(value = "/{idDesignDecision}", method = RequestMethod.POST)
+	@RequestMapping(value = "/{idDesignDecision}/comments", method = RequestMethod.POST)
 	public void addComment(@PathVariable long idDesignDecision,
 			@RequestParam(value = "message") String message,
 			@RequestParam(value = "date") String stringDate) {

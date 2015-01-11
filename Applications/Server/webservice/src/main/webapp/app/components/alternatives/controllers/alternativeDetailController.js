@@ -21,4 +21,27 @@ angular.module('collaboApp').controller('AlternativeDetailController', ['$scope'
 	
 	$scope.initialize();
 	
+	$scope.addAlternativeComment = function(){
+		var uri = "/rest/issues/" + idAlternative + "/comments?message=" + $scope.newComment + "&date=2015-01-01 11:11:11";
+		
+		$http.post(uri, null).success(function() {
+			$scope.toggleInputComment();
+			$scope.initialize();
+		}).error(function() {
+			alert("fehler");
+		});
+	};
+	
+	$scope.hideInputComment = true;
+	
+	$scope.toggleInputComment = function(){
+		$scope.newComment="";
+		$scope.hideInputComment = !$scope.hideInputComment;
+	};
+	
+	// handles event if a new reply is added
+	$scope.$on("addedReply", function(event, args){
+		$scope.initialize();
+	});
+	
 }]);

@@ -1,0 +1,8 @@
+<div ng-controller="ReplyInputController">
+	<a href="#" ng-click="toggleInputReply()" ng-hide="!hideInputReply">Reply</a>
+	<div class="form-group" ng-hide="hideInputReply">
+		<input type="text" class="form-control" id="inputReply" ng-model="newReply" placeholder="Reply...">
+		<button class="btn btn-success" type="button" ng-click="addReplyComment()">Save Comment</button>
+		<button class="btn btn-danger" type="button" ng-click="toggleInputReply()">Cancel</button>
+	</div>
+</div>

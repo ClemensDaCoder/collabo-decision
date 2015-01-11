@@ -91,13 +91,7 @@
 			</div>
 		</div>
 		<div class=row>
-			<ul class="list-group">
-				<li class="list-group-item" ng-repeat="comment in issueResponse.issue.comments">
-					[{{comment.idComment}}]: {{comment.creator.forename}} {{comment.creator.surname}} said <br> {{comment.text}}
-					<a href="#" ng-click="">Reply</a>
-					<replycomment parentcomment="comment.idComment"> </replycomment>
-				</li>
-			</ul>
+			<comments commentlist="issueResponse.issue.comments"></comments>
 		</div>
 	</div>
 	<div class="modal-footer">

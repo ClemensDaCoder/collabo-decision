@@ -3,7 +3,7 @@
 		<ul class="list-group">
 			<li class="list-group-item" ng-repeat="comment in comments">
 				[{{comment.idComment}}]: {{comment.creator.forename}} {{comment.creator.surname}} replied to [{{parentcomment}}] <br> {{comment.text}}
-				<a href="#" ng-click="">Reply</a>
+				<replyinput parentcomment="comment.idComment"></replyinput>
 				<replycomment parentcomment="comment.idComment"> </replycomment>
 			</li>
 		</ul>

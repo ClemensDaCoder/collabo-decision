@@ -172,6 +172,11 @@ angular.module('collaboApp').controller('IssueDetailViewController', ['$scope', 
 		$scope.hideInputComment = !$scope.hideInputComment;
 	};
 	
+	// handles event if a new reply is added
+	$scope.$on("addedReply", function(event, args){
+		$scope.initialize();
+	});
+	
 }]);
 
 function getIdsFromIssueArray(array) {

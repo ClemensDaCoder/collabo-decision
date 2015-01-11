@@ -49,4 +49,20 @@ angular.module('collaboApp').directive('tageditor', function() {
         }
 		
 	}
+}).directive('comments', function() {
+	return {
+		restrict: 'E',
+		templateUrl : 'app/shared/directives/comments/views/commentsView.html',
+		scope : { 
+			commentlist : "=",
+		}
+	}
+}).directive('replyinput', function() {
+	return {
+		restrict: 'E',
+		templateUrl : 'app/shared/directives/replycomment/views/replyinputView.html',
+		scope : { 
+			parentcomment : "=",
+		}
+	}
 });

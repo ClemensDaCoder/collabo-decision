@@ -97,6 +97,20 @@
 				</div>
 			</div>
 		</div>
+		<div class="container-fluid">
+		<h4>Comments</h4>
+			<div class=row">
+				<button class="btn btn-primary" type="button" ng-click="toggleInputComment()" ng-hide="!hideInputComment">Add comment</button>
+				<div class="form-group" ng-hide="hideInputComment">
+					<input type="text" class="form-control" id="inputComment" ng-model="newComment" placeholder="Comment...">
+					<button class="btn btn-success" type="button" ng-click="addDesignDecisionComment()">Save Comment</button>
+					<button class="btn btn-danger" type="button" ng-click="toggleInputComment()">Cancel</button>
+				</div>
+			</div>
+			<div class=row>
+				<comments commentlist="designDecisionWrapper.designDecision.comments"></comments>
+			</div>
+		</div>
 		<div class="modal-footer">
 			<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
 		</div>

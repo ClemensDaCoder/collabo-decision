@@ -1,0 +1,7 @@
+<ul class="list-group" ng-controller="CommentsController">
+	<li class="list-group-item" ng-repeat="comment in commentlist">
+		[{{comment.idComment}}]: {{comment.creator.forename}} {{comment.creator.surname}} said <br> {{comment.text}}
+		<replyinput parentcomment="comment.idComment"></replyinput>
+		<replycomment parentcomment="comment.idComment"> </replycomment>
+	</li>
+</ul>
