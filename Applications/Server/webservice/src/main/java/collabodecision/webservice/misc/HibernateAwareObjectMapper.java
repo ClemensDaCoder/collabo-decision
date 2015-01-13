@@ -7,7 +7,9 @@ import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module;
 public class HibernateAwareObjectMapper extends ObjectMapper {
 	
 	public HibernateAwareObjectMapper() {
-		registerModule(new Hibernate4Module());
+		Hibernate4Module module = new Hibernate4Module();
+		module.disable(Hibernate4Module.Feature.USE_TRANSIENT_ANNOTATION);
+		registerModule(module);
 	}
 	
 }
