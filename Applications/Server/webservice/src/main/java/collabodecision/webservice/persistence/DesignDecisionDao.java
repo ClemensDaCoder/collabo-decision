@@ -22,4 +22,5 @@ public interface DesignDecisionDao {
 	DesignDecision getDesignDecisionWithRelations(long id);
 	
 	void addComments(long id, Set<Comment> comments);
+	void rateDesignDecision(long id, Integer value);
 }

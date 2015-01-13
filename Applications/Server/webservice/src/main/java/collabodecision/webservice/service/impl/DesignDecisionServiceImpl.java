@@ -301,4 +301,10 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 			alternativeService.rankAlternative(id, map.get(id));
 		}
 	}
+
+	@Override
+	public void rateDesignDecision(long id, Integer value) {
+		// TODO Auto-generated method stub
+		designDecisionDao.rateDesignDecision(id, value);
+	}
 }

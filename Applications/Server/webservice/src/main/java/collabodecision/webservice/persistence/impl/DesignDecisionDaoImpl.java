@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import collabodecision.webservice.persistence.AppUserDao;
 import collabodecision.webservice.persistence.DesignDecisionDao;
+import collabodecision.webservice.persistence.domain.Alternative;
 import collabodecision.webservice.persistence.domain.AppUser;
 import collabodecision.webservice.persistence.domain.Comment;
 import collabodecision.webservice.persistence.domain.DesignDecision;
@@ -106,6 +107,13 @@ public class DesignDecisionDaoImpl extends BaseDao implements DesignDecisionDao 
 		DesignDecision decision = getDesignDecision(id);
 		decision.setComments(comments);
 		getCurrentSession().saveOrUpdate(decision);
+	}
+
+	@Override
+	public void rateDesignDecision(long id, Integer value) {
+		// TODO Auto-generated method stub
+		DesignDecision decision = getDesignDecision(id);
+
 	}
 
 }
