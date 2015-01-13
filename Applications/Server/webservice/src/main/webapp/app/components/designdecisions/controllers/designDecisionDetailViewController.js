@@ -102,6 +102,39 @@ angular.module('collaboApp').controller('DesignDecisionDetailViewController', ['
 		$modalInstance.dismiss('cancel');
 	};
 	
+	$scope.save = function() {
+		
+		//$scope.designDecisionWrapper.designDecision
+		/*
+		  	private String title;
+			private String assumption;
+			private long idIssue;
+			private List<String> files;
+			private Set<Long> appUserIds;
+			private String designDecisionStatus;
+			private String rationale;
+			private boolean onlyStatusChange;
+		 */
+		var config = {
+				data : {
+					'title' : $scope.designDecisionWrapper.designDecision.title,
+					'assumption' : $scope.designDecisionWrapper.designDecision.assumption,
+					'idIssue' : $scope.designDecisionWrapper.designDecision.idIssue,
+					'appUserIds' : $scope.designDecisionWrapper.designDecision.addUserIds,
+					'rationale' : $scope.designDecisionWrapper.designDecision.rationale,
+					'onlyStatusChange' : false
+				},
+				method : 'PUT',
+				url : "rest/designdecisions/" + id
+		}
+		
+		$http(config).success(function() {
+			$scope.cancel();
+		}).error(function(data, status, headers, config) {
+			alert(data.error + " - " + data.exception);
+		});
+	};
+	
 	$scope.getUser = function(partialName) {
 			
 			return $http.get('/rest/appusers', {
