@@ -125,21 +125,23 @@ angular.module('collaboApp').controller('DesignDecisionDetailViewController', ['
 		var config = {
 				data : {
 					'title' : $scope.designDecisionWrapper.designDecision.title,
-					'assumption' : $scope.designDecisionWrapper.designDecision.assumption,
 					'idIssue' : $scope.designDecisionWrapper.designDecision.issue.idIssue,
 					'appUserIds' : idsShareholders,
+					'assumption' : $scope.designDecisionWrapper.designDecision.assumption,
 					'rationale' : $scope.designDecisionWrapper.designDecision.rationale,
+					'designDecisionStatus' : $scope.designDecisionWrapper.designDecision.designDecisionStatus,
 					'onlyStatusChange' : false
-				},
-				method : 'PUT',
-				url : "rest/designdecisions/" + id
+				}
 		}
 		
-		$http(config).success(function() {
+		var uri = "rest/designdecisions/" + id;
+		
+		$http.put(uri, config).success(function() {
 			$scope.cancel();
-		}).error(function(data, status, headers, config) {
-			alert(data.error + " - " + data.exception);
+		}).error(function() {
+			alert("fehler");
 		});
+
 	};
 	
 	$scope.getUser = function(partialName) {
