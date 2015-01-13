@@ -115,12 +115,19 @@ angular.module('collaboApp').controller('DesignDecisionDetailViewController', ['
 			private String rationale;
 			private boolean onlyStatusChange;
 		 */
+		
+		var idsShareholders = [];
+		//$scope.currentShareholders[i].idUser
+		for(var i in $scope.currentShareholders) {
+			idsShareholders.push($scope.currentShareholders[i].idUser);
+		}
+		
 		var config = {
 				data : {
 					'title' : $scope.designDecisionWrapper.designDecision.title,
 					'assumption' : $scope.designDecisionWrapper.designDecision.assumption,
-					'idIssue' : $scope.designDecisionWrapper.designDecision.idIssue,
-					'appUserIds' : $scope.designDecisionWrapper.designDecision.addUserIds,
+					'idIssue' : $scope.designDecisionWrapper.designDecision.issue.idIssue,
+					'appUserIds' : idsShareholders,
 					'rationale' : $scope.designDecisionWrapper.designDecision.rationale,
 					'onlyStatusChange' : false
 				},
