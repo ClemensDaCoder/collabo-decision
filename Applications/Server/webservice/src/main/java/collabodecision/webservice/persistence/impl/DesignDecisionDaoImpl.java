@@ -113,6 +113,7 @@ public class DesignDecisionDaoImpl extends BaseDao implements DesignDecisionDao 
 	public void rateDesignDecision(long id, Integer value) {
 		// TODO Auto-generated method stub
 		DesignDecision decision = getDesignDecision(id);
+		
 
 	}
 

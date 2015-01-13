@@ -2,10 +2,12 @@ package collabodecision.webservice.service.impl;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.Arrays; 
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,24 +89,18 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 	public ResponseWrapperDesignDecision getDesignDecision(long id,
 			boolean withRelations) {
 		if (withRelations) {
+			DesignDecision decision = calculateRanking(designDecisionDao
+					.getDesignDecisionWithRelations(id));
+			
+			
 			return wrapDesignDecision(designDecisionDao
 					.getDesignDecisionWithRelations(id));
+			
 		}
 		return wrapDesignDecision(designDecisionDao.getDesignDecision(id));
 	}
 
-	// @Override
-	// public ResponseWrapperDesignDecision getDesignDescision(
-	// long id, boolean withRelations) {
-	// DesignDecision decision;
-	//
-	// if (withRelations) {
-	// decision = designDecisionDao.getDesignDecisionWithRelations(id);
-	// } else {
-	// decision = designDecisionDao.getDesignDecision(id);
-	// }
-	// return wrapDesignDecision(decision);
-	// }
+
 
 	@Override
 	@Transactional(readOnly = false)
@@ -222,10 +218,44 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 		}
 
 	}
+	private DesignDecision calculateRanking(DesignDecision decision)
+	{
+		int[] values = new int[decision.getAlternatives().size()];
+		int i = 0;
+		for(Alternative a: decision.getAlternatives())
+		{
+		
+			int sum = 0;
+			for(AlternativeRanking ar: a.getAlternativeRankings())
+			{
+				sum += ar.getRank();
+			}
+			a.setRankingpoints(sum);
+			values[i] = sum;
+			i++;
+		}
+		Arrays.sort(values);
+		for(Alternative a: decision.getAlternatives())
+		{
+			for(int j = 0; j < values.length; j++)
+			{
+				if(a.getRankingpoints() == values[j])
+				{
+					a.setRanking(j + 1);
+				}
+			}
+		}
+		
+		return decision;
+	}
 
 	private ResponseWrapperDesignDecision wrapDesignDecision(
 			DesignDecision decision) {
 
+		//set Alternative Data
+		//decision= calculateRanking(decision);
+
+		
 		// The user that made the request!
 		AppUser appUser = userService
 				.getAppUserByUsername(SecurityContextHolder.getContext()
@@ -300,6 +330,32 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 		{
 			alternativeService.rankAlternative(id, map.get(id));
 		}
+		
+		DesignDecision d = designDecisionDao.getDesignDecision(idDesignDecision);
+		d.getShares();
+		List<Share> l = new ArrayList<Share>();
+		for(Alternative a: d.getAlternatives())
+		{
+			
+			for(AlternativeRanking ar: a.getAlternativeRankings())
+			{
+				l.add(ar.getShare());
+			}
+		}
+		Collection<Share> collection = d.getShares();
+		
+		if(l.containsAll(collection))
+		{
+			d.setDesignDecisionStatus(DesignDecisionStatus.SELECTING_ALTERNATIVES);
+			System.out.print("Ready to select alternative");
+			//fertig mit Ranken
+		}
+		else
+		{
+			System.out.print("Not finished");
+			//noch nicht fertig
+		}
+	
 	}
 
 	@Override

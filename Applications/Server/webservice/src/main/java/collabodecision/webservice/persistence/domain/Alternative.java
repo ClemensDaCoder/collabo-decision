@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
@@ -59,6 +60,28 @@ public class Alternative {
 	@JsonManagedReference
 	private Set<AlternativeRanking> alternativeRankings;
 
+	@Transient
+	private int rankingpoints;
+	@Transient
+	private int ranking;
+	
+	public int getRankingpoints() {
+		return rankingpoints;
+	}
+
+	public void setRankingpoints(int rankingpoints) {
+		this.rankingpoints = rankingpoints;
+	}
+
+	public int getRanking() {
+		return ranking;
+	}
+
+	public void setRanking(int ranking) {
+		this.ranking = ranking;
+	}
+	
+	
 	public String getDescription() {
 		return description;
 	}
