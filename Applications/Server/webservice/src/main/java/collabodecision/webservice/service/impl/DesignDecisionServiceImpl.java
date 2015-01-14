@@ -324,35 +324,26 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 
 	@Override
 	@Transactional(readOnly = false)
-
 	public void rateDesignDecision(long id, Integer value, String message, String ratingTime) {
 		DesignDecisionRating designDecisionRating = new DesignDecisionRating();
 		DesignDecision designDecision = designDecisionDao.getDesignDecisionWithRelations(id);
-		sessionFactory.getCurrentSession().flush();
 
-		if(message !=  null && ratingTime != null)
-		{
-		Comment ratingComment = commentHelper.createComment(message, ratingTime);
-		ratingComment.setDesignDecisionRating(designDecisionRating);
-		designDecisionRating.getComments().add(ratingComment);
-		
-		commentDao.saveOrUpdateComment(ratingComment);
-		//alternativeDao.saveOrUpdateAlternative(alternative);
+		Comment ratingComment = null;
+		if (message != null && ratingTime != null) {
+			ratingComment = commentHelper.createComment(message, ratingTime);
+			ratingComment.setDesignDecisionRating(designDecisionRating);
+			designDecisionRating.getComments().add(ratingComment);
 		}
-		
-		
-		//commentDao.saveOrUpdateComment(comment);
-		//designDecisionDao.saveOrUpdateDesignDecision(designDecision);
-		
-		//DesignDecision decision = designDecisionDao.getDesignDecision(id);
 
-		AppUser appUser = userService
-				.getAppUserByUsername(SecurityContextHolder.getContext()
-						.getAuthentication().getName());		
+		AppUser appUser = userService.getAppUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+		
 		designDecisionRating.setRating(value);
 		designDecisionRating.setDesignDecision(designDecision);
-		designDecisionRating.setRater(shareDao.getShare(appUser, designDecision));		
+		designDecisionRating.setRater(shareDao.getShare(appUser, designDecision));
+
+		if (ratingComment != null) {
+			commentDao.saveOrUpdateComment(ratingComment);
+		}
 		designDecisionRatingDao.saveOrUpdateDesignDecisionRating(designDecisionRating);
-				
 	}
 }
