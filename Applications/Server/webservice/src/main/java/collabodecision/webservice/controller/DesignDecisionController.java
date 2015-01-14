@@ -74,8 +74,10 @@ public class DesignDecisionController {
 
 	@RequestMapping(value = "/{idDesignDecision}/rate", method = RequestMethod.POST)
 	public void rateAlternative(@PathVariable long idDesignDecision,
-			@RequestParam(value = "value") Integer value) {
-		designDecisionService.rateDesignDecision(idDesignDecision, value);
+			@RequestParam(value = "value") Integer value,
+			@RequestParam(value = "comment" , required=false) String comment,
+			@RequestParam(value = "date", required = false) String stringDate) {
+		designDecisionService.rateDesignDecision(idDesignDecision, value, comment, stringDate);
 	}
 	
 }

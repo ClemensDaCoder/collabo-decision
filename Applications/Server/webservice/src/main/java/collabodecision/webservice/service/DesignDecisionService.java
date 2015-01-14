@@ -18,6 +18,6 @@ public interface DesignDecisionService extends CommentService, FileService {
 	
 	void addDesignDecision(RequestWrapperDesignDecision designDecisionRequest);
 	
-	void rateDesignDecision(long id, Integer value);
+	void rateDesignDecision(long id, Integer value, String comment, String ratingTime);
 
 }
