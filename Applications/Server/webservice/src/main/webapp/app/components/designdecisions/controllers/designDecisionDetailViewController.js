@@ -22,6 +22,8 @@ angular.module('collaboApp').controller('DesignDecisionDetailViewController', ['
 				$scope.canRank = $scope.designDecisionWrapper.designDecision.designDecisionStatus === 'RANK_ALTERNATIVES' && 
 									$scope.designDecisionWrapper.shareholder;
 				
+				$scope.showAddAlternative = ($scope.designDecisionWrapper.showStartRanking || !$scope.designDecisionWrapper.showSelectAlternative) && !$scope.designDecisionWrapper.showFinishRanking;
+				
 				$scope.alternativeRanks = [];
 				
 				if($scope.canRank) {
