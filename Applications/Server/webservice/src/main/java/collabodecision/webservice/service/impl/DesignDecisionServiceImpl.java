@@ -353,7 +353,7 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 		}
 
 		if (DesignDecisionStatus.DECIDED.equals(decision.getDesignDecisionStatus())) {
-			response.setShowDecided(true);
+			response.setShowInappropriateSolution(true);
 			for (DesignDecisionRating rating : decision.getDesignDecisionRatings()) {
 				 if (appUser.equals(rating.getRater().getAppUser())) {
 					 response.setRated(true);
@@ -361,7 +361,7 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 				 }
 			}
 		} else if (DesignDecisionStatus.INAPPROPRIATE_SOLUTION.equals(decision.getDesignDecisionStatus())) {
-			response.setShowInappropriateSolution(true);
+			response.setShowDecided(true);
 		} else if (DesignDecisionStatus.OBSOLETE.equals(decision.getDesignDecisionStatus())) {
 			response.setShowObsolete(true);
 		}
