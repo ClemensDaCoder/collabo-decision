@@ -13,10 +13,12 @@ angular.module('collaboApp').controller('DesignDecisionDetailViewController', ['
 			$http.get(uri).success(function(data) {
 				$scope.designDecisionWrapper = angular.fromJson(data);
 				
-				for(var i = 0; i < $scope.designDecisionWrapper.designDecision.alternatives.length; i++){
-					if ($scope.designDecisionWrapper.designDecision.alternatives[i].idAlternative == $scope.designDecisionWrapper.designDecision.solution.idAlternative){
-						$scope.designDecisionWrapper.designDecision.alternatives.splice(i, 1);
-						break;
+				if($scope.designDecisionWrapper.designDecision.solution != null){
+					for(var i = 0; i < $scope.designDecisionWrapper.designDecision.alternatives.length; i++){
+						if ($scope.designDecisionWrapper.designDecision.alternatives[i].idAlternative == $scope.designDecisionWrapper.designDecision.solution.idAlternative){
+							$scope.designDecisionWrapper.designDecision.alternatives.splice(i, 1);
+							break;
+						}
 					}
 				}
 				
