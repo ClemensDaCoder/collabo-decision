@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import collabodecision.webservice.data.RequestWrapperDesignDecision;
 import collabodecision.webservice.data.ResponseWrapperDesignDecision;
+import collabodecision.webservice.persistence.AlternativeRankingDao;
 import collabodecision.webservice.persistence.CommentDao;
 import collabodecision.webservice.persistence.DesignDecisionDao;
 import collabodecision.webservice.persistence.DesignDecisionRatingDao;
@@ -64,6 +65,9 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 
 	@Autowired
 	private DesignDecisionRatingDao designDecisionRatingDao;
+	
+	@Autowired
+	private AlternativeRankingDao alternativeRankingDao;
 
 	@Override
 	public List<ResponseWrapperDesignDecision> getDesignDecisions(
@@ -92,15 +96,10 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public ResponseWrapperDesignDecision getDesignDecision(long id,
-			boolean withRelations) {
+	public ResponseWrapperDesignDecision getDesignDecision(long id, boolean withRelations) {
 		if (withRelations) {
-			DesignDecision decision = calculateRanking(designDecisionDao
-					.getDesignDecisionWithRelations(id));
-
-			return wrapDesignDecision(designDecisionDao
-					.getDesignDecisionWithRelations(id));
-
+			DesignDecision decision = calculateRanking(designDecisionDao.getDesignDecisionWithRelations(id));
+			return wrapDesignDecision(decision);
 		}
 		return wrapDesignDecision(designDecisionDao.getDesignDecision(id));
 	}
@@ -116,9 +115,7 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 			DesignDecision designDecision = designDecisionDao
 					.getDesignDecision(id);
 			designDecision
-					.setDesignDecisionStatus(DesignDecision.DesignDecisionStatus
-							.valueOf(designDecisionRequest
-									.getDesignDecisionStatus()));
+					.setDesignDecisionStatus(DesignDecisionStatus.valueOf(designDecisionRequest.getDesignDecisionStatus()));
 
 		} else {
 			addOrUpdateDesignDecision(designDecisionRequest, id);
@@ -207,8 +204,7 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 		decision.setRationale(decisionRequest.getRationale());
 
 		
-		DesignDecisionStatus status = DesignDecisionStatus
-				.valueOf(decisionRequest.getDesignDecisionStatus());
+		DesignDecisionStatus status = DesignDecisionStatus.valueOf(decisionRequest.getDesignDecisionStatus());
 		
 		decision.setDesignDecisionStatus(status);
 
@@ -295,7 +291,6 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 				}
 			}
 		}
-
 		return decision;
 	}
 
@@ -339,21 +334,27 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 				response.setIsShareholder(true);
 				if (DesignDecisionStatus.RANK_ALTERNATIVES.equals(decision
 						.getDesignDecisionStatus())) {
-					response.setShowFinishRanking(true);
+					
+					boolean allAlternativesRanked = true;
+					for(Alternative alternative : decision.getAlternatives()) {
+						for(Share share : decision.getShares()) {
+							if(!alternativeRankingDao.existsRanking(alternative, share)) {
+								allAlternativesRanked =  false;
+							}		
+						}
+					}
+					//show button if not alternatives are not ranked
+					if (!allAlternativesRanked) {
+						response.setShowFinishRanking(true);
+					}
+					
 				}
 			}
-
 		}
-
-		// Cannot check ShareHolder against AppUser -> returns null
-		// if (decision.getShareHolders().contains(appUser)) {
-		// response.setEditable(true);
-		// response.setIsShareholder(true);
-		// if (DesignDecisionStatus.RANK_ALTERNATIVES.equals(decision
-		// .getDesignDecisionStatus())) {
-		// response.setShowFinishRanking(true);
-		// }
-		// }
+		
+		
+		
+		
 
 		if (DesignDecisionStatus.DECIDED.equals(decision
 				.getDesignDecisionStatus())) {
@@ -371,38 +372,28 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 
 	@Override
 	@Transactional(readOnly = false)
-	public void rateDesignDecision(long id, Integer value, String message,
-			String ratingTime) {
-		// TODO Auto-generated method stub
+	public void rateDesignDecision(long id, Integer value, String message, String ratingTime) {
 		DesignDecisionRating designDecisionRating = new DesignDecisionRating();
 		DesignDecision designDecision = designDecisionDao
 				.getDesignDecisionWithRelations(id);
 
+		Comment ratingComment = null;
 		if (message != null && ratingTime != null) {
-			Comment ratingComment = commentHelper.createComment(message,
-					ratingTime);
+			ratingComment = commentHelper.createComment(message, ratingTime);
 			ratingComment.setDesignDecisionRating(designDecisionRating);
 			designDecisionRating.getComments().add(ratingComment);
-
-			commentDao.saveOrUpdateComment(ratingComment);
-			// alternativeDao.saveOrUpdateAlternative(alternative);
 		}
 
-		// commentDao.saveOrUpdateComment(comment);
-		// designDecisionDao.saveOrUpdateDesignDecision(designDecision);
-
-		// DesignDecision decision = designDecisionDao.getDesignDecision(id);
-
-		AppUser appUser = userService
-				.getAppUserByUsername(SecurityContextHolder.getContext()
-						.getAuthentication().getName());
+		AppUser appUser = userService.getAppUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+		
 		designDecisionRating.setRating(value);
 		designDecisionRating.setDesignDecision(designDecision);
-		designDecisionRating.setRater(shareDao
-				.getShare(appUser, designDecision));
-		designDecisionRatingDao
-				.saveOrUpdateDesignDecisionRating(designDecisionRating);
+		designDecisionRating.setRater(shareDao.getShare(appUser, designDecision));
 
+		if (ratingComment != null) {
+			commentDao.saveOrUpdateComment(ratingComment);
+		}
+		designDecisionRatingDao.saveOrUpdateDesignDecisionRating(designDecisionRating);
 	}
 
 	@Override

@@ -7,6 +7,6 @@ import collabodecision.webservice.persistence.domain.Share;
 public interface AlternativeRankingDao {
 	void saveOrUpdateAlternativeRanking(AlternativeRanking alternativeRanking);
 	
-	boolean exitsRanking(Alternative alternative, Share share);
+	boolean existsRanking(Alternative alternative, Share share);
 	
 }

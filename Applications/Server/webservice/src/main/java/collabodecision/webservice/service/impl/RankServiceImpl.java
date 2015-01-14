@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import collabodecision.webservice.data.RequestWrapperRank;
-import collabodecision.webservice.data.ResponseWrapperDesignDecision;
 import collabodecision.webservice.persistence.AlternativeRankingDao;
 import collabodecision.webservice.persistence.ShareDao;
 import collabodecision.webservice.persistence.domain.Alternative;
@@ -75,8 +74,7 @@ public class RankServiceImpl implements RankService {
 		// Find out, if all shareholders of the DD have ranked all the Alternatives of the DD
 		for(Alternative alternative : alternatives) {
 			for(Share share : shares) {
-				
-				if(!alternativeRankingDao.exitsRanking(alternative, share)) {
+				if(!alternativeRankingDao.existsRanking(alternative, share)) {
 					return false;
 				}		
 			}

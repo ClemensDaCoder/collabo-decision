@@ -165,7 +165,7 @@ public class DesignDecision {
 			Set<DesignDecisionRating> designDecisionRatings) {
 		this.designDecisionRatings = designDecisionRatings;
 	}
-	
+
 	public Alternative getSolution() {
 		return solution;
 	}

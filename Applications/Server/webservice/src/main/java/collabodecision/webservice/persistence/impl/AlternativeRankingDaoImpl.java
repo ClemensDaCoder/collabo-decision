@@ -31,7 +31,7 @@ public class AlternativeRankingDaoImpl extends BaseDao implements
 
 	@Override
 	@Transactional(readOnly = true)
-	public boolean exitsRanking(Alternative alternative, Share share) {
+	public boolean existsRanking(Alternative alternative, Share share) {
 		Criteria crit = getCurrentSession().createCriteria(
 				AlternativeRanking.class);
 		crit.add(Restrictions.and(Restrictions.eq("alternative", alternative),
