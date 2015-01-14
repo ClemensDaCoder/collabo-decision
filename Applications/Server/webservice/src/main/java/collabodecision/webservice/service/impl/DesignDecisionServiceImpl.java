@@ -98,8 +98,8 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 	@Transactional(readOnly = true)
 	public ResponseWrapperDesignDecision getDesignDecision(long id, boolean withRelations) {
 		if (withRelations) {
-			DesignDecision decision = calculateRanking(designDecisionDao.getDesignDecisionWithRelations(id));
-			return wrapDesignDecision(decision);
+			calculateRanking(designDecisionDao.getDesignDecisionWithRelations(id));
+			return wrapDesignDecision(designDecisionDao.getDesignDecisionWithRelations(id));
 		}
 		return wrapDesignDecision(designDecisionDao.getDesignDecision(id));
 	}
@@ -338,8 +338,9 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 					boolean allAlternativesRanked = true;
 					for(Alternative alternative : decision.getAlternatives()) {
 						for(Share share : decision.getShares()) {
-							if(!alternativeRankingDao.existsRanking(alternative, share)) {
+							if(share.getAppUser().equals(appUser) && !alternativeRankingDao.existsRanking(alternative, share)) {
 								allAlternativesRanked =  false;
+								break;
 							}		
 						}
 					}
