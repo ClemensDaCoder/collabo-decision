@@ -2,12 +2,12 @@ package collabodecision.webservice.service.impl;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.Arrays; 
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +20,7 @@ import collabodecision.webservice.data.RequestWrapperRankAlternatives;
 import collabodecision.webservice.data.ResponseWrapperDesignDecision;
 import collabodecision.webservice.persistence.CommentDao;
 import collabodecision.webservice.persistence.DesignDecisionDao;
+import collabodecision.webservice.persistence.ShareDao;
 import collabodecision.webservice.persistence.domain.Alternative;
 import collabodecision.webservice.persistence.domain.AlternativeRanking;
 import collabodecision.webservice.persistence.domain.AppUser;
@@ -27,7 +28,6 @@ import collabodecision.webservice.persistence.domain.Comment;
 import collabodecision.webservice.persistence.domain.DesignDecision;
 import collabodecision.webservice.persistence.domain.DesignDecision.DesignDecisionStatus;
 import collabodecision.webservice.persistence.domain.File;
-import collabodecision.webservice.persistence.domain.Issue.IssueStatus;
 import collabodecision.webservice.persistence.domain.Share;
 import collabodecision.webservice.service.AlternativeService;
 import collabodecision.webservice.service.AppUserService;
@@ -53,6 +53,9 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 
 	@Autowired
 	private CommentDao commentDao;
+	
+	@Autowired
+	private ShareDao shareDao;
 
 	@Autowired
 	private AppUserService userService;
@@ -156,32 +159,21 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 		return commentDao.getChildComments(idComment);
 	}
 
-	private void addOrUpdateDesignDecision(
-			RequestWrapperDesignDecision decisionRequest,
-			Long idExistingDesignDecision) {
+	private void addOrUpdateDesignDecision(RequestWrapperDesignDecision decisionRequest, Long idExistingDesignDecision) {
+		
 		// get DesignDecision from DB if update; otherwise new Design Decion
+		DesignDecision decision = idExistingDesignDecision != null ? designDecisionDao.getDesignDecision(idExistingDesignDecision) : new DesignDecision();
 
-		DesignDecision decision = null;
-
-		if (idExistingDesignDecision == null) {
-			decision = new DesignDecision();
-			decision.setCreationDate(new Date(System.currentTimeMillis()));
-			decision.setIssue(issueService.getIssue(
-					decisionRequest.getIdIssue(), false).getIssue());
-			decision.getIssue().setIssueStatus(IssueStatus.IN_PROGRESS);
-		} else {
-			decision = designDecisionDao
-					.getDesignDecision(idExistingDesignDecision);
-		}
-		// On Update - Delete all OneToMany Relations in advance (are added
-		// again later)
 		if (idExistingDesignDecision != null) {
-			decision.getFiles().clear();
-			// Must be done - Otherwise Hibernate would result in Violation
-			// Constraint!
 			decision.getShares().clear();
-
+//			decision.getAlternatives().clear();
+//			decision.getComments().clear();
+			decision.getFiles().clear();
+			
+			// Must be done - Otherwise Hibernate would result in Violation Constraint!
 			sessionFactory.getCurrentSession().flush();
+		} else {
+			decision.setCreationDate(new Date(System.currentTimeMillis()));
 		}
 
 		// Setting the properties of the DesignDecision
@@ -195,7 +187,8 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 		Set<Share> shareholders = new HashSet<Share>();
 		for (Long appUserId : decisionRequest.getAppUserIds()) {
 			AppUser appUser = userService.getAppUser(appUserId);
-			shareholders.add(new Share(appUser, decision));
+			Share share = shareDao.getShare(appUser, decision);
+			shareholders.add(share != null ? share : new Share(appUser, decision));
 		}
 
 		decision.setShares(shareholders);
