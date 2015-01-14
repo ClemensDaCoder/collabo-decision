@@ -25,7 +25,17 @@ public class ResponseWrapperDesignDecision {
 	
 	private boolean isShareholder;
 	
+	private boolean isRated;
 	
+	
+	public boolean isRated() {
+		return isRated;
+	}
+
+	public void setRated(boolean isRated) {
+		this.isRated = isRated;
+	}
+
 	public DesignDecision getDesignDecision() {
 		return designDecision;
 	}
