@@ -189,9 +189,9 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 			if(idExistingDesignDecision != null) {
 				Share share = shareDao.getShare(appUser, decision);
 				shareholders.add(share != null ? share : new Share(appUser, decision));
+			} else {
+				shareholders.add(new Share(appUser, decision));
 			}
-			
-			shareholders.add(new Share(appUser, decision));
 		}
 
 		decision.setShares(shareholders);

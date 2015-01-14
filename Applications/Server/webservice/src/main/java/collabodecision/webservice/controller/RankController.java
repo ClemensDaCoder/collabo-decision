@@ -20,8 +20,8 @@ public class RankController {
 	private RankService rankService;
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public void addRanks(@RequestBody RequestWrapperData<List<RequestWrapperRank>> ranks) {
-		rankService.addRanks(ranks.getData());
+	public boolean addRanks(@RequestBody RequestWrapperData<List<RequestWrapperRank>> ranks) {
+		return rankService.addRanks(ranks.getData());
 	}
 	
 	

@@ -55,4 +55,39 @@ public class Share {
 	public long getIdShare() {
 		return idShare;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((appUser == null) ? 0 : appUser.hashCode());
+		result = prime * result
+				+ ((designDecision == null) ? 0 : designDecision.hashCode());
+		result = prime * result + (int) (idShare ^ (idShare >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Share other = (Share) obj;
+		if (appUser == null) {
+			if (other.appUser != null)
+				return false;
+		} else if (!appUser.equals(other.appUser))
+			return false;
+		if (designDecision == null) {
+			if (other.designDecision != null)
+				return false;
+		} else if (!designDecision.equals(other.designDecision))
+			return false;
+		if (idShare != other.idShare)
+			return false;
+		return true;
+	}
 }

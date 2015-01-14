@@ -151,6 +151,45 @@ public class DesignDecision {
 		this.creationDate = creationDate;
 	}
 	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ (int) (idDesignDecision ^ (idDesignDecision >>> 32));
+		result = prime * result
+				+ ((rationale == null) ? 0 : rationale.hashCode());
+		result = prime * result + ((title == null) ? 0 : title.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DesignDecision other = (DesignDecision) obj;
+		if (idDesignDecision != other.idDesignDecision)
+			return false;
+		if (rationale == null) {
+			if (other.rationale != null)
+				return false;
+		} else if (!rationale.equals(other.rationale))
+			return false;
+		if (title == null) {
+			if (other.title != null)
+				return false;
+		} else if (!title.equals(other.title))
+			return false;
+		return true;
+	}
+
+
+
+
 	public enum DesignDecisionStatus {
 		COLLECTING_ALTERNATIVES,
 		RANK_ALTERNATIVES,

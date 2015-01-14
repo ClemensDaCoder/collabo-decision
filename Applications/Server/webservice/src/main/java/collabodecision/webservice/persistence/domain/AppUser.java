@@ -86,19 +86,33 @@ public class AppUser {
 	public long getIdUser() {
 		return idUser;
 	}
+	
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (idUser ^ (idUser >>> 32));
+		result = prime * result + ((mail == null) ? 0 : mail.hashCode());
+		return result;
+	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (this == o) {
+	public boolean equals(Object obj) {
+		if (this == obj)
 			return true;
-		}
-		if (o instanceof AppUser) {
-			AppUser other = (AppUser) o;
-			if (this.idUser == other.getIdUser()) {
-				return true;
-			}
-		}
-		return false;
-		
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AppUser other = (AppUser) obj;
+		if (idUser != other.idUser)
+			return false;
+		if (mail == null) {
+			if (other.mail != null)
+				return false;
+		} else if (!mail.equals(other.mail))
+			return false;
+		return true;
 	}
 }

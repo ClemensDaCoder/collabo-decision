@@ -183,22 +183,14 @@ angular.module('collaboApp').controller('DesignDecisionDetailViewController', ['
 			data : 	$scope.alternativeRanks
 		};
 		
-		
-		$http.post("/rest/rankings", config).success(function() {
-			alert("saved");
+		$http.post("/rest/rankings", config).success(function(data) {
+			
+			var rankingFinished = angular.fromJson(data);
+			
+			if(rankingFinished) {
+				$scope.cancel()
+			}
 		});
-		
-		
-		
-//		for(var i in $scope.alternativeRanks) {
-//			
-//			
-//			$http.post("/rest/alternatives/" + $scope.alternativeRanks[i].idAlternative + "/rankings?rank=" + $scope.alternativeRanks[i].rank).success(function() {
-//				alert("saved");
-//			})
-//			
-//			
-//		}
 		
 	}
 
