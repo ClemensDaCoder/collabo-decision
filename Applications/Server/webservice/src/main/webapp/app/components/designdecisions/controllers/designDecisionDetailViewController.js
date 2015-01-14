@@ -123,7 +123,6 @@ angular.module('collaboApp').controller('DesignDecisionDetailViewController', ['
 		for(var i in $scope.currentShareholders) {
 			idsShareholders.push($scope.currentShareholders[i].idUser);
 		}
-		
 		var config = {
 				data : {
 					'title' : $scope.designDecisionWrapper.designDecision.title,
@@ -199,12 +198,28 @@ angular.module('collaboApp').controller('DesignDecisionDetailViewController', ['
 	}
 	
 	$scope.selectAlternative = function(alternative, designDecision) {
-		
 		$http.post("rest/designdecisions/" + designDecision.idDesignDecision + "/solution?solution=" + alternative.idAlternative).success(function() {
-			alert("Alternative: " + alternative.idAlternative + " was successfully selected as Solution.")
-			$scope.cancel();
+			alert("Alternative: " + alternative.idAlternative + " was successfully selected as Solution.");
+			
+			// get the design decision from server
+			$scope.currentShareholders = [];
+			var uri = "/rest/designdecisions/";
+			
+			if($scope.idDesignDecision != null) {
+				uri += $scope.idDesignDecision + "?withRelations=true";
+				$http.get(uri).success(function(data) {
+					$scope.designDecisionWrapper = angular.fromJson(data);
+					
+					for (var index = 0; index < $scope.designDecisionWrapper.designDecision.shares.length; index++) {
+						$scope.currentShareholders.push($scope.designDecisionWrapper.designDecision.shares[index].appUser);
+					}
+					//set rationale and save
+					$scope.designDecisionWrapper.designDecision.rationale = $scope.rationale;
+					$scope.save();
+				});
+			}
 		});
-	}
+	};
 
 	//initialize fields
 	$scope.initialize();

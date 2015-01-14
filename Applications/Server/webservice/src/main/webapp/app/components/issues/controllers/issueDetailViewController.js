@@ -147,6 +147,12 @@ angular.module('collaboApp').controller('IssueDetailViewController', ['$scope', 
 				}
 			}
 		});
+		
+		modalInstance.result.then(function() {
+			$scope.initialize();
+		}, function() {
+			$scope.initialize();
+		});
 	};
 	
 	// fetch the Issue and show it

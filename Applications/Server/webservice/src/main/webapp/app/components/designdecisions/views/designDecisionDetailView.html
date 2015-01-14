@@ -54,9 +54,9 @@
 							<label for="inputAssumption" class="control-label">Assumption</label>
 							<textarea ng-disabled="isEditDisabled" rows="5" cols="10" id="inputAssumption" class="form-control" placeholder="Assumption" ng-model="designDecisionWrapper.designDecision.assumption"></textarea>
 					</div>
-					<div class="form-group">
+					<div class="form-group" ng-show="designDecisionWrapper.showDecided">
 						<label for="inputRationale" class="control-label">Rationale</label>
-						<textarea ng-disabled="isEditDisabled" rows="5" cols="10" id="inputRationale" class="form-control" placeholder="Rationale" ng-model="designDecisionWrapper.designDecision.rationale"></textarea>
+						<textarea ng-disabled="true" rows="5" cols="10" id="inputRationale" class="form-control" placeholder="Rationale" ng-model="designDecisionWrapper.designDecision.rationale"></textarea>
 					</div>
 				</div>
 			</div>
@@ -91,7 +91,14 @@
 								</td>
 								<td style="width: 300px" ng-show="designDecisionWrapper.showSelectAlternative">
 									<div>Rank: {{alternative.ranking}} ({{alternative.rankingpoints + 1}} Points)</div>
-									<button class="btn btn-success" ng-click="selectAlternative(alternative, designDecisionWrapper.designDecision)">As Result</button>
+									<!-- <button class="btn btn-success" ng-click="selectAlternative(alternative, designDecisionWrapper.designDecision)">As Result</button> -->
+									<button class="btn btn-success" ng-click="showInputRationale = ! showInputRationale">As Result</button>
+									<div class="form-group" ng-show="showInputRationale">
+										<label for="inpRationale" class="control-label">Rationale</label>
+										<textarea rows="5" cols="8" id="inpRationale" class="form-control" placeholder="Rationale" ng-model="$parent.rationale"></textarea>
+										<button class="btn btn-success" ng-click="selectAlternative(alternative, designDecisionWrapper.designDecision)">Choose Alternative</button>
+										<button class="btn btn-danger" ng-click="showInputRationale = ! showInputRationale">Cancel</button>
+									</div>
 								</td>
 							</tr>
 						</table>
