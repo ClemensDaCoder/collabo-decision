@@ -322,6 +322,7 @@ public class IssueServiceImpl implements IssueService {
 
 		//when to show buttons for issue owner
 		if (rwi.isOwner()) {
+			rwi.setShowBtnRejectIssue(true);
 			if (IssueStatus.NEW.equals(rwi.getIssue().getIssueStatus()) &&
 				!rwi.getIssue().isBlocked() && 
 				rwi.getIssue().getDesignDecisions().isEmpty()) {
