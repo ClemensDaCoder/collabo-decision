@@ -73,9 +73,30 @@ angular.module('collaboApp').controller('DesignDecisionDetailViewController', ['
 	
 	$scope.setInappropriateSolution = function(){
 		//update design decision and set status to "INAPPROPRIATE_SOLUTION
+		var idsShareholders = [];
+		//$scope.currentShareholders[i].idUser
+		for(var i in $scope.currentShareholders) {
+			idsShareholders.push($scope.currentShareholders[i].idUser);
+		}
+		var config = {
+				data : {
+					'title' : $scope.designDecisionWrapper.designDecision.title,
+					'idIssue' : $scope.designDecisionWrapper.designDecision.issue.idIssue,
+					'appUserIds' : idsShareholders,
+					'assumption' : $scope.designDecisionWrapper.designDecision.assumption,
+					'rationale' : $scope.designDecisionWrapper.designDecision.rationale,
+					'designDecisionStatus' : 'INAPPROPRIATE_SOLUTION',
+					'onlyStatusChange' : true
+				}
+		}
 		
-		//refresh view
+		var uri = "rest/designdecisions/" + id;
 		
+		$http.put(uri, config).success(function() {
+			$scope.cancel();
+		}).error(function() {
+			alert("fehler");
+		});
 	};
 	
 	$scope.addAlternative = function(){
