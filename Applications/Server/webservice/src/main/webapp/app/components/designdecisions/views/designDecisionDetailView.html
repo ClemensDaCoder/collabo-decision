@@ -89,6 +89,9 @@
 										<button class="btn btn-default" ng-repeat="alternativeRank in alternativeRanks" ng-click="rankChosen(alternative.idAlternative, $index)">{{$index + 1}}</button>
 									</div>
 								</td>
+								<td style="width: 200px" ng-show="designDecisionWrapper.showSelectAlternative">
+									<button class="btn btn-success">As Result</button>
+								</td>
 							</tr>
 						</table>
 						<button class="btn btn-primary" ng-click="addAlternative()" ng-show="showAddAlternative">Add Alternative</button>
