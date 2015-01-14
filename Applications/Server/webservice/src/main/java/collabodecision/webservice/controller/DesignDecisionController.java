@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import collabodecision.webservice.data.RequestWrapperData;
 import collabodecision.webservice.data.RequestWrapperDesignDecision;
-import collabodecision.webservice.data.RequestWrapperRankAlternatives;
 import collabodecision.webservice.data.ResponseWrapperDesignDecision;
 import collabodecision.webservice.persistence.domain.DesignDecision;
 import collabodecision.webservice.service.DesignDecisionService;
@@ -70,12 +69,6 @@ public class DesignDecisionController {
 			@RequestParam(value = "message") String message,
 			@RequestParam(value = "date") String stringDate) {
 		designDecisionService.addComment(idDesignDecision, message, stringDate);
-	}
-	
-	@RequestMapping(value = "/{idDesignDecision}/ranking}", method = RequestMethod.POST)
-	public void rankAlternatives(@PathVariable long idDesignDecision, @RequestBody RequestWrapperData<RequestWrapperRankAlternatives> request) {
-		designDecisionService.rankDesignDecision(idDesignDecision, request.getData());
-		//designDecisionService.addDesignDecision(request.getData());
 	}
 	
 

@@ -16,7 +16,6 @@ import collabodecision.webservice.persistence.CommentDao;
 import collabodecision.webservice.persistence.DesignDecisionDao;
 import collabodecision.webservice.persistence.ShareDao;
 import collabodecision.webservice.persistence.domain.Alternative;
-import collabodecision.webservice.persistence.domain.AlternativeRanking;
 import collabodecision.webservice.persistence.domain.AppUser;
 import collabodecision.webservice.persistence.domain.Comment;
 import collabodecision.webservice.persistence.domain.File;
@@ -80,25 +79,6 @@ public class AlternativesServiceImpl implements AlternativeService {
 	@Transactional(readOnly = false)
 	public void deleteAlternative(long id) {
 		alternativeDao.deleteAlternative(id);
-
-	}
-
-	@Override
-	@Transactional(readOnly = false)
-	public void rankAlternative(long id, int rank) {
-
-		Alternative alternative = alternativeDao.getAlternative(id);
-		AppUser appUser = userService
-				.getAppUserByUsername(SecurityContextHolder.getContext()
-						.getAuthentication().getName());		
-		
-		AlternativeRanking alternativeRanking = new AlternativeRanking();
-		alternativeRanking.setAlternative(alternative);
-		alternativeRanking.setRank(rank);
-		alternativeRanking.setShare(shareDao.getShare(appUser,
-				alternative.getDesignDecision()));
-		
-		alternativeRankingDao.saveOrUpdateAlternativeRanking(alternativeRanking);
 
 	}
 

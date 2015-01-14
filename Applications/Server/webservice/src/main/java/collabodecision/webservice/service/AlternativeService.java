@@ -14,8 +14,6 @@ public interface AlternativeService extends CommentService, FileService {
 	ResponseWrapperAlternative getResponseWrapperAlternative(long id, boolean withRelations);
 	
 	void updateAlternative(long existingid, RequestWrapperAlternative alternative);
-
-	void rankAlternative(long id, int rank);
 	
 	void addAlternative(RequestWrapperAlternative alternativeRequest);
 

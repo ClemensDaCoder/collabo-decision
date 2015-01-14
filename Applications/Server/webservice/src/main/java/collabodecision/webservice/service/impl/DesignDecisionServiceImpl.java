@@ -3,8 +3,6 @@ package collabodecision.webservice.service.impl;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import collabodecision.webservice.data.RequestWrapperDesignDecision;
-import collabodecision.webservice.data.RequestWrapperRankAlternatives;
 import collabodecision.webservice.data.ResponseWrapperDesignDecision;
 import collabodecision.webservice.persistence.CommentDao;
 import collabodecision.webservice.persistence.DesignDecisionDao;
@@ -317,44 +314,6 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 		}
 		return response;
 
-	}
-
-
-	@Override
-	public void rankDesignDecision(long idDesignDecision,
-			RequestWrapperRankAlternatives requestWrapperRankAlternatives) {
-		
-		HashMap<Long, Integer> map = requestWrapperRankAlternatives.getMap();
-		for(long id : map.keySet())
-		{
-			alternativeService.rankAlternative(id, map.get(id));
-		}
-		
-		DesignDecision d = designDecisionDao.getDesignDecision(idDesignDecision);
-		d.getShares();
-		List<Share> l = new ArrayList<Share>();
-		for(Alternative a: d.getAlternatives())
-		{
-			
-			for(AlternativeRanking ar: a.getAlternativeRankings())
-			{
-				l.add(ar.getShare());
-			}
-		}
-		Collection<Share> collection = d.getShares();
-		
-		if(l.containsAll(collection))
-		{
-			d.setDesignDecisionStatus(DesignDecisionStatus.SELECTING_ALTERNATIVES);
-			System.out.print("Ready to select alternative");
-			//fertig mit Ranken
-		}
-		else
-		{
-			System.out.print("Not finished");
-			//noch nicht fertig
-		}
-	
 	}
 
 	@Override
