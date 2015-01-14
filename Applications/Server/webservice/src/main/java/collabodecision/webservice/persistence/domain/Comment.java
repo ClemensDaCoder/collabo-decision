@@ -50,6 +50,7 @@ public class Comment {
 	
 	@ManyToOne
 	@JoinColumn(name="idDesignDecisionRating")
+	@JsonBackReference
 	private DesignDecisionRating designDecisionRating;
 	
 	@ManyToOne

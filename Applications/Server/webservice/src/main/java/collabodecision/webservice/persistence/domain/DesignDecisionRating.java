@@ -38,6 +38,7 @@ public class DesignDecisionRating {
 	
 	@OneToMany(mappedBy="designDecisionRating")
 	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
+	@JsonBackReference
 	private Set<Comment> comments;
 
 	public int getRating() {

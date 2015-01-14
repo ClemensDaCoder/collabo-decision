@@ -374,13 +374,14 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 		if(message !=  null && ratingTime != null)
 		{
 		Comment ratingComment = commentHelper.createComment(message, ratingTime);
-		
-		ratingComment.setDesignDecision(designDecision);
+		ratingComment.setDesignDecisionRating(designDecisionRating);
 		designDecisionRating.getComments().add(ratingComment);
-
 		
+		commentDao.saveOrUpdateComment(ratingComment);
+		//alternativeDao.saveOrUpdateAlternative(alternative);
 		}
-		//designDecision.getComments().add(comment);
+		
+		
 		//commentDao.saveOrUpdateComment(comment);
 		//designDecisionDao.saveOrUpdateDesignDecision(designDecision);
 		
@@ -391,8 +392,8 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 						.getAuthentication().getName());		
 		designDecisionRating.setRating(value);
 		designDecisionRating.setDesignDecision(designDecision);
-		designDecisionRating.setRater(shareDao.getShare(appUser, designDecision));
-		
-		//designDecisionRatingDao.saveOrUpdateDesignDecisionRating(designDecisionRating);
+		designDecisionRating.setRater(shareDao.getShare(appUser, designDecision));		
+		designDecisionRatingDao.saveOrUpdateDesignDecisionRating(designDecisionRating);
+				
 	}
 }
