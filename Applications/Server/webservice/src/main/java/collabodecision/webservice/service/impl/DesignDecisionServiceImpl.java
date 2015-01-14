@@ -363,6 +363,7 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 		if (DesignDecisionStatus.DECIDED.equals(decision.getDesignDecisionStatus())) {
 			response.setShowInappropriateSolution(true);
 			response.setRated(isRated);
+			response.setShowDecided(true);
 		} else if (DesignDecisionStatus.INAPPROPRIATE_SOLUTION.equals(decision.getDesignDecisionStatus())) {
 			response.setShowDecided(true);
 			response.setRated(isRated);
