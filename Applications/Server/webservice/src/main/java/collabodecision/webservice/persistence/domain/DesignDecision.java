@@ -38,6 +38,10 @@ public class DesignDecision {
 	private Date creationDate;
 
 	@ManyToOne
+	@JoinColumn(name = "idSolutionAlternative", nullable=true)
+	private Alternative solution;
+	
+	@ManyToOne
 	@JoinColumn(name = "idIssue", nullable = false)
 	private Issue issue;
 
@@ -162,8 +166,12 @@ public class DesignDecision {
 		this.designDecisionRatings = designDecisionRatings;
 	}
 
-	public void setIdDesignDecision(long idDesignDecision) {
-		this.idDesignDecision = idDesignDecision;
+	public Alternative getSolution() {
+		return solution;
+	}
+
+	public void setSolution(Alternative solution) {
+		this.solution = solution;
 	}
 
 	@Override
