@@ -21,6 +21,6 @@ public interface DesignDecisionService extends CommentService, FileService {
 	
 	void rankDesignDecision(long id, RequestWrapperRankAlternatives requestWrapperRankAlternatives);
 	
-	void rateDesignDecision(long id, Integer value);
+	void rateDesignDecision(long id, Integer value, String comment, String ratingTime);
 
 }

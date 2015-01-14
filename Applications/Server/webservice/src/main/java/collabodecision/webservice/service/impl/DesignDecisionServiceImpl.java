@@ -20,12 +20,14 @@ import collabodecision.webservice.data.RequestWrapperRankAlternatives;
 import collabodecision.webservice.data.ResponseWrapperDesignDecision;
 import collabodecision.webservice.persistence.CommentDao;
 import collabodecision.webservice.persistence.DesignDecisionDao;
+import collabodecision.webservice.persistence.DesignDecisionRatingDao;
 import collabodecision.webservice.persistence.ShareDao;
 import collabodecision.webservice.persistence.domain.Alternative;
 import collabodecision.webservice.persistence.domain.AlternativeRanking;
 import collabodecision.webservice.persistence.domain.AppUser;
 import collabodecision.webservice.persistence.domain.Comment;
 import collabodecision.webservice.persistence.domain.DesignDecision;
+import collabodecision.webservice.persistence.domain.DesignDecisionRating;
 import collabodecision.webservice.persistence.domain.DesignDecision.DesignDecisionStatus;
 import collabodecision.webservice.persistence.domain.File;
 import collabodecision.webservice.persistence.domain.Share;
@@ -63,6 +65,10 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 	@Autowired
 	private SessionFactory sessionFactory;
 
+	@Autowired
+	private DesignDecisionRatingDao designDecisionRatingDao;
+	
+	
 	@Override
 	public List<ResponseWrapperDesignDecision> getDesignDecisions(String status, boolean isShareholder, boolean toRank, boolean toRate) {
 		DesignDecisionStatus decisionstatus = status != null ? DesignDecisionStatus
@@ -358,8 +364,35 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 	}
 
 	@Override
-	public void rateDesignDecision(long id, Integer value) {
+	@Transactional(readOnly = false)
+
+	public void rateDesignDecision(long id, Integer value, String message, String ratingTime) {
 		// TODO Auto-generated method stub
-		designDecisionDao.rateDesignDecision(id, value);
+		DesignDecisionRating designDecisionRating = new DesignDecisionRating();
+		DesignDecision designDecision = designDecisionDao.getDesignDecisionWithRelations(id);
+
+		if(message !=  null && ratingTime != null)
+		{
+		Comment ratingComment = commentHelper.createComment(message, ratingTime);
+		
+		ratingComment.setDesignDecision(designDecision);
+		designDecisionRating.getComments().add(ratingComment);
+
+		
+		}
+		//designDecision.getComments().add(comment);
+		//commentDao.saveOrUpdateComment(comment);
+		//designDecisionDao.saveOrUpdateDesignDecision(designDecision);
+		
+		//DesignDecision decision = designDecisionDao.getDesignDecision(id);
+
+		AppUser appUser = userService
+				.getAppUserByUsername(SecurityContextHolder.getContext()
+						.getAuthentication().getName());		
+		designDecisionRating.setRating(value);
+		designDecisionRating.setDesignDecision(designDecision);
+		designDecisionRating.setRater(shareDao.getShare(appUser, designDecision));
+		
+		designDecisionRatingDao.saveOrUpdateDesignDecisionRating(designDecisionRating);
 	}
 }

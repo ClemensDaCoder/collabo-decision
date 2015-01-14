@@ -14,20 +14,26 @@ import org.springframework.stereotype.Repository;
 
 import collabodecision.webservice.persistence.AppUserDao;
 import collabodecision.webservice.persistence.DesignDecisionDao;
+import collabodecision.webservice.persistence.DesignDecisionRatingDao;
+import collabodecision.webservice.persistence.ShareDao;
 import collabodecision.webservice.persistence.domain.Alternative;
+import collabodecision.webservice.persistence.domain.AlternativeRanking;
 import collabodecision.webservice.persistence.domain.AppUser;
 import collabodecision.webservice.persistence.domain.Comment;
 import collabodecision.webservice.persistence.domain.DesignDecision;
+import collabodecision.webservice.persistence.domain.DesignDecisionRating;
 import collabodecision.webservice.persistence.domain.Share;
 import collabodecision.webservice.persistence.domain.DesignDecision.DesignDecisionStatus;
 import collabodecision.webservice.persistence.domain.Issue;
+import collabodecision.webservice.service.AppUserService;
 
 @Repository
 public class DesignDecisionDaoImpl extends BaseDao implements DesignDecisionDao {
 
 	@Autowired
 	private AppUserDao userDao;
-	
+
+
 	@Autowired
 	public DesignDecisionDaoImpl(SessionFactory sessionFactory) {
 		super(sessionFactory);
@@ -109,12 +115,5 @@ public class DesignDecisionDaoImpl extends BaseDao implements DesignDecisionDao 
 		getCurrentSession().saveOrUpdate(decision);
 	}
 
-	@Override
-	public void rateDesignDecision(long id, Integer value) {
-		// TODO Auto-generated method stub
-		DesignDecision decision = getDesignDecision(id);
-		
-
-	}
 
 }

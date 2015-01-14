@@ -44,9 +44,22 @@ public class DesignDecision {
 	@Column(nullable=false)
 	private DesignDecisionStatus designDecisionStatus;
 
-//	@OneToMany(mappedBy = "designDecision")
-//	@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
-//	private Set<DesignDecisionRating> designDecisionRatings;
+		@OneToMany(mappedBy = "designDecision")
+	@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
+		private Set<DesignDecisionRating> designDecisionRatings;
+
+	public Set<DesignDecisionRating> getDesignDecisionRatings() {
+			return designDecisionRatings;
+		}
+
+		public void setDesignDecisionRatings(
+				Set<DesignDecisionRating> designDecisionRatings) {
+			this.designDecisionRatings = designDecisionRatings;
+		}
+
+		public void setIdDesignDecision(long idDesignDecision) {
+			this.idDesignDecision = idDesignDecision;
+		}
 
 	@OneToMany(mappedBy = "designDecision")
 	@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
