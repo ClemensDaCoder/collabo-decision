@@ -41,26 +41,13 @@ public class DesignDecision {
 	@JoinColumn(name = "idIssue", nullable = false)
 	private Issue issue;
 
-	@Column(nullable=false)
+	@Column(nullable = false)
 	private DesignDecisionStatus designDecisionStatus;
 
-		@OneToMany(mappedBy = "designDecision")
+	@OneToMany(mappedBy = "designDecision")
 	@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
-		@JsonManagedReference
-		private Set<DesignDecisionRating> designDecisionRatings;
-
-	public Set<DesignDecisionRating> getDesignDecisionRatings() {
-			return designDecisionRatings;
-		}
-
-		public void setDesignDecisionRatings(
-				Set<DesignDecisionRating> designDecisionRatings) {
-			this.designDecisionRatings = designDecisionRatings;
-		}
-
-		public void setIdDesignDecision(long idDesignDecision) {
-			this.idDesignDecision = idDesignDecision;
-		}
+	@JsonManagedReference
+	private Set<DesignDecisionRating> designDecisionRatings;
 
 	@OneToMany(mappedBy = "designDecision")
 	@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
@@ -125,7 +112,8 @@ public class DesignDecision {
 		return designDecisionStatus;
 	}
 
-	public void setDesignDecisionStatus(DesignDecisionStatus designDecisionStatus) {
+	public void setDesignDecisionStatus(
+			DesignDecisionStatus designDecisionStatus) {
 		this.designDecisionStatus = designDecisionStatus;
 	}
 
@@ -164,7 +152,20 @@ public class DesignDecision {
 	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
 	}
-	
+
+	public Set<DesignDecisionRating> getDesignDecisionRatings() {
+		return designDecisionRatings;
+	}
+
+	public void setDesignDecisionRatings(
+			Set<DesignDecisionRating> designDecisionRatings) {
+		this.designDecisionRatings = designDecisionRatings;
+	}
+
+	public void setIdDesignDecision(long idDesignDecision) {
+		this.idDesignDecision = idDesignDecision;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -201,16 +202,7 @@ public class DesignDecision {
 		return true;
 	}
 
-
-
-
 	public enum DesignDecisionStatus {
-		COLLECTING_ALTERNATIVES,
-		RANK_ALTERNATIVES,
-		SELECTING_ALTERNATIVES,
-		DECIDED,
-		OBSOLETE,
-		INAPPROPRIATE_SOLUTION,
-		BLOCKED
+		COLLECTING_ALTERNATIVES, RANK_ALTERNATIVES, SELECTING_ALTERNATIVES, DECIDED, OBSOLETE, INAPPROPRIATE_SOLUTION, BLOCKED
 	}
 }
