@@ -44,9 +44,9 @@ public class DesignDecision {
 	@Column(nullable=false)
 	private DesignDecisionStatus designDecisionStatus;
 
-	@OneToMany(mappedBy = "designDecision")
-	@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
-	private Set<DesignDecisionRating> designDecisionRatings;
+//	@OneToMany(mappedBy = "designDecision")
+//	@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
+//	private Set<DesignDecisionRating> designDecisionRatings;
 
 	@OneToMany(mappedBy = "designDecision")
 	@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
