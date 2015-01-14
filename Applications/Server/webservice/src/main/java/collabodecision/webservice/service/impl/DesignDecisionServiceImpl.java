@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import collabodecision.webservice.data.RequestWrapperDesignDecision;
 import collabodecision.webservice.data.ResponseWrapperDesignDecision;
+import collabodecision.webservice.persistence.AlternativeRankingDao;
 import collabodecision.webservice.persistence.CommentDao;
 import collabodecision.webservice.persistence.DesignDecisionDao;
 import collabodecision.webservice.persistence.DesignDecisionRatingDao;
@@ -64,6 +65,9 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 
 	@Autowired
 	private DesignDecisionRatingDao designDecisionRatingDao;
+	
+	@Autowired
+	private AlternativeRankingDao alternativeRankingDao;
 
 	@Override
 	public List<ResponseWrapperDesignDecision> getDesignDecisions(
@@ -92,15 +96,10 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public ResponseWrapperDesignDecision getDesignDecision(long id,
-			boolean withRelations) {
+	public ResponseWrapperDesignDecision getDesignDecision(long id, boolean withRelations) {
 		if (withRelations) {
-			DesignDecision decision = calculateRanking(designDecisionDao
-					.getDesignDecisionWithRelations(id));
-
-			return wrapDesignDecision(designDecisionDao
-					.getDesignDecisionWithRelations(id));
-
+			DesignDecision decision = calculateRanking(designDecisionDao.getDesignDecisionWithRelations(id));
+			return wrapDesignDecision(decision);
 		}
 		return wrapDesignDecision(designDecisionDao.getDesignDecision(id));
 	}
@@ -292,7 +291,6 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 				}
 			}
 		}
-
 		return decision;
 	}
 
@@ -336,21 +334,27 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 				response.setIsShareholder(true);
 				if (DesignDecisionStatus.RANK_ALTERNATIVES.equals(decision
 						.getDesignDecisionStatus())) {
-					response.setShowFinishRanking(true);
+					
+					boolean allAlternativesRanked = true;
+					for(Alternative alternative : decision.getAlternatives()) {
+						for(Share share : decision.getShares()) {
+							if(!alternativeRankingDao.existsRanking(alternative, share)) {
+								allAlternativesRanked =  false;
+							}		
+						}
+					}
+					//show button if not alternatives are not ranked
+					if (!allAlternativesRanked) {
+						response.setShowFinishRanking(true);
+					}
+					
 				}
 			}
-
 		}
-
-		// Cannot check ShareHolder against AppUser -> returns null
-		// if (decision.getShareHolders().contains(appUser)) {
-		// response.setEditable(true);
-		// response.setIsShareholder(true);
-		// if (DesignDecisionStatus.RANK_ALTERNATIVES.equals(decision
-		// .getDesignDecisionStatus())) {
-		// response.setShowFinishRanking(true);
-		// }
-		// }
+		
+		
+		
+		
 
 		if (DesignDecisionStatus.DECIDED.equals(decision
 				.getDesignDecisionStatus())) {
