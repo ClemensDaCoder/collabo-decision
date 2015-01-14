@@ -1,5 +1,6 @@
 package collabodecision.webservice.persistence.domain;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -40,6 +41,10 @@ public class DesignDecisionRating {
 	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
 	@JsonBackReference
 	private Set<Comment> comments;
+
+	public DesignDecisionRating() {
+		comments = new HashSet<>();
+	}
 
 	public int getRating() {
 		return rating;

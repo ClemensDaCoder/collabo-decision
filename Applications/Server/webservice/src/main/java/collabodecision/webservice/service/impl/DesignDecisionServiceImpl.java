@@ -326,9 +326,9 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 	@Transactional(readOnly = false)
 
 	public void rateDesignDecision(long id, Integer value, String message, String ratingTime) {
-		// TODO Auto-generated method stub
 		DesignDecisionRating designDecisionRating = new DesignDecisionRating();
 		DesignDecision designDecision = designDecisionDao.getDesignDecisionWithRelations(id);
+		sessionFactory.getCurrentSession().flush();
 
 		if(message !=  null && ratingTime != null)
 		{
