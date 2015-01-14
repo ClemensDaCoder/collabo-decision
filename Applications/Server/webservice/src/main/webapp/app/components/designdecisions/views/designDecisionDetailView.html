@@ -68,6 +68,7 @@
 			<!-- isOwner -->
 			<!-- isShareholder -->
 		</div>
+		<!-- Alternatives -->
 		<div class="row">
 			<div class="col-md-12">
 				<div class="form-horizontal">
@@ -121,12 +122,23 @@
 				</div>
 			</div>
 		</div>
+		<!-- Rating -->
+		<div class="row" ng-show="designDecisionWrapper.showDecided">
+			<form class="form-horizontal">
+				<div class="form-group">
+					<label for="inputRating" class="control-label">Rating[1-10 points]</label>
+					<input ng-disabled="designDecisionWrapper.rated" type="text" class="form-control" id="inputRating" placeholder="NaN" ng-model="rating">
+					<button ng-hide="designDecisionWrapper.rated" class="btn btn-success" type="button" ng-click="rateDD()">Save Rating</button>
+					<button ng-hide="designDecisionWrapper.rated" class="btn btn-danger" type="button" ng-click="calcAvgRating()">Cancel</button>
+				</div>
+			</form>
+		</div>
 		<div class="container-fluid">
 		<h4>Comments</h4>
 			<div class=row">
 				<button class="btn btn-primary" type="button" ng-click="toggleInputComment()" ng-hide="!hideInputComment">Add comment</button>
 				<div class="form-group" ng-hide="hideInputComment">
-					<input type="text" class="form-control" id="inputComment" ng-model="newComment" placeholder="Comment...">
+					<input type="number" min="0" step="1" max="10" class="form-control" id="inputComment" ng-model="newComment" placeholder="Comment...">
 					<button class="btn btn-success" type="button" ng-click="addDesignDecisionComment()">Save Comment</button>
 					<button class="btn btn-danger" type="button" ng-click="toggleInputComment()">Cancel</button>
 				</div>

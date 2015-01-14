@@ -46,6 +46,8 @@ angular.module('collaboApp').controller('DesignDecisionDetailViewController', ['
 						});
 					}	
 				}
+				
+				$scope.calcAvgRating();
 			});
 		}
 	};
@@ -255,4 +257,37 @@ angular.module('collaboApp').controller('DesignDecisionDetailViewController', ['
 		$scope.initialize();
 	});
 	
+	$scope.rateDD = function(){
+		//$scope.designDecisionWrapper.designDecision.designDecisionRatings.rating/.rater.appUser.idUser
+//		var config = {
+//				data : {
+//					'value' : $scope.rating,
+//					'comment' : "",
+//					'date' : DateService.date
+//				}
+//		};
+		
+		if(($scope.rating <= 10) && ($scope.rating >= 1)){
+			//comment optional
+			var uri = "rest/designdecisions/" + id + "/rate?value=" + $scope.rating + "&date=" + DateService.date;
+			
+			$http.post(uri, null).success(function() {
+				$scope.initialize();
+			}).error(function() {
+				alert("fehler");
+			});
+		}else{
+			alert("Please enter a valid rating between 1 and 10");
+			$scope.calcAvgRating();
+		}
+	};
+	
+	$scope.calcAvgRating = function(){
+		//calculate average rating
+		var sum=0;
+		for(var i = 0; i<$scope.designDecisionWrapper.designDecision.designDecisionRatings.length;i++){
+			sum+=$scope.designDecisionWrapper.designDecision.designDecisionRatings[i].rating;
+		}
+		$scope.rating = sum / $scope.designDecisionWrapper.designDecision.designDecisionRatings.length;
+	};
 }]);
