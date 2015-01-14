@@ -183,6 +183,33 @@ angular.module('collaboApp').controller('IssueDetailViewController', ['$scope', 
 		$scope.initialize();
 	});
 	
+	$scope.rejectIssue = function(){
+		var idsDepends = getIdsFromIssueArray($scope.dependsIssues);
+		var idsResolves = getIdsFromIssueArray($scope.resolvesIssues);
+		var idsRelates = getIdsFromIssueArray($scope.relatesIssues);
+		
+		var config = {
+				data : {
+					'title' : $scope.title,
+					'description' : $scope.description,
+					'idOwner' : $scope.selectedOwner.idUser,
+					'tags' : $scope.currentTags,
+					'idsDepends' : idsDepends,
+					'idsResolves' : idsResolves,
+					'idsRelates' : idsRelates,
+					'issueStatus' : 'REJECTED'
+				},
+				method : 'PUT',
+				url : "rest/issues/" + id
+		}
+		
+		$http(config).success(function() {
+			$scope.cancel();
+		}).error(function(data, status, headers, config) {
+			alert(data.error + " - " + data.exception);
+		});
+	};
+	
 }]);
 
 function getIdsFromIssueArray(array) {

@@ -9,7 +9,7 @@
 				<div class="col-md-4 my-col">
 					<div class="btn-group pull-right" ng-if="isEdit">
 						<button ng-show="issueResponse.showBtnCreateDesignDecision" ng-disabled="!issueResponse.owner" class="btn btn-primary" ng-click="createDesignDecision()">Create Design Decision</button>
-						<button ng-show="issueResponse.showBtnRejectIssue" ng-disabled="!issueResponse.owner" class="btn btn-danger">Reject Issue</button>
+						<button ng-show="issueResponse.showBtnRejectIssue" ng-disabled="!issueResponse.owner" class="btn btn-danger" ng-click="rejectIssue()">Reject Issue</button>
 					</div>
 				</div>
 			</div>
