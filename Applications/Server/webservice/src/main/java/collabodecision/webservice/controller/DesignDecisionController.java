@@ -78,7 +78,7 @@ public class DesignDecisionController {
 	}
 
 	@RequestMapping(value = "/{idDesignDecision}/rate", method = RequestMethod.POST)
-	public void rateAlternative(@PathVariable long idDesignDecision,
+	public void rateDesignDecision(@PathVariable long idDesignDecision,
 			@RequestParam(value = "value") Integer value,
 			@RequestParam(value = "comment", required = false) String comment,
 			@RequestParam(value = "date", required = false) String stringDate) {
