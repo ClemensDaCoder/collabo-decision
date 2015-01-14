@@ -65,8 +65,8 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	//@Autowired
-	//private DesignDecisionRatingDao designDecisionRatingDao;
+	@Autowired
+	private DesignDecisionRatingDao designDecisionRatingDao;
 	
 	
 	@Override

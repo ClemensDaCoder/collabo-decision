@@ -46,6 +46,7 @@ public class DesignDecision {
 
 		@OneToMany(mappedBy = "designDecision")
 	@Cascade({ CascadeType.SAVE_UPDATE, CascadeType.DELETE })
+		@JsonManagedReference
 		private Set<DesignDecisionRating> designDecisionRatings;
 
 	public Set<DesignDecisionRating> getDesignDecisionRatings() {

@@ -70,6 +70,7 @@ public class DesignDecisionDaoImpl extends BaseDao implements DesignDecisionDao 
 		//Hibernate.initialize(designDecision.getIssue());
 		Hibernate.initialize(designDecision.getAlternatives());
 		Hibernate.initialize(designDecision.getComments());
+		Hibernate.initialize(designDecision.getDesignDecisionRatings());
 		return designDecision;
 	}
 
