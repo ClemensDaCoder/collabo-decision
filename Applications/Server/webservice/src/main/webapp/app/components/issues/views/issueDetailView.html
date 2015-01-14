@@ -68,7 +68,7 @@
 						<label for="issuesMatchingTags" class="control-label">Issues with matching tags</label>
 						<table class="table matchingTags">
 							<tr ng-repeat="issueMatchingTagsResponse in issuesMatchingTagsResponse">
-								<td ng-if="issueMatchingTagsResponse.issue.idIssue != issueResponse.issue.idIssue" style="width: 70%; min-width: 200px;"><a href="#">{{issueMatchingTagsResponse.issue.title}}</a><br/><div class="tagwrapper" ng-repeat="issueTag in issueMatchingTagsResponse.issue.issueTags">{{issueTag.tag.name}}</div></td>
+								<td ng-if="issueMatchingTagsResponse.issue.idIssue != issueResponse.issue.idIssue" style="width: 70%; min-width: 200px;"><a>{{issueMatchingTagsResponse.issue.title}}</a><br/><div class="tagwrapper" ng-repeat="issueTag in issueMatchingTagsResponse.issue.issueTags">{{issueTag.tag.name}}</div></td>
 								<td ng-if="issueMatchingTagsResponse.issue.idIssue != issueResponse.issue.idIssue"><button ng-disabled="isEditDisabled" class="btn btn-warning" ng-click="addDepends(issueMatchingTagsResponse.issue)">Add depends</button></td>
 								<td ng-if="issueMatchingTagsResponse.issue.idIssue != issueResponse.issue.idIssue"><button ng-disabled="isEditDisabled" class="btn btn-success" ng-click="addResolves(issueMatchingTagsResponse.issue)">Add resolves</button></td>
 								<td ng-if="issueMatchingTagsResponse.issue.idIssue != issueResponse.issue.idIssue"><button ng-disabled="isEditDisabled" class="btn btn-primary" ng-click="addRelates(issueMatchingTagsResponse.issue)">Add relates</button></td>

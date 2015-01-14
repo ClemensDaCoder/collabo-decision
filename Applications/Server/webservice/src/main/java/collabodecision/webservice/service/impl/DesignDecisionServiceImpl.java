@@ -187,8 +187,14 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 		Set<Share> shareholders = new HashSet<Share>();
 		for (Long appUserId : decisionRequest.getAppUserIds()) {
 			AppUser appUser = userService.getAppUser(appUserId);
-			Share share = shareDao.getShare(appUser, decision);
-			shareholders.add(share != null ? share : new Share(appUser, decision));
+			
+			// Only check for existing shares when Update
+			if(idExistingDesignDecision != null) {
+				Share share = shareDao.getShare(appUser, decision);
+				shareholders.add(share != null ? share : new Share(appUser, decision));
+			}
+			
+			shareholders.add(new Share(appUser, decision));
 		}
 
 		decision.setShares(shareholders);

@@ -3,6 +3,10 @@ body {
 	min-width: 670px;
 }
 
+a[ng-click] {
+	cursor: pointer;
+}
+
 .modal-dialog {
 	width: auto;
 	margin-left: 15px;
@@ -144,4 +148,34 @@ body {
 	padding: 10px;
 	border-radius: 5px;
 	border-color: #ccc;
+	position: relative;
+}
+
+.tile .tile-header {
+	border-radius: 5px 5px 0 0;
+	color: white;
+	margin: -10px -10px 10px -10px;
+	padding: 5px;	
+}
+
+.tile .tile-header.blue {
+	background: #428bca;
+	border-color: #357ebd;
+}
+
+.tile .tile-header.green {
+	background-color: #5cb85c;
+    border-color: #4cae4c;
+}
+
+.tile .tile-header.yellow {
+	background-color: #f0ad4e;
+    border-color: #eea236;
+}
+
+.tile .tile-header button {
+	position: absolute;
+	right: 12px;
+	left: auto;
+	top: 10px;
 }

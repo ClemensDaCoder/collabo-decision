@@ -15,10 +15,12 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table
+@JsonIgnoreProperties({"designDecisions"})
 public class Issue {
 
 	@GeneratedValue

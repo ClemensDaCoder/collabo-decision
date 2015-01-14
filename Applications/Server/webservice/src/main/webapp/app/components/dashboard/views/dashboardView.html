@@ -1,9 +1,13 @@
 <div class="container-fluid" style="margin-top: 10px;">
 	<div class="row">
 		<div class="col-md-6">
-			<div class="tile"><h4>Owning Issues <button class="pull-right btn btn-default" ng-click="getOwningIssues()"><span class="glyphicon glyphicon-refresh"></span></button></h4>
+			<div class="tile">
+				<div class="tile-header blue">
+					<h4>Your Issues</h4>
+					<button class="pull-right btn btn-default" ng-click="getOwningIssues()"><span class="glyphicon glyphicon-refresh"></span></button>
+				</div>
 				<div class="list-group">
-					<a href="#" class="list-group-item" ng-click="showIssue(issueResponse.issue.idIssue)" ng-repeat="issueResponse in issues">
+					<a class="list-group-item" ng-click="showIssue(issueResponse.issue.idIssue)" ng-repeat="issueResponse in issues">
 						{{issueResponse.issue.title}}
 						<span class="badge">{{issueResponse.issue.issueStatus}}</span>
 					</a>
@@ -11,10 +15,14 @@
 			</div>
 		</div>
 		<div class="col-md-6">
-			<div class="tile"><h4>Your Design Decisions <button class="pull-right btn btn-default" ng-click="getDDs()"><span class="glyphicon glyphicon-refresh"></span></h4>
+			<div class="tile">
+				<div class="tile-header blue">
+					<h4>Your Design Decisions</h4>
+					<button class="pull-right btn btn-default" ng-click="getDDs()"><span class="glyphicon glyphicon-refresh"></span></button>
+				</div>
 				<!-- rankableDDs -->
 				<div class="list-group">
-					<a href="#" class="list-group-item" ng-click="showDesignDecision(ddResponse.designDecision.idDesignDecision)" ng-repeat="ddResponse in allDDs">
+					<a class="list-group-item" ng-click="showDesignDecision(ddResponse.designDecision.idDesignDecision)" ng-repeat="ddResponse in allDDs">
 						{{ddResponse.designDecision.title}}
 						<span class="badge">{{ddResponse.designDecision.designDecisionStatus}}</span>
 					</a>
@@ -24,29 +32,32 @@
 	</div>
 	<div class="row">
 		<div class="col-md-6">
-			<div class="tile"><h4>Rankable Design Decisions <button class="pull-right btn btn-default" ng-click="getRankableDDs()"><span class="glyphicon glyphicon-refresh"></span> </h4>
+			<div class="tile">
+				<div class="tile-header green">
+					<h4>Design Decisions to rank</h4>
+					<button class="pull-right btn btn-default" ng-click="getRankableDDs()"><span class="glyphicon glyphicon-refresh"></span></button>
+				</div>
 				<!-- rankableDDs -->
 				<div class="list-group">
-					<a href="#" class="list-group-item" ng-click="showDesignDecision(ddResponse.designDecision.idDesignDecision)" ng-repeat="ddResponse in rankableDDs">
+					<a class="list-group-item" ng-click="showDesignDecision(ddResponse.designDecision.idDesignDecision)" ng-repeat="ddResponse in rankableDDs">
 						{{ddResponse.designDecision.title}}
 					</a>
 				</div>
 			</div>
 		</div>
 		<div class="col-md-6">
-			<div class="tile"><h4>Rateable Design Decisions <button class="pull-right btn btn-default" ng-click="getRateableDDs()"><span class="glyphicon glyphicon-refresh"></span></h4>
+			<div class="tile">
+				<div class="tile-header green">
+					<h4>Design Decisions to rate</h4>
+					<button class="pull-right btn btn-default" ng-click="getRateableDDs()"><span class="glyphicon glyphicon-refresh"></span></button>
+				</div>
 				<!-- rateableDDs -->
 				<div class="list-group">
-					<a href="#" class="list-group-item" ng-click="showDesignDecision(ddResponse.designDecision.idDesignDecision)" ng-repeat="ddResponse in rateableDDs">
+					<a class="list-group-item" ng-click="showDesignDecision(ddResponse.designDecision.idDesignDecision)" ng-repeat="ddResponse in rateableDDs">
 						{{ddResponse.designDecision.title}}
 					</a>
 				</div>
 			</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-6">
-			<div class="tile"><h4>Notifications</h4></div>
 		</div>
 	</div>
 </div>

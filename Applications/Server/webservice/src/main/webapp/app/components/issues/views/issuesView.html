@@ -1,33 +1,47 @@
 <div class="issues-wrapper">
 	<h2>{{currentTab}} - Issues</h2>
 	<div class="container-fluid">
-		<div class="btn-group">
-			<button class="btn btn-primary" ng-click="getIssues(null)">All</button>
-			<button class="btn btn-primary" ng-click="getIssues('NEW')">New</button>
-			<button class="btn btn-primary" ng-click="getIssues('IN_PROGRESS')">In
-				Progress</button>
-			<button class="btn btn-primary" ng-click="getIssues('RESOLVED')">Resolved</button>
-			<button class="btn btn-primary" ng-click="getIssues('OBSOLETE')">Obsolete</button>
-			<button class="btn btn-primary" ng-click="getIssues('REJECTED')">Rejected</button>
-		</div>
-		<div class="btn-group pull-right">
-			<button class="btn btn-success" ng-click="newIssue()">New Issue</button>
+		<div class="col-md-12">
+			<div class="btn-group">
+				<button class="btn btn-primary" ng-click="getIssues(null)">All</button>
+				<button class="btn btn-primary" ng-click="getIssues('NEW')">New</button>
+				<button class="btn btn-primary" ng-click="getIssues('IN_PROGRESS')">In Progress</button>
+				<button class="btn btn-primary" ng-click="getIssues('RESOLVED')">Resolved</button>
+				<button class="btn btn-primary" ng-click="getIssues('OBSOLETE')">Obsolete</button>
+				<button class="btn btn-primary" ng-click="getIssues('REJECTED')">Rejected</button>
+			</div>
+			<div class="btn-group pull-right">
+				<button class="btn btn-success" ng-click="newIssue()">New Issue</button>
+			</div>
 		</div>
 	</div>
-	<table class="table">
-		<tr>
-			<th>Title</th>
-			<th>Status</th>
-			<th>Creator</th>
-			<th>Owner</th>
-			<th></th>
-		</tr>
-		<tr ng-repeat="issueResponse in issuesResponse">
-			<td><a href="#" ng-click="showIssue(issueResponse.issue.idIssue)">{{issueResponse.issue.title}}</a><br/><div class="tagwrapper" ng-repeat="issueTag in issueResponse.issue.issueTags">{{issueTag.tag.name}}</div></td>
-			<td>{{issueResponse.issue.issueStatus}}</td>
-			<td>{{issueResponse.issue.creator.forename}} {{issueResponse.issue.creator.surname}}</td>
-			<td>{{issueResponse.issue.owner.forename}} {{issueResponse.issue.owner.surname}}</td>
-			<td><button ng-show="issueResponse.showBtnCreateDesignDecision" ng-disabled="!issueResponse.owner" class="btn btn-primary" ng-click="createDesignDecision(issueResponse.issue.idIssue)">Create Design Decision</button></td>
-		</tr>
-	</table>
+	<div class="container-fluid">
+		<div class="col-md-12 tile">
+			<table class="table">
+				<tr>
+					<th>Title</th>
+					<th>Status</th>
+					<th>Creator</th>
+					<th>Owner</th>
+					<th></th>
+				</tr>
+				<tr ng-repeat="issueResponse in issuesResponse">
+					<td>
+						<a ng-click="showIssue(issueResponse.issue.idIssue)">{{issueResponse.issue.title}}</a><br />
+						<div class="tagwrapper" ng-repeat="issueTag in issueResponse.issue.issueTags">{{issueTag.tag.name}}</div>
+					</td>
+					<td>{{issueResponse.issue.issueStatus}}</td>
+					<td>{{issueResponse.issue.creator.forename}} {{issueResponse.issue.creator.surname}}</td>
+					<td>{{issueResponse.issue.owner.forename}} {{issueResponse.issue.owner.surname}}</td>
+					<td>
+						<button ng-show="issueResponse.showBtnCreateDesignDecision" 
+								ng-disabled="!issueResponse.owner" class="btn btn-primary"
+								ng-click="createDesignDecision(issueResponse.issue.idIssue)">
+								Create Design Decision</button>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+
 </div>

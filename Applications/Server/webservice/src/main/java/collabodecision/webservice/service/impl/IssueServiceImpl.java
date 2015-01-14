@@ -258,7 +258,10 @@ public class IssueServiceImpl implements IssueService {
 			// blocked!
 			// TODO: Check only blocks when DD is not accepted!
 			issue.setBlocked(dependingIssues.size() > 0);
+		} else {
+			issue.setBlocked(false);
 		}
+		
 		// This issue resolves other issues
 		if (issueRequest.getIdsResolves() != null
 				&& !issueRequest.getIdsResolves().isEmpty()) {
