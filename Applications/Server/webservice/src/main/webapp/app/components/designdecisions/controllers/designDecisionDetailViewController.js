@@ -22,7 +22,7 @@ angular.module('collaboApp').controller('DesignDecisionDetailViewController', ['
 				$scope.canRank = $scope.designDecisionWrapper.designDecision.designDecisionStatus === 'RANK_ALTERNATIVES' && 
 									$scope.designDecisionWrapper.shareholder;
 				
-				$scope.showAddAlternative = ($scope.designDecisionWrapper.showStartRanking || !$scope.designDecisionWrapper.showSelectAlternative) && !$scope.designDecisionWrapper.showFinishRanking;
+				$scope.showAddAlternative = $scope.designDecisionWrapper.designDecision.designDecisionStatus == "COLLECTING_ALTERNATIVES";
 				
 				$scope.alternativeRanks = [];
 				
@@ -191,9 +191,19 @@ angular.module('collaboApp').controller('DesignDecisionDetailViewController', ['
 			
 			if(rankingFinished) {
 				$scope.cancel()
+			} else {
+				alert("Sucessfully Ranked");
+				$scope.cancel();
 			}
-		});
+		});	
+	}
+	
+	$scope.selectAlternative = function(alternative, designDecision) {
 		
+		$http.post("rest/designdecisions/" + designDecision.idDesignDecision + "/solution?solution=" + alternative.idAlternative).success(function() {
+			alert("Alternative: " + alternative.idAlternative + " was successfully selected as Solution.")
+			$scope.cancel();
+		});
 	}
 
 	//initialize fields
@@ -221,4 +231,5 @@ angular.module('collaboApp').controller('DesignDecisionDetailViewController', ['
 	$scope.$on("addedReply", function(event, args){
 		$scope.initialize();
 	});
+	
 }]);

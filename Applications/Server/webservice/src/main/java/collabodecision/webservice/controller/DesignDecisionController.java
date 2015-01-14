@@ -29,13 +29,13 @@ public class DesignDecisionController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public List<ResponseWrapperDesignDecision> getDesignDecisions(
-			
+
 			@RequestParam(value = "status", required = false) String status,
-			@RequestParam(value = "isShareholder", required=false) boolean isShareholder,
-			@RequestParam(value = "torate", required=false) boolean toRate,
-			@RequestParam(value = "torank", required=false) boolean toRank)
-			 {
-		return designDecisionService.getDesignDecisions(status, isShareholder, toRank, toRate);
+			@RequestParam(value = "isShareholder", required = false) boolean isShareholder,
+			@RequestParam(value = "torate", required = false) boolean toRate,
+			@RequestParam(value = "torank", required = false) boolean toRank) {
+		return designDecisionService.getDesignDecisions(status, isShareholder,
+				toRank, toRate);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -46,16 +46,22 @@ public class DesignDecisionController {
 		return designDecisionService.getDesignDecision(id, withRelations);
 	}
 
-	
 	@RequestMapping(method = RequestMethod.POST)
-	public void addDesignDecision(@RequestBody RequestWrapperData<RequestWrapperDesignDecision> request) {
+	public void addDesignDecision(
+			@RequestBody RequestWrapperData<RequestWrapperDesignDecision> request) {
 		designDecisionService.addDesignDecision(request.getData());
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public void updateDesignDecision(@PathVariable long id,
+	public void updateDesignDecision(
+			@PathVariable long id,
 			@RequestBody RequestWrapperData<RequestWrapperDesignDecision> request) {
 		designDecisionService.updateDesignDecision(id, request.getData());
+	}
+	
+	@RequestMapping(value = "/{id}/solution", method = RequestMethod.POST)
+	public void addSolution(@RequestParam(value="solution") long idSolutionAlternative, @PathVariable long id) {
+		designDecisionService.addSolution(id, idSolutionAlternative);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
@@ -70,14 +76,14 @@ public class DesignDecisionController {
 			@RequestParam(value = "date") String stringDate) {
 		designDecisionService.addComment(idDesignDecision, message, stringDate);
 	}
-	
 
 	@RequestMapping(value = "/{idDesignDecision}/rate", method = RequestMethod.POST)
 	public void rateAlternative(@PathVariable long idDesignDecision,
 			@RequestParam(value = "value") Integer value,
-			@RequestParam(value = "comment" , required=false) String comment,
+			@RequestParam(value = "comment", required = false) String comment,
 			@RequestParam(value = "date", required = false) String stringDate) {
-		designDecisionService.rateDesignDecision(idDesignDecision, value, comment, stringDate);
+		designDecisionService.rateDesignDecision(idDesignDecision, value,
+				comment, stringDate);
 	}
-	
+
 }
