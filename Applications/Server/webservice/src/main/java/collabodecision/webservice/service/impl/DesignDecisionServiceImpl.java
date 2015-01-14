@@ -192,8 +192,7 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 			// Only check for existing shares when Update
 			if (idExistingDesignDecision != null) {
 				Share share = shareDao.getShare(appUser, decision);
-				shareholders.add(share != null ? share : new Share(appUser,
-						decision));
+				shareholders.add(share != null ? share : new Share(appUser, decision));
 			} else {
 				shareholders.add(new Share(appUser, decision));
 			}
@@ -352,10 +351,6 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 				}
 			}
 		}
-		
-		
-		
-		
 
 		if (DesignDecisionStatus.DECIDED.equals(decision.getDesignDecisionStatus())) {
 			response.setShowDecided(true);
@@ -365,8 +360,6 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 					 break;
 				 }
 			}
-			
-			
 		} else if (DesignDecisionStatus.INAPPROPRIATE_SOLUTION.equals(decision.getDesignDecisionStatus())) {
 			response.setShowInappropriateSolution(true);
 		} else if (DesignDecisionStatus.OBSOLETE.equals(decision.getDesignDecisionStatus())) {
