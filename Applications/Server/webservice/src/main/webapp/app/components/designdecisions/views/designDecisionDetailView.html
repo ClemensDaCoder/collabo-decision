@@ -54,10 +54,10 @@
 							<label for="inputAssumption" class="control-label">Assumption</label>
 							<textarea ng-disabled="isEditDisabled" rows="5" cols="10" id="inputAssumption" class="form-control" placeholder="Assumption" ng-model="designDecisionWrapper.designDecision.assumption"></textarea>
 					</div>
-					<div class="form-group" ng-show="designDecisionWrapper.showDecided">
+					<!-- <div class="form-group" ng-show="designDecisionWrapper.showDecided">
 						<label for="inputRationale" class="control-label">Rationale</label>
 						<textarea ng-disabled="true" rows="5" cols="10" id="inputRationale" class="form-control" placeholder="Rationale" ng-model="designDecisionWrapper.designDecision.rationale"></textarea>
-					</div>
+					</div> -->
 				</div>
 			</div>
 			
@@ -79,6 +79,18 @@
 								<th>Creator</th>
 								<th>Description</th>
 								<th ng-show="canRank">Rank</th>
+							</tr>
+							<tr ng-show="designDecisionWrapper.showDecided" class="success">
+							<!-- designDecisionWrapper.designDecision.solution -->
+								<td style="width: 100px;"><b><a href ng-click="showAlternative(designDecisionWrapper.designDecision.solution.idAlternative)">{{designDecisionWrapper.designDecision.solution.idAlternative}}</a></b></td>
+								<td style="width: 200px;"><b>{{designDecisionWrapper.designDecision.solution.creator.forename}} {{designDecisionWrapper.designDecision.solution.creator.surname}}</b></td>
+								<td style="width: auto;"><b>{{designDecisionWrapper.designDecision.solution.description}}</b></td>
+								<td style="width: auto;">
+									<div class="form-group">
+										<label for="inputRationale" class="control-label">Rationale</label>
+										<textarea ng-disabled="true" rows="3" cols="10" id="inputRationale" class="form-control" placeholder="Rationale" ng-model="designDecisionWrapper.designDecision.rationale"></textarea>
+									</div>
+								</td>
 							</tr>
 							<tr ng-repeat="alternative in designDecisionWrapper.designDecision.alternatives">
 								<td style="width: 100px;"><a href ng-click="showAlternative(alternative.idAlternative)">{{alternative.idAlternative}}</a></td>

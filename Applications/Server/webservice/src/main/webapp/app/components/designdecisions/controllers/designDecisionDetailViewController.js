@@ -12,6 +12,14 @@ angular.module('collaboApp').controller('DesignDecisionDetailViewController', ['
 			uri += $scope.idDesignDecision + "?withRelations=true";
 			$http.get(uri).success(function(data) {
 				$scope.designDecisionWrapper = angular.fromJson(data);
+				
+				for(var i = 0; i < $scope.designDecisionWrapper.designDecision.alternatives.length; i++){
+					if ($scope.designDecisionWrapper.designDecision.alternatives[i].idAlternative == $scope.designDecisionWrapper.designDecision.solution.idAlternative){
+						$scope.designDecisionWrapper.designDecision.alternatives.splice(i, 1);
+						break;
+					}
+				}
+				
 				//$scope.owner = $scope.designDecisionWrapper.designDecision.issue.owner.forename + " " + $scope.designDecisionWrapper.designDecision.issue.owner.surname;
 				
 				for (var index = 0; index < $scope.designDecisionWrapper.designDecision.shares.length; index++) {
