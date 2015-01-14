@@ -351,17 +351,21 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 				}
 			}
 		}
+		
+		boolean isRated = false;
+		for (DesignDecisionRating rating : decision.getDesignDecisionRatings()) {
+			 if (appUser.equals(rating.getRater().getAppUser())) {
+				 isRated = true;
+				 break;
+			 }
+		}
 
 		if (DesignDecisionStatus.DECIDED.equals(decision.getDesignDecisionStatus())) {
 			response.setShowInappropriateSolution(true);
-			for (DesignDecisionRating rating : decision.getDesignDecisionRatings()) {
-				 if (appUser.equals(rating.getRater().getAppUser())) {
-					 response.setRated(true);
-					 break;
-				 }
-			}
+			response.setRated(isRated);
 		} else if (DesignDecisionStatus.INAPPROPRIATE_SOLUTION.equals(decision.getDesignDecisionStatus())) {
 			response.setShowDecided(true);
+			response.setRated(isRated);
 		} else if (DesignDecisionStatus.OBSOLETE.equals(decision.getDesignDecisionStatus())) {
 			response.setShowObsolete(true);
 		}
