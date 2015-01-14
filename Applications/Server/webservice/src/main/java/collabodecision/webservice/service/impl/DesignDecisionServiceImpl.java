@@ -65,8 +65,8 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	@Autowired
-	private DesignDecisionRatingDao designDecisionRatingDao;
+	//@Autowired
+	//private DesignDecisionRatingDao designDecisionRatingDao;
 	
 	
 	@Override
@@ -393,6 +393,6 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 		designDecisionRating.setDesignDecision(designDecision);
 		designDecisionRating.setRater(shareDao.getShare(appUser, designDecision));
 		
-		designDecisionRatingDao.saveOrUpdateDesignDecisionRating(designDecisionRating);
+		//designDecisionRatingDao.saveOrUpdateDesignDecisionRating(designDecisionRating);
 	}
 }
