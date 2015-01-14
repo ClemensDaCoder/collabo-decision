@@ -25,6 +25,12 @@ angular.module('collaboApp').controller('DesignDecisionsController', ['$scope', 
 				}
 			}
 		});
+		
+		modalInstance.result.then(function() {
+			$scope.getDesignDecisions(null);
+		}, function() {
+			$scope.getDesignDecisions(null);
+		});
 	};
 	
 	// On load show all
