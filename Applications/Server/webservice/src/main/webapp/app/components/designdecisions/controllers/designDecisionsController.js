@@ -33,6 +33,19 @@ angular.module('collaboApp').controller('DesignDecisionsController', ['$scope', 
 		});
 	};
 	
+	$scope.calcRating = function(designDecision){
+		//calculate average rating
+		var sum=0;
+		for(var i = 0; i<designDecision.designDecisionRatings.length;i++){
+			sum+=designDecision.designDecisionRatings[i].rating;
+		}
+		var rating = sum / designDecision.designDecisionRatings.length;
+		if(isNaN(rating))
+			return "no rating";
+		else
+			return (Math.round(rating * 100) / 100) + "/10";
+	};
+	
 	// On load show all
 	$scope.getDesignDecisions(null);
 }]);
