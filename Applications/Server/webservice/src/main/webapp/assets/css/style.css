@@ -179,3 +179,8 @@ a[ng-click] {
 	left: auto;
 	top: 10px;
 }
+
+button[id^=rank-][disabled=""] {
+	background-color: green !important;
+	color: white;
+}

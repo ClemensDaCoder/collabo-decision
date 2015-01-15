@@ -99,7 +99,7 @@
 								<td style="width: auto;">{{alternative.description}}</td>
 								<td style="width: 200px" ng-show="canRank">
 									<div class="btn-group">
-										<button class="btn btn-default" ng-repeat="alternativeRank in alternativeRanks" ng-click="rankChosen(alternative.idAlternative, $index)">{{$index + 1}}</button>
+										<button class="btn btn-default" id="rank-{{alternative.idAlternative}}-{{$index}}" ng-repeat="alternativeRank in alternativeRanks" ng-click="rankChosen(alternative.idAlternative, $index)">{{$index + 1}}</button>
 									</div>
 								</td>
 								<td style="width: 300px" ng-show="designDecisionWrapper.showSelectAlternative">
@@ -117,7 +117,7 @@
 						</table>
 						<p style="width: 100%; font-weight: bold; text-align: right;" ng-show="designDecisionWrapper.showSelectAlternative">Less Ranking Points = Better Alternative (e.g. 2 are better than 3)</p>
 						<button class="btn btn-primary" ng-click="addAlternative()" ng-show="showAddAlternative">Add Alternative</button>
-						<button ng-if="designDecisionWrapper.showFinishRanking" class="btn btn-success" ng-click="finishRanking()">Finish Ranking</button>
+						<button ng-if="designDecisionWrapper.showFinishRanking" ng-disabled="!rankingFinished" class="btn btn-success" ng-click="finishRanking()">Finish Ranking</button>
 					</div>
 				</div>
 			</div>

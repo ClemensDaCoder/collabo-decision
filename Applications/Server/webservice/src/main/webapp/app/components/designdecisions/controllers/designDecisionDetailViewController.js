@@ -34,6 +34,8 @@ angular.module('collaboApp').controller('DesignDecisionDetailViewController', ['
 				
 				$scope.showAddAlternative = $scope.designDecisionWrapper.designDecision.designDecisionStatus == "COLLECTING_ALTERNATIVES";
 				
+				$scope.rankingFinished = false;
+				
 				$scope.alternativeRanks = [];
 				
 				if($scope.canRank) {
@@ -45,6 +47,7 @@ angular.module('collaboApp').controller('DesignDecisionDetailViewController', ['
 						$scope.alternativeRanks.push({
 							'idAlternative' : idAlternative,
 							'rank' : null
+							
 						});
 					}	
 				}
@@ -196,18 +199,44 @@ angular.module('collaboApp').controller('DesignDecisionDetailViewController', ['
 	
 	$scope.rankChosen = function(idAlternative, rank) {
 		
+		
+		
+		// Enable all Buttons before
 		for(var i in $scope.alternativeRanks) {
-			if($scope.alternativeRanks[i].rank == rank) {
+			document.getElementById("rank-" + idAlternative + "-" + i).removeAttribute("disabled");
+		}
+		
+		
+		//alert(JSON.stringify($scope.alternativeRanks));
+		
+		// if rank already chosen - remove rank from it
+		for(var i in $scope.alternativeRanks) {	
+			if($scope.alternativeRanks[i].rank === rank) {
 				$scope.alternativeRanks[i].rank = null;
+				document.getElementById("rank-" + $scope.alternativeRanks[i].idAlternative + "-" + rank).removeAttribute("disabled");
 			}
 		}
 		
 		for(var i in $scope.alternativeRanks) {
-			if($scope.alternativeRanks[i].idAlternative == idAlternative) {
+			if($scope.alternativeRanks[i].idAlternative === idAlternative) {
 				$scope.alternativeRanks[i].rank = rank;
+				document.getElementById("rank-" + idAlternative + "-" + rank).setAttribute("disabled", "");
 				break;
 			}
 		}
+		
+		
+		var isRankingFinished = true;
+		for(var i in $scope.alternativeRanks) {
+			
+			if($scope.alternativeRanks[i].rank === null) {
+				isRankingFinished = false;
+				break;
+			}
+			
+		}
+		
+		$scope.rankingFinished = isRankingFinished; 
 		
 	};
 	
