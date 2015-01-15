@@ -104,7 +104,8 @@ public class DesignDecisionDaoImpl extends BaseDao implements DesignDecisionDao 
 		if(toRate)
 		{
 			crit.add(Restrictions.eq("designDecisionStatus", DesignDecisionStatus.DECIDED));
-			List<DesignDecision> decidedDesignDecisions = crit.list();
+			
+			/*List<DesignDecision> decidedDesignDecisions = crit.list();
 			List<DesignDecision> decidedDesignDecisionsWithoutRatings = new ArrayList<DesignDecision>();
 			for (DesignDecision decidedDesignDecision : decidedDesignDecisions) {
 				if (decidedDesignDecision.getDesignDecisionRatings().isEmpty()) {
@@ -112,6 +113,7 @@ public class DesignDecisionDaoImpl extends BaseDao implements DesignDecisionDao 
 				}
 			}
 			return decidedDesignDecisionsWithoutRatings;
+			*/
 		}
 		List<DesignDecision> designDecisions = crit.list();
 		return designDecisions;
