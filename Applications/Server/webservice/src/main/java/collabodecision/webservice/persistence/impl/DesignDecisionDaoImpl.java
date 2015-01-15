@@ -1,5 +1,6 @@
 package collabodecision.webservice.persistence.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -103,6 +104,14 @@ public class DesignDecisionDaoImpl extends BaseDao implements DesignDecisionDao 
 		if(toRate)
 		{
 			crit.add(Restrictions.eq("designDecisionStatus", DesignDecisionStatus.DECIDED));
+			List<DesignDecision> decidedDesignDecisions = crit.list();
+			List<DesignDecision> decidedDesignDecisionsWithoutRatings = new ArrayList<DesignDecision>();
+			for (DesignDecision decidedDesignDecision : decidedDesignDecisions) {
+				if (decidedDesignDecision.getDesignDecisionRatings().isEmpty()) {
+					decidedDesignDecisionsWithoutRatings.add(decidedDesignDecision);
+				}
+			}
+			return decidedDesignDecisionsWithoutRatings;
 		}
 		List<DesignDecision> designDecisions = crit.list();
 		return designDecisions;
