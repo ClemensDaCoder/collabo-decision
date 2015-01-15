@@ -2,7 +2,9 @@
 	<div class=row>
 		<ul class="list-group">
 			<li class="list-group-item" ng-repeat="comment in comments">
-				[{{comment.idComment}}]: {{comment.creator.forename}} {{comment.creator.surname}} replied to [{{parentcomment}}] <br> {{comment.text}}
+				<!-- [{{comment.idComment}}]: {{comment.creator.forename}} {{comment.creator.surname}} replied to [{{parentcomment}}] <br> {{comment.text}} -->
+				<label for="lblComment" class="control-label">[{{comment.idComment}}]: {{comment.creator.forename}} {{comment.creator.surname}} replied to [{{parentcomment}}] </label>					
+				<label type="text" class="form-control" id="lblComment">{{comment.text}}</label>
 				<replyinput parentcomment="comment.idComment"></replyinput>
 				<replycomment parentcomment="comment.idComment"> </replycomment>
 			</li>
