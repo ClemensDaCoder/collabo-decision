@@ -46,8 +46,14 @@ angular.module('collaboApp').controller('DashboardController', ['$http', '$scope
 			uri+="&torate=true";
 		
 		$http.get(uri).success(function(data) {
-			if(rankable)
+			if(rankable){
 				$scope.rankableDDs = angular.fromJson(data);
+				for(var i = 0;i<$scope.rankableDDs.length;i++){
+					if(!$scope.rankableDDs[i].showFinishRanking){
+						$scope.rankableDDs.splice(i,1);
+					}
+				}
+			}
 			else if(rateable){
 				$scope.rateableDDs = angular.fromJson(data);
 				for(var i = 0;i<$scope.rateableDDs.length;i++){
