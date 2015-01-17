@@ -17,6 +17,4 @@ public interface AlternativeDao {
 	void saveOrUpdateAlternative(Alternative alternative);
 	
 	List<Alternative> getAlternativeByIds(Collection<Long> alternativeIds);
-
-	
 }

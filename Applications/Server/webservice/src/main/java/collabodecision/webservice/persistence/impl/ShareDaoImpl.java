@@ -22,7 +22,6 @@ public class ShareDaoImpl extends BaseDao implements ShareDao {
 	@Override
 	@Transactional(readOnly = true)
 	public Share getShare(AppUser user, DesignDecision designDecision) {
-		// TODO Auto-generated method stub
 		return (Share)getCurrentSession()
 				.createCriteria(Share.class)
 				.add(Restrictions.and(Restrictions.eq("appUser", user),

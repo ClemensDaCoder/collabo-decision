@@ -19,7 +19,6 @@ public class AlternativeRankingDaoImpl extends BaseDao implements
 	@Autowired
 	public AlternativeRankingDaoImpl(SessionFactory sessionFactory) {
 		super(sessionFactory);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

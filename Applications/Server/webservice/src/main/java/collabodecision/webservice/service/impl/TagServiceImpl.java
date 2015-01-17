@@ -1,5 +1,6 @@
 package collabodecision.webservice.service.impl;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,19 @@ public class TagServiceImpl implements TagService {
 		return tagDao.getTagsNameLike(partialName);
 	}
 
+	@Override
+	public List<Tag> getTagsByName(Collection<String> names) {
+		return tagDao.getTagsByName(names);
+	}
+
+	@Override
+	public void addTag(Tag tag) {
+		tagDao.saveOrUpdateTag(tag);
+	}
 	
-	
+	@Override
+	public void addTag(String tagValue) {
+		Tag tag = new Tag(tagValue);
+		addTag(tag);
+	}
 }

@@ -4,6 +4,10 @@ import java.util.List;
 
 import collabodecision.webservice.persistence.domain.AppUser;
 
+/**
+ * Defines the methods that are available to manipulate {@link collabodecision.webservice.persistence.domain.AppUser}
+ *
+ */
 public interface AppUserService {
 	
 	AppUser getAppUserByUsername(String username);

@@ -18,6 +18,10 @@ import org.hibernate.annotations.CascadeType;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+/** 
+ * Represents an Alternative in the database.
+ *
+ */
 @Entity
 @Table
 public class Alternative {

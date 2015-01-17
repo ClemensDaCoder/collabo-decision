@@ -27,33 +27,21 @@ public class AlternativeController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public void updateAlternative(@PathVariable long id,
-			@RequestBody RequestWrapperData<RequestWrapperAlternative> request) {
+	public void updateAlternative(@PathVariable long id, @RequestBody RequestWrapperData<RequestWrapperAlternative> request) {
 		alternativeService.updateAlternative(id, request.getData());
 	}
 	
 	@RequestMapping(value = "/{idAlternative}/comments", method = RequestMethod.POST)
-	public void addComment(@PathVariable long idAlternative,
-			@RequestParam(value = "message") String message,
+	public void addComment(@PathVariable long idAlternative, @RequestParam(value = "message") String message,
 			@RequestParam(value = "date") String stringDate) {
 		alternativeService.addComment(idAlternative, message, stringDate);
 	}
 	
-	
-//	// TODO: Probably not a good idea! -> All alternatives should be Ranked in one Transaction
-//	@RequestMapping(value = "/{idAlternative}/rankings", method = RequestMethod.POST)
-//	public void rankAlternative(@PathVariable long idAlternative,
-//			@RequestParam(value = "rank") int rank) {
-//		alternativeService.rankAlternative(idAlternative, rank);
-//	}
-	
-	
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseWrapperAlternative getAlternative(
-			@PathVariable long id,
+	public ResponseWrapperAlternative getAlternative(@PathVariable long id,
 			@RequestParam(value = "withRelations", defaultValue = "false") boolean withRelations) {
-		return alternativeService.getResponseWrapperAlternative(id, withRelations);
+		return alternativeService.getAlternativeWrapped(id, withRelations);
 	}
 	
 	

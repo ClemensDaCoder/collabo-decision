@@ -11,6 +11,10 @@ import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+/**
+ * Represents a relation between two {@link collabodecision.webservice.persistence.domain.Issue} objects.
+ *
+ */
 @Entity
 @Table(uniqueConstraints=@UniqueConstraint(columnNames={"idIssueFrom", "idIssueTo", "relationType"}))
 public class IssueRelation {

@@ -10,6 +10,10 @@ import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+/**
+ * Assigns an {@link collabodecision.webservice.persistence.domain.AppUser} to a {@link collabodecision.webservice.persistence.domain.DesignDecision}, thereby granting the permission to rank the existing {@link collabodecision.webservice.persistence.domain.Alternative}
+ *
+ */
 @Entity
 @Table(uniqueConstraints=@UniqueConstraint(columnNames={"idDesignDecision", "idUser"}))
 public class Share {

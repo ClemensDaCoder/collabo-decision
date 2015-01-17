@@ -142,14 +142,11 @@ public class DesignDecisionServiceImpl implements DesignDecisionService {
 
 	@Override
 	public void addFile(long id, String pathToFile) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void addDesignDecision(
-			RequestWrapperDesignDecision DesignDecisionrequest) {
-		// TODO Auto-generated method stub
+	public void addDesignDecision(RequestWrapperDesignDecision DesignDecisionrequest) {
 		addOrUpdateDesignDecision(DesignDecisionrequest, null);
 	}
 

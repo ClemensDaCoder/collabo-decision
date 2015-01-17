@@ -32,21 +32,18 @@ public class IssueController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseWrapperIssue getIssue(
-			@PathVariable long id,
+	public ResponseWrapperIssue getIssue(@PathVariable long id,
 			@RequestParam(value = "withRelations", defaultValue = "false") boolean withRelations) {
 		return issueService.getIssue(id, withRelations);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public void addIssue(
-			@RequestBody RequestWrapperIssue request) {
+	public void addIssue(@RequestBody RequestWrapperIssue request) {
 		issueService.addIssue(request);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public void updateIssue(@PathVariable long id,
-			@RequestBody RequestWrapperIssue issueRequest) {
+	public void updateIssue(@PathVariable long id, @RequestBody RequestWrapperIssue issueRequest) {
 		issueService.updateIssue(id, issueRequest);
 	}
 

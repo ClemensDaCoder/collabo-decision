@@ -9,6 +9,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+/**
+ * Represents a relation between two {@link collabodecision.webservice.persistence.domain.Alternative} objects.
+ *
+ */
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {
 		"idAlternativeFrom", "idAlternativeTo", "relationType" }))

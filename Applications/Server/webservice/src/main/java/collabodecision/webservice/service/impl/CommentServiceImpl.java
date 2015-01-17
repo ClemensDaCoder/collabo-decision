@@ -35,5 +35,4 @@ public class CommentServiceImpl implements CommentService {
 	public List<Comment> getChildComments(long idComment) {
 		return commentDao.getChildComments(idComment);
 	}
-
 }

@@ -9,6 +9,10 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+/**
+ * Represents an user of collabodecision in the database.
+ *
+ */
 @Entity
 @Table
 public class AppUser {

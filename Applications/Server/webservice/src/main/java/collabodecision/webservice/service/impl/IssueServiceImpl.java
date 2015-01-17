@@ -24,6 +24,7 @@ import collabodecision.webservice.persistence.domain.IssueTag;
 import collabodecision.webservice.persistence.domain.Tag;
 import collabodecision.webservice.service.AppUserService;
 import collabodecision.webservice.service.IssueService;
+import collabodecision.webservice.service.TagService;
 import collabodecision.webservice.service.utils.CommentHelper;
 
 @Service
@@ -40,6 +41,9 @@ public class IssueServiceImpl implements IssueService {
 
 	@Autowired
 	private AppUserService userService;
+	
+	@Autowired
+	private TagService tagService;
 
 	@Autowired
 	private CommentHelper commentHelper;
@@ -86,31 +90,16 @@ public class IssueServiceImpl implements IssueService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public ResponseWrapperIssue getIssue(long id,
-			boolean withRelations) {
+	public ResponseWrapperIssue getIssue(long id, boolean withRelations) {
 
-		Issue issue = withRelations ? issueDao.getIssueWithRelations(id)
-				: issueDao.getIssue(id);;
-
+		Issue issue = withRelations ? issueDao.getIssueWithRelations(id): issueDao.getIssue(id);
 		ResponseWrapperIssue rwi = new ResponseWrapperIssue();
+		
 		rwi.setIssue(issue);
-		
 		setResponseWrapperIssueFlags(rwi);
-		
-		/*
-		 * #########
-		 * 
-		 * TODO: 
-		 * 
-		 * Evaluate if the following is correct! (probably not correct in the moment!)
-		 * 		Building the Lists!
-		 * 
-		 * #########
-		 */
 		if(withRelations) {
 			
 			for(IssueRelation irFrom : issue.getIssueRelationsFrom()) {
-				
 				switch(irFrom.getRelationType()) {
 				case DEPENDS:
 					rwi.getDependsIssuesFrom().add(irFrom.getIssueTo());
@@ -138,9 +127,7 @@ public class IssueServiceImpl implements IssueService {
 				}
 			}
 		}
-		
 		return rwi;
-
 	}
 	
 	@Override
@@ -220,13 +207,13 @@ public class IssueServiceImpl implements IssueService {
 		issue.setCreator(creator);
 
 		// Get all the tags that are already in the DB
-		List<Tag> tagsInDb = tagDao.getTagsByName(issueRequest.getTags());
+		List<Tag> tagsInDb = tagService.getTagsByName(issueRequest.getTags());
 
 		for (String tagName : issueRequest.getTags()) {
 			Tag newTag = new Tag(tagName);
 			// Adding non existing Tags to the DB
 			if (!tagsInDb.contains(newTag)) {
-				tagDao.saveOrUpdateTag(newTag);
+				tagService.addTag(newTag);
 				tagsInDb.add(newTag);
 			}
 		}
@@ -316,7 +303,6 @@ public class IssueServiceImpl implements IssueService {
 		
 		rwi.setOwner(rwi.getIssue().getOwner().equals(appUser));
 
-		// TODO: check if needed in list (probably not)
 		rwi.setShowInProgress(false);
 		rwi.setShowRepeat(false);
 
@@ -342,18 +328,11 @@ public class IssueServiceImpl implements IssueService {
 		if (IssueStatus.RESOLVED.equals(rwi.getIssue().getIssueStatus())) {
 			rwi.setShowResolved(true);
 		}
-		
-
 	}
-
 
 
 	@Override
 	public List<Comment> getChildComments(long idComment) {
 		return commentDao.getChildComments(idComment);
 	}
-
-
-
-
 }

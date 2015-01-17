@@ -11,6 +11,12 @@ import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+/**
+ * Represents an individual rank of a Shareholder on an {@link collabodecision.webservice.persistence.domain.Alternative}.
+ * 
+ *  @see collabodecision.webservice.persistence.domain.Share
+ *
+ */
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = { "idAlternative",
 		"idShare", "rank" }))

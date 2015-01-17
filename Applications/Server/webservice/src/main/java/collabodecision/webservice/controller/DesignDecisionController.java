@@ -29,7 +29,6 @@ public class DesignDecisionController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public List<ResponseWrapperDesignDecision> getDesignDecisions(
-
 			@RequestParam(value = "status", required = false) String status,
 			@RequestParam(value = "isShareholder", required = false) boolean isShareholder,
 			@RequestParam(value = "torate", required = false) boolean toRate,
@@ -39,23 +38,18 @@ public class DesignDecisionController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseWrapperDesignDecision getDesignDecision(
-			@PathVariable long id,
+	public ResponseWrapperDesignDecision getDesignDecision(@PathVariable long id,
 			@RequestParam(value = "withRelations", defaultValue = "false") boolean withRelations) {
-
 		return designDecisionService.getDesignDecision(id, withRelations);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public void addDesignDecision(
-			@RequestBody RequestWrapperData<RequestWrapperDesignDecision> request) {
+	public void addDesignDecision(@RequestBody RequestWrapperData<RequestWrapperDesignDecision> request) {
 		designDecisionService.addDesignDecision(request.getData());
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public void updateDesignDecision(
-			@PathVariable long id,
-			@RequestBody RequestWrapperData<RequestWrapperDesignDecision> request) {
+	public void updateDesignDecision(@PathVariable long id, @RequestBody RequestWrapperData<RequestWrapperDesignDecision> request) {
 		designDecisionService.updateDesignDecision(id, request.getData());
 	}
 	
@@ -65,8 +59,7 @@ public class DesignDecisionController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public void deleteDesignDecision(@PathVariable long id,
-			@Valid DesignDecision sesignDecision) {
+	public void deleteDesignDecision(@PathVariable long id, @Valid DesignDecision designDecision) {
 		designDecisionService.deleteDesignDecision(id);
 	}
 

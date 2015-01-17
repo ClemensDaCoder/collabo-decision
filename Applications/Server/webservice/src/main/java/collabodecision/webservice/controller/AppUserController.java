@@ -21,14 +21,12 @@ public class AppUserController {
 	private AppUserService appUserService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public List<AppUser> getAppUsers(
-			@RequestParam(value = "partialname", required = false) String partialName) {
+	public List<AppUser> getAppUsers(@RequestParam(value = "partialname", required = false) String partialName) {
 		return appUserService.getAppUsers(partialName);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public void addAppUser(
-			@RequestBody RequestWrapperData<AppUser> appUserRequest) {
+	public void addAppUser(@RequestBody RequestWrapperData<AppUser> appUserRequest) {
 		AppUser appUser = appUserRequest.getData();
 		appUserService.addAppUser(appUser.getMail(), appUser.getForename(),
 				appUser.getSurname(), appUser.getPassword());

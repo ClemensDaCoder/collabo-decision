@@ -80,8 +80,6 @@ public class AppUserServiceImpl implements UserDetailsService, AppUserService {
 		if(partialName != null) {
 			return userDao.getAppUsersNameLike(partialName);
 		}
-		
 		return userDao.getAppUsers();
 	}
-
 }

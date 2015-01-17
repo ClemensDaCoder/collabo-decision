@@ -18,6 +18,11 @@ import org.hibernate.annotations.CascadeType;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+/**
+ * Represents an Issue in the database.
+ * 
+ *
+ */
 @Entity
 @Table
 @JsonIgnoreProperties({"designDecisions"})

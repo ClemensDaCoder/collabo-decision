@@ -17,6 +17,10 @@ import org.hibernate.annotations.CascadeType;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+/** Represents a DesignDecision in the database.
+ * 
+ *
+ */
 @Entity
 @Table
 public class DesignDecision {
@@ -210,6 +214,10 @@ public class DesignDecision {
 		return true;
 	}
 
+	/**
+	 * The state of a {@link collabodecision.webservice.persistence.domain.DesignDecision}
+	 *
+	 */
 	public enum DesignDecisionStatus {
 		COLLECTING_ALTERNATIVES, RANK_ALTERNATIVES, SELECTING_ALTERNATIVES, DECIDED, OBSOLETE, INAPPROPRIATE_SOLUTION, BLOCKED
 	}

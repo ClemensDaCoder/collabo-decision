@@ -13,6 +13,16 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+/**
+ * Represents a comment on one of the following items:
+ *  <ul>
+ *  	<li>{@link collabodecision.webservice.persistence.domain.Alternative}</li>
+ * 	 	<li>{@link collabodecision.webservice.persistence.domain.Issue}</li>
+ *  	<li>{@link collabodecision.webservice.persistence.domain.DesignDecision}</li>
+ *  </ul>
+
+ *
+ */
 @Entity
 @Table
 public class Comment {

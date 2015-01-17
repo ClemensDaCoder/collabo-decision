@@ -61,7 +61,6 @@ public class AlternativesServiceImpl implements AlternativeService {
 
 	@Override
 	public void addFile(long id, String pathToFile) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -85,9 +84,7 @@ public class AlternativesServiceImpl implements AlternativeService {
 	@Override
 	@Transactional(readOnly = false)
 	public void addAlternative(RequestWrapperAlternative alternativeRequest) {
-		// TODO Auto-generated method stub
 		addorUpdateAlternative(alternativeRequest, null);
-
 	}
 	
 	@Override
@@ -159,23 +156,12 @@ public class AlternativesServiceImpl implements AlternativeService {
 		}
 	}
 
-	@Override
 	@Transactional(readOnly = true)
-	public ResponseWrapperAlternative getResponseWrapperAlternative(long id,
-			boolean withRelations) {
-		// TODO Auto-generated method stub
-		Alternative alternative;
+	public ResponseWrapperAlternative getAlternativeWrapped(long id, boolean withRelations) {
+		Alternative alternative = getAlternative(id, withRelations); 
 
-		AppUser appUser = userService
-				.getAppUserByUsername(SecurityContextHolder.getContext()
+		AppUser appUser = userService.getAppUserByUsername(SecurityContextHolder.getContext()
 						.getAuthentication().getName());
-
-		if (withRelations) {
-			alternative = alternativeDao.getAlternativeWithRelations(id);
-
-		} else {
-			alternative = alternativeDao.getAlternative(id);
-		}
 
 		ResponseWrapperAlternative response = new ResponseWrapperAlternative();
 		response.setAlternative(alternative);
@@ -189,11 +175,8 @@ public class AlternativesServiceImpl implements AlternativeService {
 
 	@Override
 	@Transactional(readOnly = false)
-	public void updateAlternative(long existingid,
-			RequestWrapperAlternative alternative) {
+	public void updateAlternative(long existingid, RequestWrapperAlternative alternative) {
 		addorUpdateAlternative(alternative, existingid);
 
 	}
-
-
 }

@@ -10,6 +10,10 @@ import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+/**
+ * Assigns a {@link collabodecision.webservice.persistence.domain.Tag} to an {@link collabodecision.webservice.persistence.domain.Issue}
+ *
+ */
 @Entity
 @Table(uniqueConstraints=@UniqueConstraint(columnNames={"idTag", "idIssue"}))
 public class IssueTag {

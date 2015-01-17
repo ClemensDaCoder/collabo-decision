@@ -6,6 +6,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * Represents a tag, which can be assigned to one or more {@link collabodecision.webservice.persistence.domain.Issue}
+ *
+ */
 @Entity
 @Table
 public class Tag {

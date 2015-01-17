@@ -17,6 +17,10 @@ import org.hibernate.annotations.CascadeType;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+/**
+ * Represents the rating an individuals rating of a {@link collabodecision.webservice.persistence.domain.DesignDecision}
+ *
+ */
 @Entity
 @Table
 public class DesignDecisionRating {
