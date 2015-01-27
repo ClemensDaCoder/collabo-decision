@@ -2,11 +2,13 @@ package collabodecision.webservice.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import collabodecision.webservice.data.RequestWrapperIssue;
@@ -20,6 +22,7 @@ import collabodecision.webservice.persistence.domain.File;
 import collabodecision.webservice.persistence.domain.Issue;
 import collabodecision.webservice.persistence.domain.Issue.IssueStatus;
 import collabodecision.webservice.persistence.domain.IssueRelation;
+import collabodecision.webservice.persistence.domain.IssueRelation.RelationType;
 import collabodecision.webservice.persistence.domain.IssueTag;
 import collabodecision.webservice.persistence.domain.Tag;
 import collabodecision.webservice.service.AppUserService;
@@ -41,7 +44,7 @@ public class IssueServiceImpl implements IssueService {
 
 	@Autowired
 	private AppUserService userService;
-	
+
 	@Autowired
 	private TagService tagService;
 
@@ -55,7 +58,8 @@ public class IssueServiceImpl implements IssueService {
 	@Transactional(readOnly = true)
 	public List<ResponseWrapperIssue> getIssues(String status,
 			List<String> tags, String partialTitle, boolean owned) {
-		IssueStatus issueStatus = status != null ? IssueStatus.valueOf(status) : null;
+		IssueStatus issueStatus = status != null ? IssueStatus.valueOf(status)
+				: null;
 
 		List<Tag> tagsOfIssue = null;
 
@@ -85,22 +89,21 @@ public class IssueServiceImpl implements IssueService {
 
 		return result;
 	}
-	
-	
 
 	@Override
 	@Transactional(readOnly = true)
 	public ResponseWrapperIssue getIssue(long id, boolean withRelations) {
 
-		Issue issue = withRelations ? issueDao.getIssueWithRelations(id): issueDao.getIssue(id);
+		Issue issue = withRelations ? issueDao.getIssueWithRelations(id)
+				: issueDao.getIssue(id);
 		ResponseWrapperIssue rwi = new ResponseWrapperIssue();
-		
+
 		rwi.setIssue(issue);
 		setResponseWrapperIssueFlags(rwi);
-		if(withRelations) {
-			
-			for(IssueRelation irFrom : issue.getIssueRelationsFrom()) {
-				switch(irFrom.getRelationType()) {
+		if (withRelations) {
+
+			for (IssueRelation irFrom : issue.getIssueRelationsFrom()) {
+				switch (irFrom.getRelationType()) {
 				case DEPENDS:
 					rwi.getDependsIssuesFrom().add(irFrom.getIssueTo());
 					break;
@@ -112,9 +115,9 @@ public class IssueServiceImpl implements IssueService {
 					break;
 				}
 			}
-			
-			for(IssueRelation irTo : issue.getIssueRelationsTo()) {
-				switch(irTo.getRelationType()) {
+
+			for (IssueRelation irTo : issue.getIssueRelationsTo()) {
+				switch (irTo.getRelationType()) {
 				case DEPENDS:
 					rwi.getDependsIssuesTo().add(irTo.getIssueFrom());
 					break;
@@ -129,7 +132,7 @@ public class IssueServiceImpl implements IssueService {
 		}
 		return rwi;
 	}
-	
+
 	@Override
 	@Transactional(readOnly = false)
 	public void deleteIssue(long id) {
@@ -176,20 +179,27 @@ public class IssueServiceImpl implements IssueService {
 	private void addOrUpdateIssue(RequestWrapperIssue issueRequest,
 			Long idExistingIssue) {
 
+		boolean isUpdate = idExistingIssue != null;
+
 		// Fetching the Issue from DB if Update ; otherwise create new
-		Issue issue = idExistingIssue != null ? issueDao.getIssue(idExistingIssue) : new Issue();
+		Issue issue = isUpdate ? issueDao.getIssue(idExistingIssue)
+				: new Issue();
+
+		// No matching Issue was found
+		if (isUpdate && issue == null) {
+			return;
+		}
+
+		boolean isRejected = IssueStatus.valueOf(issueRequest.getIssueStatus()) == IssueStatus.REJECTED;
+		// When Issue should be rejected -> must remove all Relations
+		if (isRejected) {
+			rejectIssue(issue);
+		}
 
 		// On Update - Delete all OneToMany Relations in advance (are added
 		// again later)
-		if (idExistingIssue != null) {
-			issue.getIssueTags().clear();
-			issue.getIssueRelationsFrom().clear();
-			issue.getIssueRelationsTo().clear();
-			issue.getFiles().clear();
-
-			// Must be done - Otherwise Hibernate would result in Violation
-			// Constraint!
-			sessionFactory.getCurrentSession().flush();
+		if (isUpdate) {
+			clearIssueRelations(issue);
 		}
 
 		// Setting the properties of the Issue
@@ -230,7 +240,8 @@ public class IssueServiceImpl implements IssueService {
 			}
 		}
 
-		// This issue depends on other issues
+		// This issue depends on other issues -> only if Issue not set to
+		// Rejected
 		if (issueRequest.getIdsDepends() != null
 				&& !issueRequest.getIdsDepends().isEmpty()) {
 			List<Issue> dependingIssues = issueDao.getIssuesByIds(issueRequest
@@ -238,7 +249,8 @@ public class IssueServiceImpl implements IssueService {
 
 			for (Issue dependingIssue : dependingIssues) {
 				issue.getIssueRelationsFrom().add(
-						new IssueRelation(issue, dependingIssue, IssueRelation.RelationType.DEPENDS));
+						new IssueRelation(issue, dependingIssue,
+								IssueRelation.RelationType.DEPENDS));
 			}
 
 			// If the issue depends on another issue -> it is considered
@@ -248,37 +260,120 @@ public class IssueServiceImpl implements IssueService {
 		} else {
 			issue.setBlocked(false);
 		}
-		
-		// This issue resolves other issues
+
+		// This issue resolves other issues -> only if Issue not set to Rejected
 		if (issueRequest.getIdsResolves() != null
 				&& !issueRequest.getIdsResolves().isEmpty()) {
 			List<Issue> resolvesIssues = issueDao.getIssuesByIds(issueRequest
 					.getIdsResolves());
 			for (Issue resolvesIssue : resolvesIssues) {
 				issue.getIssueRelationsFrom().add(
-						new IssueRelation(issue, resolvesIssue, IssueRelation.RelationType.RESOLVES));
+						new IssueRelation(issue, resolvesIssue,
+								IssueRelation.RelationType.RESOLVES));
 			}
 		}
 
 		// This issue is related to other issues
-		// other issues are related to this issue
+		// other issues are related to this issue -> only if Issue not set to
+		// Rejected
 		if (issueRequest.getIdsRelates() != null
 				&& !issueRequest.getIdsRelates().isEmpty()) {
 			List<Issue> relatedIssues = issueDao.getIssuesByIds(issueRequest
 					.getIdsRelates());
 			for (Issue relatedIssue : relatedIssues) {
 				issue.getIssueRelationsFrom().add(
-						new IssueRelation(issue, relatedIssue, IssueRelation.RelationType.RELATES));
+						new IssueRelation(issue, relatedIssue,
+								IssueRelation.RelationType.RELATES));
 				issue.getIssueRelationsTo().add(
-						new IssueRelation(relatedIssue, issue, IssueRelation.RelationType.RELATES));
+						new IssueRelation(relatedIssue, issue,
+								IssueRelation.RelationType.RELATES));
+			}
+		}
+
+		// Only needed when new (not update)
+		if (!isUpdate) {
+			issueDao.saveOrUpdateIssue(issue);
+		}
+	}
+
+	/**
+	 * Help method for rejecting an Issue properly - Must set the blocked flag
+	 * of other Issues properly - Must delete all relations to other Issues
+	 * 
+	 * @param issue
+	 *            The issue
+	 */
+	@Transactional(propagation=Propagation.NESTED)
+	private void rejectIssue(Issue issue) {
+		
+		// Get all 
+		Set<IssueRelation> issueRelationsTo = issue.getIssueRelationsTo();
+		
+		if(issueRelationsTo != null) {
+			for(IssueRelation issueRelationTo : issueRelationsTo) {
+				
+				// 
+				if(issueRelationTo.getRelationType() == RelationType.DEPENDS) {
+					Issue issueDependsOn = issueRelationTo.getIssueFrom();
+					
+					Set<IssueRelation> dependingIssueRelations = issueDependsOn.getIssueRelationsFrom();
+					
+					if(dependingIssueRelations != null) {
+						
+						boolean hasOtherDependsRelations = false;
+						
+						for(IssueRelation dependingIssueRelation : dependingIssueRelations) {
+							
+							if(dependingIssueRelation.getRelationType() == RelationType.DEPENDS && !dependingIssueRelation.getIssueTo().equals(issue)) {
+								issueDao.getIssue(issueRelationTo.getIssueFrom().getIdIssue()).setBlocked(true);
+								hasOtherDependsRelations = true;
+								break;
+							}
+						}
+						
+						if(!hasOtherDependsRelations) {
+							issueRelationTo.getIssueFrom().setBlocked(false);
+							issueDao.getIssue(issueRelationTo.getIssueFrom().getIdIssue()).setBlocked(false);
+						}	
+					}
+				}
 			}
 		}
 		
+		clearIssueRelations(issue);
+	}
 
-		// Only needed when new (not update)
-		if (idExistingIssue == null) {
-			issueDao.saveOrUpdateIssue(issue);
+	/**
+	 * Help method to clear the Relations of an Issue
+	 * 
+	 * @param issue
+	 *            The issue
+	 */
+	private void clearIssueRelations(Issue issue) {
+		
+		Set<IssueRelation> issueRelationsTo = issue.getIssueRelationsTo();
+	
+		if(issueRelationsTo != null) {
+			for(IssueRelation issueRelationTo : issueRelationsTo) {
+				
+				Set<IssueRelation> issueRelationsFrom = issueRelationTo.getIssueFrom().getIssueRelationsFrom();
+				
+				if(issueRelationsFrom != null) {
+					issueRelationsFrom.clear();
+				}
+			}
+			
+			issueRelationsTo.clear();
 		}
+		
+		
+		issue.getIssueTags().clear();
+		issue.getIssueRelationsFrom().clear();
+		issue.getFiles().clear();
+
+		// Must be done - Otherwise Hibernate would result in Violation
+		// Constraint!
+		sessionFactory.getCurrentSession().flush();
 	}
 
 	/**
@@ -294,42 +389,43 @@ public class IssueServiceImpl implements IssueService {
 		AppUser appUser = userService
 				.getAppUserByUsername(SecurityContextHolder.getContext()
 						.getAuthentication().getName());
-		
+
 		// Editable only if Owner or Creator
 		boolean isEditable = rwi.getIssue().getOwner().equals(appUser)
 				|| rwi.getIssue().getCreator().equals(appUser);
 
 		rwi.setEditable(isEditable);
-		
+
 		rwi.setOwner(rwi.getIssue().getOwner().equals(appUser));
 
 		rwi.setShowInProgress(false);
 		rwi.setShowRepeat(false);
 
-		//when to show buttons for issue owner
+		// when to show buttons for issue owner
 		if (rwi.isOwner()) {
 			rwi.setShowBtnRejectIssue(true);
-			if (IssueStatus.NEW.equals(rwi.getIssue().getIssueStatus()) &&
-				!rwi.getIssue().isBlocked() && 
-				rwi.getIssue().getDesignDecisions().isEmpty()) {
+			if (IssueStatus.NEW.equals(rwi.getIssue().getIssueStatus())
+					&& !rwi.getIssue().isBlocked()
+					&& rwi.getIssue().getDesignDecisions().isEmpty()) {
 				rwi.setShowBtnCreateDesignDecision(true);
 				rwi.setShowBtnRejectIssue(true);
-			} else if (IssueStatus.RESOLVED.equals(rwi.getIssue().getIssueStatus()) ) {
-				//if issue status is resolved but should be able to be openend again
+			} else if (IssueStatus.RESOLVED.equals(rwi.getIssue()
+					.getIssueStatus())) {
+				// if issue status is resolved but should be able to be openend
+				// again
 				rwi.setShowBtnCreateDesignDecision(true);
 				rwi.setShowBtnRejectIssue(false);
-			} 
+			}
 		}
-		
+
 		if (IssueStatus.OBSOLETE.equals(rwi.getIssue().getIssueStatus())) {
 			rwi.setShowObsolete(true);
 		}
-		
+
 		if (IssueStatus.RESOLVED.equals(rwi.getIssue().getIssueStatus())) {
 			rwi.setShowResolved(true);
 		}
 	}
-
 
 	@Override
 	public List<Comment> getChildComments(long idComment) {
